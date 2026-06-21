@@ -12,6 +12,7 @@ SLOTMACHINEGFXDIR := graphics/slot_machine
 FIELDEFFECTSGFXDIR := graphics/field_effects
 MISCGFXDIR := graphics/misc
 TEXTWINDOWGFXDIR := graphics/text_window
+SLIDINGBLOCKSGFXDIR := graphics/sliding_blocks
 TEACHYTVGFXDIR := graphics/teachy_tv
 SSANNEGFXDIR := graphics/ss_anne
 ITEMPCGFXDIR := graphics/item_pc
@@ -227,6 +228,15 @@ $(SLOTMACHINEGFXDIR)/firered/bg.4bpp: %.4bpp: %.png
 
 $(SLOTMACHINEGFXDIR)/leafgreen/bg.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 134 -Wnum_tiles
+
+$(SLIDINGBLOCKSGFXDIR)/bg_wall.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -num_tiles 63
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_ho_oh.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/arrows.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
 
 $(TEACHYTVGFXDIR)/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 233 -Wnum_tiles

@@ -1,0 +1,39 @@
+mapscripts PalletTown_PlayersHouse_2F_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION: PalletTown_PlayersHouse_2F_OnTransition
+    MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE [
+        VAR_MAP_SCENE_PALLET_TOWN_PLAYERS_HOUSE_2F, 0: PalletTown_PlayersHouse_2F_FirstWarpIn
+    ]
+}
+
+script PalletTown_PlayersHouse_2F_OnTransition {
+    if (var(VAR_MAP_SCENE_PALLET_TOWN_PLAYERS_HOUSE_2F) == 0) {
+        setrespawn(HEAL_LOCATION_PALLET_TOWN)
+    }
+}
+
+script PalletTown_PlayersHouse_2F_FirstWarpIn {
+    turnobject(LOCALID_PLAYER, DIR_NORTH)
+    setvar(VAR_MAP_SCENE_PALLET_TOWN_PLAYERS_HOUSE_2F, 1)
+}
+
+script PalletTown_PlayersHouse_2F_EventScript_NES {
+    lock
+    msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
+    closemessage
+    playslidingblocks(0)
+    msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
+    closemessage
+    release
+}
+
+text PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks {
+    "Texting whether sliding blocks works."
+}
+
+text PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone {
+    "Testing finished."
+}
+
+script PalletTown_PlayersHouse_2F_EventScript_PC {}
+
+script PalletTown_PlayersHouse_2F_EventScript_Sign {}

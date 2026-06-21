@@ -1210,10 +1210,10 @@
 	.byte \disable
 	.endm
 
-	@ In FRLG, this command is a nop. In RSE, gets whether the effects of the specified PokeNews program are active.
-	.macro getpokenewsactive newsKind:req
+	@ Starts a sliding blocks puzzle. Which puzzle layout is played is determined by puzzleId.
+	.macro playslidingblocks puzzleId:req
 	.byte 0x96
-	.2byte \newsKind
+	.byte \puzzleId
 	.endm
 
 	@ Fades the screen to and from black and white. Modes are FADE_(TO/FROM)_(WHITE/BLACK)

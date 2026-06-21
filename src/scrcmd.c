@@ -30,6 +30,7 @@
 #include "coins.h"
 #include "battle_setup.h"
 #include "shop.h"
+#include "sliding_blocks.h"
 #include "slot_machine.h"
 #include "field_effect.h"
 #include "fieldmap.h"
@@ -1999,12 +2000,13 @@ bool8 ScrCmd_setberrytree(struct ScriptContext * ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_getpokenewsactive(struct ScriptContext * ctx)
+bool8 ScrCmd_playslidingblocks(struct ScriptContext * ctx)
 {
-//    u16 value = VarGet(ScriptReadHalfword(ctx));
-//
-//    gSpecialVar_Result = GetPriceReduction(value);
-    return FALSE;
+    u8 puzzleId = VarGet(ScriptReadByte(ctx));
+
+    PlaySlidingBlocks(puzzleId, CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    ScriptContext_Stop();
+    return TRUE;
 }
 
 bool8 ScrCmd_choosecontestmon(struct ScriptContext * ctx)
