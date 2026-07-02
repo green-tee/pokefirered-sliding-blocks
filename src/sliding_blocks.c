@@ -13,6 +13,7 @@
 #include "strings.h"
 #include "event_data.h"
 #include "constants/songs.h"
+#include "constants/sliding_blocks.h"
 
 #define SLIDINGTASK_GFX_INIT        0
 #define SLIDINGTASK_FADEOUT_EXIT    1
@@ -37,10 +38,23 @@ enum SlidingMove {
     SLIDINGMOVE_RIGHT
 };
 
+struct SlidingBlocksLayout
+{
+    u16 blocksPermutation[4][4];
+    u16 blocksOrientation[4][4];
+};
+
+struct SlidingBlocksPuzzle
+{
+    const u32 *spriteSheet;
+    const u16 *palette;
+    struct SlidingBlocksLayout blocksInitialLayout;
+};
+
 struct SlidingBlocksState
 {
     MainCallback savedCallback;
-    u16 machineidx;
+    u16 puzzleId;
     u8 taskId;
     u16 blocksInitialLayout[4][4];
     u16 blocksCurrentLayout[4][4];
@@ -77,12 +91,6 @@ struct SlidingBlocksSetupTaskData
     u8 bg2TilemapBuffer[0x800];
     u8 bg3TilemapBuffer[0x800];
 }; // size: 285C
-
-struct LineStateTileIdxList
-{
-    const u16 * tiles;
-    u32 count;
-};
 
 static EWRAM_DATA struct SlidingBlocksState * sSlidingBlocksState = NULL;
 static EWRAM_DATA struct SlidingBlocksGfxManager * sSlidingBlocksGfxManager = NULL;
@@ -125,32 +133,101 @@ static const u8 sString_GiveUpPuzzle[] = _("Give up on this puzzle?");
 static const u8 gString_ResetPuzzle[] = _("Do you want to start over?");
 static const u8 sString_PuzzleSolved[] = _("Congratulations!\nYou solved the puzzle!");
 
-static const u16 sProtoLayout[4][4] = {
-    {0x1, 0x3, 0xE, 0x6},
-    {0x9, 0x0, 0x4, 0x2},
-    {0x7, 0xC, 0xB, 0xF},
-    {0xD, 0x5, 0xA, 0x8}
-};
+static const u32 sSpriteTiles_HoOh[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh.4bpp.lz");
+static const u32 sSpriteTiles_Voltorb[] = INCBIN_U32("graphics/sliding_blocks/puzzle_voltorb.4bpp.lz");
+static const u32 sSpriteTiles_Electrode[] = INCBIN_U32("graphics/sliding_blocks/puzzle_electrode.4bpp.lz");
 
-static const u16 sBabyDifficultyLayout[4][4] = {
-    {0x1, 0x5, 0x2, 0x3},
-    {0x4, 0x0, 0x6, 0x7},
-    {0x8, 0x9, 0xA, 0xB},
-    {0xC, 0xD, 0xE, 0xF}
-};
+static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
+static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
+static const u16 sSpritePal_Electrode[] = INCBIN_U16("graphics/sliding_blocks/puzzle_electrode.gbapal");
 
-static const u16 sSpritePal_Blocks[] = INCBIN_U16("graphics/sliding_blocks/puzzle.gbapal");
-static const u32 sSpriteTiles_Blocks[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh.4bpp.lz");
+//static const u16 sSpritePal_Blocks[] = INCBIN_U16("graphics/sliding_blocks/puzzle.gbapal");
+//static const u32 sSpriteTiles_Blocks[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh.4bpp.lz");
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
+static const u16 sSpritePal_Hud[] = INCBIN_U16("graphics/sliding_blocks/hud.gbapal");
 
 static const struct CompressedSpriteSheet sSpriteSheets[] = {
-    {(const void *)sSpriteTiles_Blocks,  0x2000, 0},
     {(const void *)sSpriteTiles_Arrows,  0x2A00, 1},
 };
 
-static const struct SpritePalette sSpritePalettes[] = {
-    {sSpritePal_Blocks, 0},
+static const struct SpritePalette sSpriteHudPalettes[] = {
+    {sSpritePal_Hud, 1},
     {NULL}
+};
+
+static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
+
+    [SLIDING_LAYOUT_TEST_HO_OH] = {
+        .spriteSheet = sSpriteTiles_HoOh,
+        .palette = sSpritePal_HoOh,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 1,  3, 14,  6},
+                { 9,  0,  4,  2},
+                { 7, 12, 11, 15},
+                {13,  5, 10,  8}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            }
+        }
+    },
+
+    [SLIDING_LAYOUT_VOLTORB] = {
+        .spriteSheet = sSpriteTiles_Voltorb,
+        .palette = sSpritePal_Voltorb,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15, 14, 13, 12},
+                {11, 10,  9,  8},
+                { 7,  6,  5,  4},
+                { 3,  2,  1,  0}
+            },
+            .blocksOrientation = {
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
+            }
+        }
+    },
+
+    [SLIDING_LAYOUT_ELECTRODE] = {
+        .spriteSheet = sSpriteTiles_Electrode,
+        .palette = sSpritePal_Electrode,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15, 14, 13, 12},
+                {11, 10,  9,  8},
+                { 7,  6,  5,  4},
+                { 3,  2,  1,  0}
+            },
+            .blocksOrientation = {
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
+            }
+        }
+    }
+
+};
+
+static const u16 sProtoLayout[4][4] = {
+    { 1,  3, 14,  6},
+    { 9,  0,  4,  2},
+    { 7, 12, 11, 15},
+    {13,  5, 10,  8}
+};
+
+static const u16 sBabyDifficultyLayout[4][4] = {
+    { 1,  5,  2,  3},
+    { 4,  0,  6,  7},
+    { 8,  9, 10, 11},
+    {12, 13, 14, 15}
 };
 
 static const u8 sReelIconBldY[] = {
@@ -159,9 +236,25 @@ static const u8 sReelIconBldY[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x03, 0x04, 0x05, 0x06, 0x06, 0x07, 0x08, 0x09, 0x09, 0x0a, 0x0b, 0x0c, 0x0c, 0x0d, 0x0e, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f
 };
 
+static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwise[] = {
+    AFFINEANIMCMD_FRAME(0, 0, 2, 64), // Rotate slightly counter-clockwise
+    AFFINEANIMCMD_FRAME(0, 0, -2, 64),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateClockwise[] = {
+    AFFINEANIMCMD_FRAME(1, 1,  50, 0), // Rotate slightly counter-clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sTileAffineAnims[] = {
+    sTileAffineAnim_RotateCounterclockwise,
+    sTileAffineAnim_RotateClockwise
+};
+
 static const struct OamData sOamData_Blocks = {
     .y = 0,
-    .affineMode = ST_OAM_AFFINE_OFF,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = FALSE,
     .bpp = ST_OAM_4BPP,
@@ -223,13 +316,13 @@ static const struct SpriteTemplate sSpriteTemplate_Blocks = {
     .oam = &sOamData_Blocks,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
+    .affineAnims = sTileAffineAnims,
     .callback = SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_Arrows = {
     .tileTag = 1,
-    .paletteTag = 0,
+    .paletteTag = 1,
     .oam = &sOamData_Arrows,
     .anims = sAnimTable_Arrows,
     .images = NULL,
@@ -347,7 +440,7 @@ static const u32 sSlidingBlocksYs[] = {
     0x88, 0x88, 0x88, 0x88
 };
 
-void PlaySlidingBlocks(u16 machineIdx, MainCallback savedCallback)
+void PlaySlidingBlocks(u16 puzzleId, MainCallback savedCallback)
 {
     ResetTasks();
     sSlidingBlocksState = Alloc(sizeof(*sSlidingBlocksState));
@@ -355,9 +448,7 @@ void PlaySlidingBlocks(u16 machineIdx, MainCallback savedCallback)
         SetMainCallback2(savedCallback);
     else
     {
-        if (machineIdx > 5)
-            machineIdx = 0;
-        sSlidingBlocksState->machineidx = machineIdx;
+        sSlidingBlocksState->puzzleId = puzzleId;
         sSlidingBlocksState->savedCallback = savedCallback;
         InitSlidingBlocksState(sSlidingBlocksState, sProtoLayout);
         //InitSlidingBlocksState(sSlidingBlocksState, sBabyDifficultyLayout);
@@ -727,10 +818,20 @@ static void SetMainTask(TaskFunc taskFunc)
 static bool32 LoadSpriteGraphicsAndAllocateManager(void)
 {
     s32 i;
-
+    struct CompressedSpriteSheet blocksSpriteSheet;
+    struct SpritePalette blocksSpritePaletteWrapper[] = {{NULL}, {NULL}};
+    const struct SlidingBlocksPuzzle *puzzle = &sSlidingBlocksPuzzles[sSlidingBlocksState->puzzleId];
+    
+    blocksSpriteSheet.data = puzzle->spriteSheet;
+    blocksSpriteSheet.size = 0x2000;
+    blocksSpriteSheet.tag = 0;
+    blocksSpritePaletteWrapper[0].data = puzzle->palette;
+    blocksSpritePaletteWrapper[0].tag = 0;
+    LoadCompressedSpriteSheet(&blocksSpriteSheet);
     for (i = 0; i < NELEMS(sSpriteSheets); i++)
         LoadCompressedSpriteSheet(&sSpriteSheets[i]);
-    LoadSpritePalettes(sSpritePalettes);
+    LoadSpritePalettes(blocksSpritePaletteWrapper);
+    LoadSpritePalettes(sSpriteHudPalettes);
     sSlidingBlocksGfxManager = Alloc(sizeof(*sSlidingBlocksGfxManager));
     if (sSlidingBlocksGfxManager == NULL)
         return FALSE;
@@ -782,6 +883,9 @@ static void CreateBlocksSprites(u32 indexOfHollowPiece) {
         sSlidingBlocksGfxManager->blocksSprites[i] = &gSprites[spriteId];
         currentSprite = &gSprites[spriteId];
         currentSprite->oam.tileNum = i * 16;
+        currentSprite->oam.matrixNum = AllocOamMatrix();
+        //currentSprite->affineAnimPaused = FALSE;
+        StartSpriteAffineAnim(currentSprite, 0);
     }
     sSlidingBlocksGfxManager->blocksSprites[indexOfHollowPiece]->invisible = TRUE;
     sSlidingBlocksGfxManager->hollowSpriteIndex = indexOfHollowPiece;

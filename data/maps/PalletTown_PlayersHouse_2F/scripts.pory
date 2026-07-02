@@ -20,7 +20,7 @@ script PalletTown_PlayersHouse_2F_EventScript_NES {
     lock
     msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
     closemessage
-    playslidingblocks(0)
+    playslidingblocks(SLIDING_LAYOUT_VOLTORB)
     msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
     closemessage
     release

@@ -39,7 +39,7 @@ PalletTown_PlayersHouse_2F_EventScript_NES::
 # 22 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
 	closemessage
 # 23 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
-	playslidingblocks 0
+	playslidingblocks SLIDING_LAYOUT_VOLTORB
 # 24 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
 	msgbox PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT
 # 25 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
