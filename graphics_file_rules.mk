@@ -244,6 +244,9 @@ $(SLIDINGBLOCKSGFXDIR)/puzzle_electrpde.4bpp: %.4bpp: %.png
 $(SLIDINGBLOCKSGFXDIR)/arrows.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+$(SLIDINGBLOCKSGFXDIR)/hand.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
 $(TEACHYTVGFXDIR)/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 233 -Wnum_tiles
 

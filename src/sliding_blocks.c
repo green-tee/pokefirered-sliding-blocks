@@ -25,9 +25,21 @@
 #define INDEX_Y 1
 
 #define SPRITEANIM_ARROWS_CONVERGE 0
+#define SPRITEANIM_HAND_POINT      0
+
+#define TILETAG_BLOCKS 0
+#define TILETAG_ARROWS 1
+#define TILETAG_HAND   2
 
 #define SLIDING_NUM_BLOCKS 16
 #define ARROWS_NUM_TILES 16
+#define HAND_NUM_TILES   16
+
+
+enum ControlMode {
+    CONTROLMODE_ARROWS,
+    CONTROLMODE_CURSOR
+};
 
 
 enum SlidingMove {
@@ -42,6 +54,7 @@ struct SlidingBlocksLayout
 {
     u16 blocksPermutation[4][4];
     u16 blocksOrientation[4][4];
+    u16 hollowIndex[2];
 };
 
 struct SlidingBlocksPuzzle
@@ -49,6 +62,7 @@ struct SlidingBlocksPuzzle
     const u32 *spriteSheet;
     const u16 *palette;
     struct SlidingBlocksLayout blocksInitialLayout;
+    bool32 (*winCondition)(const struct SlidingBlocksLayout *layout);
 };
 
 struct SlidingBlocksState
@@ -56,9 +70,10 @@ struct SlidingBlocksState
     MainCallback savedCallback;
     u16 puzzleId;
     u8 taskId;
-    u16 blocksInitialLayout[4][4];
-    u16 blocksCurrentLayout[4][4];
-    u16 hollowIndex[2];
+    struct SlidingBlocksLayout blocksInitialLayout;
+    struct SlidingBlocksLayout blocksCurrentLayout;
+    enum ControlMode controlMode;
+    bool32 (*winCondition)(const struct SlidingBlocksLayout *layout);
     bool32 isSliding;
     enum SlidingMove currentMove;
 };
@@ -67,6 +82,8 @@ struct SlidingBlocksGfxManager
 {
     struct Sprite *blocksSprites[SLIDING_NUM_BLOCKS];
     struct Sprite *arrowsSprite;
+    struct Sprite *handSprite;
+    u32 cursorIndex;
     u32 hollowSpriteIndex;
 };
 
@@ -84,18 +101,16 @@ struct SlidingBlocksSetupTaskData
     // align 2
     s32 bg1X;
     bool32 yesNoMenuActive;
-    u16 buttonPressedTiles[3][4];
-    u16 buttonReleasedTiles[3][4];
     u8 bg0TilemapBuffer[0x800];
     u8 bg1TilemapBuffer[0x800];
     u8 bg2TilemapBuffer[0x800];
     u8 bg3TilemapBuffer[0x800];
-}; // size: 285C
+};
 
 static EWRAM_DATA struct SlidingBlocksState * sSlidingBlocksState = NULL;
 static EWRAM_DATA struct SlidingBlocksGfxManager * sSlidingBlocksGfxManager = NULL;
 
-static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const u16 initialLayout[4][4]);
+static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const struct SlidingBlocksPuzzle *puzzle);
 static void CB2_InitSlidingBlocks(void);
 static void CleanSupSlidingBlocksState(void);
 static void CB2_RunSlidingBlocks(void);
@@ -104,8 +119,11 @@ static void MainTask_ShowHelp(u8 taskId);
 static void MainTask_ConfirmExitGame(u8 taskId);
 static void MainTask_ExitSlidingBlocks(u8 taskId);
 static void MainTask_VictorySequence(u8 taskId);
+static bool32 CanSetControlMode(enum ControlMode mode);
+static void SetControlMode(enum ControlMode mode);
+static void HandleControlModeChange(void);
 static void ProcessMove(enum SlidingMove move);
-static bool32 IsSlidingLayoutSolved(u16 layout[4][4]);
+static bool32 IsSlidingLayoutSolved(const struct SlidingBlocksState *state);
 static void MainTask_SlideBlock(u8 taskId);
 static void MainTask_Bump(u8 taskId);
 static void SetMainTask(TaskFunc taskFunc);
@@ -117,6 +135,8 @@ static void Task_SlidingBlocks(u8 taskId);
 static void SetSlidingBlocksSetupTask(u16 funcno, u8 taskId);
 static void SetArrowsSpritePosition(s16 x, s16 y);
 static void SetArrowsSpriteVisible(bool32 isVisible);
+static void SetHandSpritePosition(s16 x, s16 y);
+static void SetHandSpriteVisible(bool32 isVisible);
 static bool32 IsSlidingBlocksSetupTaskActive(u8 taskId);
 static bool8 SlidingTask_GraphicsInit(u8 *state, struct SlidingBlocksSetupTaskData * ptr);
 static bool8 SlidingTask_FadeOut(u8 *state, struct SlidingBlocksSetupTaskData * ptr);
@@ -127,10 +147,18 @@ static void SlidingBlocks_PrintOnWindow0(const u8 * str);
 static void SlidingBlocks_ClearWindow0(void);
 static void SlidingBlocks_CreateYesNoMenu(u8 cursorPos);
 static void SlidingBlocks_DestroyYesNoMenu(void);
+static void SlidingBlocks_PrintControlsText(const u8 *str);
+// Winning conditions for each puzzle
+static bool32 WinCondition_AllCorrectPlaces(const struct SlidingBlocksLayout *layout);
+static bool32 WinCondition_AllCorrectOrientations(const struct SlidingBlocksLayout *layout);
+static bool32 WinCondition_AllCorrectPlacesAndOrientations(const struct SlidingBlocksLayout *layout);
+static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout);
 
-static const u8 sString_SlidingBlocksControls[] = _("{DPAD_ANY}Move {START_BUTTON}Reset {B_BUTTON}Give up");
+static const u8 sString_SlidingBlocksControlsArrows[] = _("{SELECT_BUTTON}Mode {DPAD_ANY}Slide {B_BUTTON}Give up");
+static const u8 sString_SlidingBlocksControlsArrowsCantSwitch[] = _("{DPAD_ANY}Slide {B_BUTTON}Give up");
+static const u8 sString_SlidingBlocksControlsCursor[] = _("{SELECT_BUTTON}Mode {DPAD_ANY}Select {L_BUTTON}{R_BUTTON}Rotate {A_BUTTON}Slide");
+static const u8 sString_SlidingBlocksControlsCursorCantSwitch[] = _("{DPAD_ANY}Select {L_BUTTON}{R_BUTTON}Rotate {B_BUTTON}Give up");
 static const u8 sString_GiveUpPuzzle[] = _("Give up on this puzzle?");
-static const u8 gString_ResetPuzzle[] = _("Do you want to start over?");
 static const u8 sString_PuzzleSolved[] = _("Congratulations!\nYou solved the puzzle!");
 
 static const u32 sSpriteTiles_HoOh[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh.4bpp.lz");
@@ -141,13 +169,13 @@ static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
 static const u16 sSpritePal_Electrode[] = INCBIN_U16("graphics/sliding_blocks/puzzle_electrode.gbapal");
 
-//static const u16 sSpritePal_Blocks[] = INCBIN_U16("graphics/sliding_blocks/puzzle.gbapal");
-//static const u32 sSpriteTiles_Blocks[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh.4bpp.lz");
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
+static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
 static const u16 sSpritePal_Hud[] = INCBIN_U16("graphics/sliding_blocks/hud.gbapal");
 
 static const struct CompressedSpriteSheet sSpriteSheets[] = {
-    {(const void *)sSpriteTiles_Arrows,  0x2A00, 1},
+    {(const void *)sSpriteTiles_Arrows,  0x2A00, TILETAG_ARROWS},
+    {(const void *)sSpriteTiles_Hand,   0x2A00, TILETAG_HAND},
 };
 
 static const struct SpritePalette sSpriteHudPalettes[] = {
@@ -172,8 +200,10 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
                 {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
                 {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
-            }
-        }
+            },
+            .hollowIndex = {[INDEX_X] = 1, [INDEX_Y] = 1} // Where 0 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
     },
 
     [SLIDING_LAYOUT_VOLTORB] = {
@@ -191,8 +221,10 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
-            }
-        }
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 0 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
     },
 
     [SLIDING_LAYOUT_ELECTRODE] = {
@@ -210,24 +242,12 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
-            }
-        }
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectOrientations
     }
 
-};
-
-static const u16 sProtoLayout[4][4] = {
-    { 1,  3, 14,  6},
-    { 9,  0,  4,  2},
-    { 7, 12, 11, 15},
-    {13,  5, 10,  8}
-};
-
-static const u16 sBabyDifficultyLayout[4][4] = {
-    { 1,  5,  2,  3},
-    { 4,  0,  6,  7},
-    { 8,  9, 10, 11},
-    {12, 13, 14, 15}
 };
 
 static const u8 sReelIconBldY[] = {
@@ -236,20 +256,45 @@ static const u8 sReelIconBldY[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x03, 0x04, 0x05, 0x06, 0x06, 0x07, 0x08, 0x09, 0x09, 0x0a, 0x0b, 0x0c, 0x0c, 0x0d, 0x0e, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f
 };
 
+enum TileAnimation {
+    TILEANIM_BE_COUNTERCLOCKWISE,
+    TILEANIM_BE_CLOCKWISE,
+    TILEANIM_BE_FLIPPED,
+    TILEANIM_ROTATE_COUNTERCLOCKWISE,
+    TILEANIM_ROTATE_CLOCKWISE
+};
+
+static const union AffineAnimCmd sTileAffineAnim_BeCounterclockwise[] = {
+    AFFINEANIMCMD_FRAME(0, 0, 64, 1), // Rotate 90 degrees counter-clockwise instantly
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_BeClockwise[] = {
+    AFFINEANIMCMD_FRAME(0, 0, -64, 1), // Rotate 90 degrees clockwise instantly
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_BeFlipped[] = {
+    AFFINEANIMCMD_FRAME(0, 0, 128, 1), // Rotate 180 degrees instantly
+    AFFINEANIMCMD_END
+};
+
 static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwise[] = {
-    AFFINEANIMCMD_FRAME(0, 0, 2, 64), // Rotate slightly counter-clockwise
-    AFFINEANIMCMD_FRAME(0, 0, -2, 64),
+    AFFINEANIMCMD_FRAME(0, 0, 4, 16), // Rotate 90 degrees counter-clockwise
     AFFINEANIMCMD_END
 };
 
 static const union AffineAnimCmd sTileAffineAnim_RotateClockwise[] = {
-    AFFINEANIMCMD_FRAME(1, 1,  50, 0), // Rotate slightly counter-clockwise
+    AFFINEANIMCMD_FRAME(0, 0, -4, 16), // Rotate 90 degrees clockwise
     AFFINEANIMCMD_END
 };
 
 static const union AffineAnimCmd *const sTileAffineAnims[] = {
-    sTileAffineAnim_RotateCounterclockwise,
-    sTileAffineAnim_RotateClockwise
+    [TILEANIM_BE_COUNTERCLOCKWISE]     = sTileAffineAnim_BeCounterclockwise,
+    [TILEANIM_BE_CLOCKWISE]            = sTileAffineAnim_BeClockwise,
+    [TILEANIM_BE_FLIPPED]              = sTileAffineAnim_BeFlipped,
+    [TILEANIM_ROTATE_COUNTERCLOCKWISE] = sTileAffineAnim_RotateCounterclockwise,
+    [TILEANIM_ROTATE_CLOCKWISE]        = sTileAffineAnim_RotateClockwise
 };
 
 static const struct OamData sOamData_Blocks = {
@@ -269,6 +314,22 @@ static const struct OamData sOamData_Blocks = {
 };
 
 static const struct OamData sOamData_Arrows = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static const struct OamData sOamData_Hand = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -306,12 +367,26 @@ static const union AnimCmd sAnimCmd_Arrows_Converge[] = {
     // 120 frames in total
 };
 
+static const union AnimCmd sAnimCmd_Hand_Point[] = {
+    ANIMCMD_FRAME(0 * HAND_NUM_TILES,  1),
+    ANIMCMD_FRAME(1 * HAND_NUM_TILES,  1),
+    ANIMCMD_FRAME(2 * HAND_NUM_TILES,  1),
+    ANIMCMD_FRAME(3 * HAND_NUM_TILES, 30),
+    ANIMCMD_FRAME(2 * HAND_NUM_TILES,  1),
+    ANIMCMD_FRAME(1 * HAND_NUM_TILES,  1),
+    ANIMCMD_JUMP(0)
+};
+
 static const union AnimCmd *const sAnimTable_Arrows[] = {
     [SPRITEANIM_ARROWS_CONVERGE] = sAnimCmd_Arrows_Converge
 };
 
+static const union AnimCmd *const sAnimTable_Hand[] = {
+    [SPRITEANIM_HAND_POINT] = sAnimCmd_Hand_Point
+};
+
 static const struct SpriteTemplate sSpriteTemplate_Blocks = {
-    .tileTag = 0,
+    .tileTag = TILETAG_BLOCKS,
     .paletteTag = 0,
     .oam = &sOamData_Blocks,
     .anims = gDummySpriteAnimTable,
@@ -321,10 +396,20 @@ static const struct SpriteTemplate sSpriteTemplate_Blocks = {
 };
 
 static const struct SpriteTemplate sSpriteTemplate_Arrows = {
-    .tileTag = 1,
+    .tileTag = TILETAG_ARROWS,
     .paletteTag = 1,
     .oam = &sOamData_Arrows,
     .anims = sAnimTable_Arrows,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Hand = {
+    .tileTag = TILETAG_HAND,
+    .paletteTag = 1,
+    .oam = &sOamData_Hand,
+    .anims = sAnimTable_Hand,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
@@ -341,24 +426,6 @@ bool8 (*const sSlidingBlocksSetupTasks[])(u8 *, struct SlidingBlocksSetupTaskDat
 static const u16 sBgWallPal[] = INCBIN_U16("graphics/sliding_blocks/bg.gbapal");
 static const u32 sBgWallTiles[] = INCBIN_U32("graphics/sliding_blocks/bg_wall.4bpp.lz");
 static const u32 sBgWallMap[] = INCBIN_U32("graphics/sliding_blocks/bg_wall_tilemap.bin.lz");
-/*
-#if defined(FIRERED)
-static const u16 sBgPal_50[] = INCBIN_U16("graphics/slot_machine/unk_84664bc.gbapal");
-#elif defined(LEAFGREEN)
-static const u16 sBgPal_50[] = INCBIN_U16("graphics/slot_machine/unk_lg_8465d9c.gbapal");
-#endif
-//*/
-
-//static const u16 sBgPal_70[] = INCBIN_U16("graphics/slot_machine/unk_84665c0.gbapal");
-/*
-#if defined(FIRERED)
-static const u32 sBg1Tiles[] = INCBIN_U32("graphics/slot_machine/unk_8466620.4bpp.lz");
-static const u32 sBg1Map[] = INCBIN_U32("graphics/slot_machine/unk_8466998.bin.lz");
-#elif defined(LEAFGREEN)
-static const u32 sBg1Tiles[] = INCBIN_U32("graphics/slot_machine/unk_lg_8465f00.4bpp.lz");
-static const u32 sBg1Map[] = INCBIN_U32("graphics/slot_machine/unk_lg_8466278.bin.lz");
-#endif
-//*/
 
 static const struct BgTemplate sBgTemplates[] = {
     {
@@ -448,29 +515,39 @@ void PlaySlidingBlocks(u16 puzzleId, MainCallback savedCallback)
         SetMainCallback2(savedCallback);
     else
     {
+        const struct SlidingBlocksPuzzle *puzzle = &sSlidingBlocksPuzzles[puzzleId];
         sSlidingBlocksState->puzzleId = puzzleId;
         sSlidingBlocksState->savedCallback = savedCallback;
-        InitSlidingBlocksState(sSlidingBlocksState, sProtoLayout);
-        //InitSlidingBlocksState(sSlidingBlocksState, sBabyDifficultyLayout);
+        InitSlidingBlocksState(sSlidingBlocksState, puzzle);
         SetMainCallback2(CB2_InitSlidingBlocks);
     }
 }
 
-static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const u16 initialLayout[4][4])
+static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const struct SlidingBlocksPuzzle *puzzle)
 {
+    /*
+    TODO: Set winning condition according to the puzzle
+    */
     u32 x;
     u32 y;
 
     for (y = 0; y < 4; y++) {
         for (x = 0; x < 4; x++) {
-            ptr->blocksInitialLayout[y][x] = initialLayout[y][x];
-            ptr->blocksCurrentLayout[y][x] = initialLayout[y][x];
-            if (ptr->blocksCurrentLayout[y][x] == 0) {
-                ptr->hollowIndex[INDEX_X] = x;
-                ptr->hollowIndex[INDEX_Y] = y;
-            }
+            // Init copy of initial layout
+            ptr->blocksInitialLayout.blocksPermutation[y][x] = puzzle->blocksInitialLayout.blocksPermutation[y][x];
+            ptr->blocksInitialLayout.blocksOrientation[y][x] = puzzle->blocksInitialLayout.blocksOrientation[y][x];
+            ptr->blocksInitialLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
+            ptr->blocksInitialLayout.hollowIndex[INDEX_Y] = puzzle->blocksInitialLayout.hollowIndex[INDEX_Y];
+
+            // Init current layout, starting the same as the initial layout
+            ptr->blocksCurrentLayout.blocksPermutation[y][x] = puzzle->blocksInitialLayout.blocksPermutation[y][x];
+            ptr->blocksCurrentLayout.blocksOrientation[y][x] = puzzle->blocksInitialLayout.blocksOrientation[y][x];
+            ptr->blocksCurrentLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
+            ptr->blocksCurrentLayout.hollowIndex[INDEX_Y] = puzzle->blocksInitialLayout.hollowIndex[INDEX_Y];
         }
     }
+    ptr->winCondition = puzzle->winCondition;
+
     ptr->isSliding = FALSE;
     ptr->currentMove = SLIDINGMOVE_NONE;
 }
@@ -530,12 +607,12 @@ static void MainTask_SlidingBlocksGameLoop(u8 taskId)
     switch (data[0])
     {
     case 0:
-        // Betting Phase
         if (JOY_NEW(B_BUTTON))
         {
             SetMainTask(MainTask_ConfirmExitGame);
-        } else if (JOY_NEW(START_BUTTON)) {
-            // Handle reset request
+        } else if (JOY_NEW(SELECT_BUTTON)) {
+            // Change control mode
+            HandleControlModeChange();
         } else if (JOY_NEW(DPAD_ANY)) {
             if (JOY_NEW(DPAD_UP))
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_UP;
@@ -617,28 +694,81 @@ static void MainTask_ExitSlidingBlocks(u8 taskId)
     }
 }
 
+static bool32 CanSetControlMode(enum ControlMode mode) {
+    // TODO: Rewrite checking if there are blocks that can rotate or slide
+    u16 *hollowIndexVector;
+    switch (mode) {
+        case CONTROLMODE_ARROWS:
+            hollowIndexVector = sSlidingBlocksState->blocksCurrentLayout.hollowIndex;
+            return hollowIndexVector[INDEX_X] < 4 && hollowIndexVector[INDEX_Y] < 4;
+        case CONTROLMODE_CURSOR:
+            return TRUE;
+    }
+}
+
+static void SetControlMode(enum ControlMode mode) {
+    sSlidingBlocksState->controlMode = mode;
+    switch (mode) {
+        case CONTROLMODE_ARROWS:
+            SetArrowsSpriteVisible(TRUE);
+            SetHandSpriteVisible(FALSE);
+            FillWindowPixelBuffer(1, PIXEL_FILL(0));
+            if (CanSetControlMode(CONTROLMODE_CURSOR)) {
+                SlidingBlocks_PrintControlsText(sString_SlidingBlocksControlsArrows);
+            } else {
+                SlidingBlocks_PrintControlsText(sString_SlidingBlocksControlsArrowsCantSwitch);
+            }
+            break;
+        case CONTROLMODE_CURSOR:
+            SetArrowsSpriteVisible(FALSE);
+            SetHandSpriteVisible(TRUE);
+            FillWindowPixelBuffer(1, PIXEL_FILL(0));
+            if (CanSetControlMode(CONTROLMODE_ARROWS)) {
+                SlidingBlocks_PrintControlsText(sString_SlidingBlocksControlsCursor);
+            } else {
+                SlidingBlocks_PrintControlsText(sString_SlidingBlocksControlsCursorCantSwitch);
+            }
+            break;
+    }
+}
+
+static void HandleControlModeChange(void) {
+    switch (sSlidingBlocksState->controlMode) {
+        case CONTROLMODE_ARROWS:
+            if (CanSetControlMode(CONTROLMODE_CURSOR)) {
+                SetControlMode(CONTROLMODE_CURSOR);
+            }
+            break;
+        case CONTROLMODE_CURSOR:
+            if (CanSetControlMode(CONTROLMODE_ARROWS)) {
+                SetControlMode(CONTROLMODE_ARROWS);
+            }
+            break;
+    }
+}
+
 static void ProcessMove(enum SlidingMove move) {
     switch (move) {
     case SLIDINGMOVE_UP:
-        if (sSlidingBlocksState->hollowIndex[INDEX_Y] < 3)
+        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] < 3)
             SetMainTask(MainTask_SlideBlock);
         else
             SetMainTask(MainTask_Bump);
         break;
     case SLIDINGMOVE_DOWN:
-        if (sSlidingBlocksState->hollowIndex[INDEX_Y] > 0)
+        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] > 0)
             SetMainTask(MainTask_SlideBlock);
         else
             SetMainTask(MainTask_Bump);
         break;
     case SLIDINGMOVE_LEFT:
-        if (sSlidingBlocksState->hollowIndex[INDEX_X] < 3)
+        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] < 3)
             SetMainTask(MainTask_SlideBlock);
         else
             SetMainTask(MainTask_Bump);
         break;
     case SLIDINGMOVE_RIGHT:
-        if (sSlidingBlocksState->hollowIndex[INDEX_X] > 0)
+        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] > 0)
             SetMainTask(MainTask_SlideBlock);
         else
             SetMainTask(MainTask_Bump);
@@ -646,22 +776,14 @@ static void ProcessMove(enum SlidingMove move) {
     }
 }
 
-static bool32 IsSlidingLayoutSolved(u16 layout[4][4]) {
-    u32 x;
-    u32 y;
-    for (y = 0; y < 4; y++) {
-        for (x = 0; x < 4; x++) {
-            if (layout[y][x] != y * 4 + x)
-                return FALSE;
-        }
-    }
-    return TRUE;
+static bool32 IsSlidingLayoutSolved(const struct SlidingBlocksState *state) {
+    return state->winCondition(&state->blocksCurrentLayout);
 }
 
 static void MainTask_SlideBlock(u8 taskId) {
     s16 *data = gTasks[taskId].data;
-    u32 hollowIndexX = sSlidingBlocksState->hollowIndex[INDEX_X];
-    u32 hollowIndexY = sSlidingBlocksState->hollowIndex[INDEX_Y];
+    u32 hollowIndexX = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X];
+    u32 hollowIndexY = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y];
     u32 targetIndexX; // X index of the block that needs to be moved
     u32 targetIndexY; // Y index of the block that needs to be moved
     u16 hollowContent;
@@ -704,7 +826,7 @@ static void MainTask_SlideBlock(u8 taskId) {
             hollowSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksGfxManager->hollowSpriteIndex];
             //hollowSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout[hollowIndexY][hollowIndexX]];
             if (data[1] > 0) {
-                targetSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout[targetIndexY][targetIndexX]];
+                targetSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX]];
                 if (targetIndexX > hollowIndexX) {
                     hollowSprite->x++;
                     targetSprite->x--;
@@ -730,12 +852,15 @@ static void MainTask_SlideBlock(u8 taskId) {
             break;
         case 2:
             // Swap hollow place with target block
-            hollowContent = sSlidingBlocksState->blocksCurrentLayout[hollowIndexY][hollowIndexX]; // Will always be 0
-            sSlidingBlocksState->blocksCurrentLayout[hollowIndexY][hollowIndexX] = sSlidingBlocksState->blocksCurrentLayout[targetIndexY][targetIndexX];
-            sSlidingBlocksState->blocksCurrentLayout[targetIndexY][targetIndexX] = hollowContent;
-            sSlidingBlocksState->hollowIndex[INDEX_X] = targetIndexX;
-            sSlidingBlocksState->hollowIndex[INDEX_Y] = targetIndexY;
-            if (IsSlidingLayoutSolved(sSlidingBlocksState->blocksCurrentLayout)) {
+            hollowContent = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX];
+            sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX] = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX];
+            sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX] = hollowContent;
+            hollowContent = sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[hollowIndexY][hollowIndexX];
+            sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[hollowIndexY][hollowIndexX] = sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX];
+            sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = hollowContent;
+            sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] = targetIndexX;
+            sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] = targetIndexY;
+            if (IsSlidingLayoutSolved(sSlidingBlocksState)) {
                 gSpecialVar_Result = 1;
                 SetMainTask(MainTask_VictorySequence);
             } else {
@@ -766,7 +891,7 @@ static void MainTask_Bump(u8 taskId) {
 
 static void MainTask_VictorySequence(u8 taskId) {
     s16 *data = gTasks[taskId].data;
-    struct Sprite *hollowSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksGfxManager->hollowSpriteIndex];
+    struct Sprite *hollowSprite = NULL;
 
     switch (data[0]) {
     case 0:
@@ -776,22 +901,25 @@ static void MainTask_VictorySequence(u8 taskId) {
         break;
     case 1:
         // Revealing missing block phase
-        if (data[1] > 0) {
-            if (data[1] < 30) {
-                hollowSprite->invisible = !hollowSprite->invisible;
-            } else if (data[1] < 60) {
-                if (data[1] % 2 == 0) {
+        if (sSlidingBlocksGfxManager->hollowSpriteIndex < SLIDING_NUM_BLOCKS) {
+            hollowSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksGfxManager->hollowSpriteIndex];
+            if (data[1] > 0) {
+                if (data[1] < 30) {
                     hollowSprite->invisible = !hollowSprite->invisible;
+                } else if (data[1] < 60) {
+                    if (data[1] % 2 == 0) {
+                        hollowSprite->invisible = !hollowSprite->invisible;
+                    }
+                } else {
+                    if (data[1] % 3 == 0) {
+                        hollowSprite->invisible = !hollowSprite->invisible;
+                    }
                 }
+                data[1]--;
             } else {
-                if (data[1] % 3 == 0) {
-                    hollowSprite->invisible = !hollowSprite->invisible;
-                }
+                hollowSprite->invisible = FALSE;
+                data[0]++;
             }
-            data[1]--;
-        } else {
-            hollowSprite->invisible = FALSE;
-            data[0]++;
         }
         break;
     case 2:
@@ -824,7 +952,7 @@ static bool32 LoadSpriteGraphicsAndAllocateManager(void)
     
     blocksSpriteSheet.data = puzzle->spriteSheet;
     blocksSpriteSheet.size = 0x2000;
-    blocksSpriteSheet.tag = 0;
+    blocksSpriteSheet.tag = TILETAG_BLOCKS;
     blocksSpritePaletteWrapper[0].data = puzzle->palette;
     blocksSpritePaletteWrapper[0].tag = 0;
     LoadCompressedSpriteSheet(&blocksSpriteSheet);
@@ -855,10 +983,12 @@ static void InitGfxManager(struct SlidingBlocksGfxManager * manager)
         manager->blocksSprites[i] = NULL;
     }
     manager->arrowsSprite = NULL;
+    manager->handSprite = NULL;
 }
 
 static void HBlankCB_SlidingBlocks(void)
 {
+    /*
     s32 vcount = REG_VCOUNT - 0x2B;
     if (vcount < 0x54u)
     {
@@ -868,6 +998,8 @@ static void HBlankCB_SlidingBlocks(void)
     {
         REG_BLDY = 0;
     }
+    */
+    REG_BLDY = 0;
 }
 
 static void CreateBlocksSprites(u32 indexOfHollowPiece) {
@@ -876,6 +1008,8 @@ static void CreateBlocksSprites(u32 indexOfHollowPiece) {
     u32 y;
     u32 spriteIndex;
     u32 spriteId;
+    u16 currentPermutation;
+    u16 currentOrientation;
     struct Sprite *currentSprite;
 
     for (i = 0; i < SLIDING_NUM_BLOCKS; i++) {
@@ -884,29 +1018,51 @@ static void CreateBlocksSprites(u32 indexOfHollowPiece) {
         currentSprite = &gSprites[spriteId];
         currentSprite->oam.tileNum = i * 16;
         currentSprite->oam.matrixNum = AllocOamMatrix();
-        //currentSprite->affineAnimPaused = FALSE;
         StartSpriteAffineAnim(currentSprite, 0);
     }
-    sSlidingBlocksGfxManager->blocksSprites[indexOfHollowPiece]->invisible = TRUE;
+    if (indexOfHollowPiece < SLIDING_NUM_BLOCKS) {
+        sSlidingBlocksGfxManager->blocksSprites[indexOfHollowPiece]->invisible = TRUE;
+    }
     sSlidingBlocksGfxManager->hollowSpriteIndex = indexOfHollowPiece;
     for (y = 0; y < 4; y++) {
         for (x = 0; x < 4; x++) {
             spriteIndex = y * 4 + x;
-            currentSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout[y][x]];
+            currentPermutation = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[y][x];
+            currentOrientation = sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[y][x];
+            currentSprite = sSlidingBlocksGfxManager->blocksSprites[currentPermutation];
             currentSprite->x = sSlidingBlocksXs[spriteIndex];
             currentSprite->y = sSlidingBlocksYs[spriteIndex];
-            if (currentSprite == sSlidingBlocksGfxManager->blocksSprites[indexOfHollowPiece]) {
+            switch (currentOrientation) {
+                case DIR_NORTH:
+                    break;
+                case DIR_EAST:
+                    StartSpriteAffineAnim(currentSprite, TILEANIM_BE_CLOCKWISE);
+                    break;
+                case DIR_SOUTH:
+                    StartSpriteAffineAnim(currentSprite, TILEANIM_BE_FLIPPED);
+                    break;
+                case DIR_WEST:
+                    StartSpriteAffineAnim(currentSprite, TILEANIM_BE_COUNTERCLOCKWISE);
+                    break;
+            }
+            if (indexOfHollowPiece < SLIDING_NUM_BLOCKS && currentSprite == sSlidingBlocksGfxManager->blocksSprites[indexOfHollowPiece]) {
                 SetArrowsSpritePosition(currentSprite->x, currentSprite->y);
+            }
+            if (x == 0 && y == 0) {
+                SetHandSpritePosition(currentSprite->x, currentSprite->y);
             }
         }
     }
 }
 
-static void CreateArrowsSprite(void) {
+static void CreateArrowsAndHandSprite(void) {
     s32 spriteId;
 
-    spriteId = CreateSprite(&sSpriteTemplate_Arrows, 0x10, 0x68, 1);
+    spriteId = CreateSprite(&sSpriteTemplate_Arrows, 0x10, 0x68, 0);
     sSlidingBlocksGfxManager->arrowsSprite = &gSprites[spriteId];
+
+    spriteId = CreateSprite(&sSpriteTemplate_Hand, 0x10, 0x68, 0);
+    sSlidingBlocksGfxManager->handSprite = &gSprites[spriteId];
 }
 
 static bool32 CreateSlidingBlocks(void)
@@ -930,6 +1086,15 @@ static void SetArrowsSpritePosition(s16 x, s16 y) {
 
 static void SetArrowsSpriteVisible(bool32 isVisible) {
     sSlidingBlocksGfxManager->arrowsSprite->invisible = !isVisible;
+}
+
+static void SetHandSpritePosition(s16 x, s16 y) {
+    sSlidingBlocksGfxManager->handSprite->x = x;
+    sSlidingBlocksGfxManager->handSprite->y = y;
+}
+
+static void SetHandSpriteVisible(bool32 isVisible) {
+    sSlidingBlocksGfxManager->handSprite->invisible = !isVisible;
 }
 
 static void DestroySlidingBlocks(void)
@@ -989,8 +1154,9 @@ static inline void LoadColor(u16 color, u16 *pal)
 static bool8 SlidingTask_GraphicsInit(u8 * state, struct SlidingBlocksSetupTaskData * ptr)
 {
     u16 pal[2];
-    u8 textColor[3];
-    u32 x;
+    u16 hollowIndexX;
+    u16 hollowIndexY;
+    u32 indexOfHollowSprite;
 
     switch (*state)
     {
@@ -1021,34 +1187,34 @@ static bool8 SlidingTask_GraphicsInit(u8 * state, struct SlidingBlocksSetupTaskD
         CopyToBgTilemapBuffer(2, sBgWallMap, 0, 0x00);
         CopyBgTilemapBufferToVram(2);
         LoadPalette(sBgWallPal, 0x00, 0xA0);
-        //LoadPalette(sBgPal_50, 0x50, 0x20);
-        //LoadPalette(sBgPal_70, 0x70, 0x60);
         LoadColor(RGB(30, 30, 31), pal);
         LoadUserWindowGfx2(0, 0x00A, 0xD0);
         LoadStdWindowGfxOnBg(0, 0x001, 0xF0);
 
         SetBgTilemapBuffer(0, ptr->bg0TilemapBuffer);
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 2, 32, 30);
-        //DecompressAndCopyTileDataToVram(1, sBg1Tiles, 0, 0, 0);
-        //DecompressAndCopyTileDataToVram(1, sBg1Map, 0, 0, 1);
         CopyBgTilemapBufferToVram(1);
 
         LoadPalette(GetTextWindowPalette(2), 0xE0, 0x20);
-        FillWindowPixelBuffer(1, 0x00);
         PutWindowTilemap(1);
 
-        x = (240 - GetStringWidth(FONT_SMALL, sString_SlidingBlocksControls, 0)) / 2;
-        textColor[0] = TEXT_COLOR_TRANSPARENT;
-        textColor[1] = TEXT_COLOR_WHITE;
-        textColor[2] = TEXT_COLOR_DARK_GRAY;
-        AddTextPrinterParameterized3(1, FONT_SMALL, x, 0, textColor, 0, sString_SlidingBlocksControls);
         CopyBgTilemapBufferToVram(0);
 
         SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | 0x20 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
         //SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN);
         LoadSpriteGraphicsAndAllocateManager();
-        CreateArrowsSprite();
-        CreateBlocksSprites(0);
+        CreateArrowsAndHandSprite();
+        hollowIndexX = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X];
+        hollowIndexY = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y];
+        indexOfHollowSprite = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX];
+        CreateBlocksSprites(indexOfHollowSprite);
+
+        if (CanSetControlMode(CONTROLMODE_ARROWS)) {
+            SetControlMode(CONTROLMODE_ARROWS);
+        } else {
+            SetControlMode(CONTROLMODE_CURSOR);
+        }
+
         BlendPalettes(PALETTES_ALL, 0x10, RGB_BLACK);
         SetVBlankCallback(VBlankCB_SlidingBlocks);
         SetHBlankCallback(HBlankCB_SlidingBlocks);
@@ -1175,4 +1341,48 @@ static void SlidingBlocks_DestroyYesNoMenu(void)
         DestroyYesNoMenu();
         data->yesNoMenuActive = FALSE;
     }
+}
+
+static void SlidingBlocks_PrintControlsText(const u8 *str) {
+    u32 x;
+    u8 textColor[3];
+    x = (240 - GetStringWidth(FONT_SMALL, str, 0)) / 2;
+    textColor[0] = TEXT_COLOR_TRANSPARENT;
+    textColor[1] = TEXT_COLOR_WHITE;
+    textColor[2] = TEXT_COLOR_DARK_GRAY;
+    AddTextPrinterParameterized3(1, FONT_SMALL, x, 0, textColor, 0, str);
+}
+
+// Winning conditions defined starting from here
+
+static bool32 WinCondition_AllCorrectPlaces(const struct SlidingBlocksLayout *layout) {
+    u32 x;
+    u32 y;
+    for (y = 0; y < 4; y++) {
+        for (x = 0; x < 4; x++) {
+            if (layout->blocksPermutation[y][x] != y * 4 + x)
+                return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static bool32 WinCondition_AllCorrectOrientations(const struct SlidingBlocksLayout *layout) {
+    u32 x;
+    u32 y;
+    for (y = 0; y < 4; y++) {
+        for (x = 0; x < 4; x++) {
+            if (layout->blocksOrientation[y][x] != DIR_NORTH)
+                return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static bool32 WinCondition_AllCorrectPlacesAndOrientations(const struct SlidingBlocksLayout *layout) {
+    return WinCondition_AllCorrectPlaces(layout) && WinCondition_AllCorrectOrientations(layout);
+}
+
+static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout) {
+    return FALSE;
 }
