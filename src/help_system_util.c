@@ -37,6 +37,7 @@ EWRAM_DATA struct ListMenuItem gHelpSystemListMenuItems[52] = {0};
 static const u16 sTiles[] = INCBIN_U16("graphics/help_system/bg_tiles.4bpp");
 static const u16 sPals[] = INCBIN_U16("graphics/help_system/bg_tiles.gbapal");
 
+/*
 u8 RunHelpSystemCallback(void)
 {
     s32 i;
@@ -135,6 +136,7 @@ u8 RunHelpSystemCallback(void)
     }
     return sVideoState.state;
 }
+//*/
 
 void SaveCallbacks(void)
 {

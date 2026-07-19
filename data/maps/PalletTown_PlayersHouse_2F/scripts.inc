@@ -50,10 +50,38 @@ PalletTown_PlayersHouse_2F_EventScript_NES::
 
 
 PalletTown_PlayersHouse_2F_EventScript_PC::
+# 38 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	lock
+# 39 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT
+# 40 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	closemessage
+# 41 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_TEST_HO_OH
+# 42 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT
+# 43 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	closemessage
+# 44 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	release
 	return
 
 
 PalletTown_PlayersHouse_2F_EventScript_Sign::
+# 48 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	lock
+# 49 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT
+# 50 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	closemessage
+# 51 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_ELECTRODE
+# 52 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT
+# 53 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	closemessage
+# 54 "data/maps/PalletTown_PlayersHouse_2F/scripts.pory"
+	release
 	return
 
 

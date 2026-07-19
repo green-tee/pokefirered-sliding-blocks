@@ -35,6 +35,11 @@
 #define ARROWS_NUM_TILES 16
 #define HAND_NUM_TILES   16
 
+#define DURATION_TILE_ROTATION 16
+
+#define HAND_OFFSET_X 16
+#define HAND_OFFSET_Y (-16)
+
 
 enum ControlMode {
     CONTROLMODE_ARROWS,
@@ -44,10 +49,20 @@ enum ControlMode {
 
 enum SlidingMove {
     SLIDINGMOVE_NONE = 0,
-    SLIDINGMOVE_UP,
-    SLIDINGMOVE_DOWN,
-    SLIDINGMOVE_LEFT,
-    SLIDINGMOVE_RIGHT
+
+    SLIDINGMOVE_SLIDE_UP,
+    SLIDINGMOVE_SLIDE_DOWN,
+    SLIDINGMOVE_SLIDE_LEFT,
+    SLIDINGMOVE_SLIDE_RIGHT,
+    SLIDINGMOVE_SLIDE_FILL,
+
+    SLIDINGMOVE_CURSOR_UP,
+    SLIDINGMOVE_CURSOR_DOWN,
+    SLIDINGMOVE_CURSOR_LEFT,
+    SLIDINGMOVE_CURSOR_RIGHT,
+
+    SLIDINGMOVE_ROTATE_CLOCKWISE,
+    SLIDINGMOVE_ROTATE_COUNTERCLOCKWISE
 };
 
 struct SlidingBlocksLayout
@@ -73,8 +88,10 @@ struct SlidingBlocksState
     struct SlidingBlocksLayout blocksInitialLayout;
     struct SlidingBlocksLayout blocksCurrentLayout;
     enum ControlMode controlMode;
+    u16 cursorIndex[2];
     bool32 (*winCondition)(const struct SlidingBlocksLayout *layout);
     bool32 isSliding;
+    bool32 isRotating;
     enum SlidingMove currentMove;
 };
 
@@ -83,7 +100,7 @@ struct SlidingBlocksGfxManager
     struct Sprite *blocksSprites[SLIDING_NUM_BLOCKS];
     struct Sprite *arrowsSprite;
     struct Sprite *handSprite;
-    u32 cursorIndex;
+    //u32 cursorIndex;
     u32 hollowSpriteIndex;
 };
 
@@ -121,10 +138,15 @@ static void MainTask_ExitSlidingBlocks(u8 taskId);
 static void MainTask_VictorySequence(u8 taskId);
 static bool32 CanSetControlMode(enum ControlMode mode);
 static void SetControlMode(enum ControlMode mode);
+static enum SlidingMove GetInputInModeArrows(void);
+static enum SlidingMove GetInputInModeCursor(void);
 static void HandleControlModeChange(void);
 static void ProcessMove(enum SlidingMove move);
 static bool32 IsSlidingLayoutSolved(const struct SlidingBlocksState *state);
+static void StartTileRotateAnimation(struct Sprite *sprite, enum SlidingMove move, u16 initialOrientation);
 static void MainTask_SlideBlock(u8 taskId);
+static void MainTask_MoveCursor(u8 taskId);
+static void MainTask_RotateBlock(u8 taskId);
 static void MainTask_Bump(u8 taskId);
 static void SetMainTask(TaskFunc taskFunc);
 static void InitGfxManager(struct SlidingBlocksGfxManager * manager);
@@ -220,7 +242,7 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
-                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_NORTH}
             },
             .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 0 is
         },
@@ -238,14 +260,14 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 { 3,  2,  1,  0}
             },
             .blocksOrientation = {
-                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
             },
             .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
         },
-        .winCondition = WinCondition_AllCorrectOrientations
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
     }
 
 };
@@ -257,11 +279,24 @@ static const u8 sReelIconBldY[] = {
 };
 
 enum TileAnimation {
+    TILEANIM_DUMMY,
     TILEANIM_BE_COUNTERCLOCKWISE,
     TILEANIM_BE_CLOCKWISE,
     TILEANIM_BE_FLIPPED,
-    TILEANIM_ROTATE_COUNTERCLOCKWISE,
-    TILEANIM_ROTATE_CLOCKWISE
+    TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMNORTH,
+    TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMWEST,
+    TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMSOUTH,
+    TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMEAST,
+    TILEANIM_ROTATE_CLOCKWISE_FROMNORTH,
+    TILEANIM_ROTATE_CLOCKWISE_FROMEAST,
+    TILEANIM_ROTATE_CLOCKWISE_FROMSOUTH,
+    TILEANIM_ROTATE_CLOCKWISE_FROMWEST
+};
+
+static const union AffineAnimCmd sTileAffineAnim_Dummy[] = {
+    AFFINEANIMCMD_FRAME(0, 0, 0, 1), // Rotate 0 degrees counter-clockwise instantly 
+    // ^^^ It doesn't work without this bitch over here
+    AFFINEANIMCMD_END
 };
 
 static const union AffineAnimCmd sTileAffineAnim_BeCounterclockwise[] = {
@@ -279,22 +314,65 @@ static const union AffineAnimCmd sTileAffineAnim_BeFlipped[] = {
     AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwise[] = {
-    AFFINEANIMCMD_FRAME(0, 0, 4, 16), // Rotate 90 degrees counter-clockwise
+static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwiseFromNorth[] = {
+    AFFINEANIMCMD_FRAME(0, 0, 64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION),  // Rotate 90 degrees counter-clockwise
     AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd sTileAffineAnim_RotateClockwise[] = {
-    AFFINEANIMCMD_FRAME(0, 0, -4, 16), // Rotate 90 degrees clockwise
+static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwiseFromWest[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 64, 0),                                            // Rotate 90 degrees counter-clockwise instantly
+    AFFINEANIMCMD_FRAME(0, 0, 64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION),  // Rotate 90 degrees counter-clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwiseFromSouth[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 128, 0),                                           // Rotate 180 degrees counter-clockwise instantly
+    AFFINEANIMCMD_FRAME(0, 0, 64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION),  // Rotate 90 degrees counter-clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateCounterclockwiseFromEast[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 192, 0),                                           // Rotate 270 degrees counter-clockwise instantly
+    AFFINEANIMCMD_FRAME(0, 0, 64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION),  // Rotate 90 degrees counter-clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateClockwiseFromNorth[] = {
+    AFFINEANIMCMD_FRAME(0, 0, -64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION), // Rotate 90 degrees clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateClockwiseFromEast[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 192, 0),                                           // Rotate 90 degrees clockwise instantly
+    AFFINEANIMCMD_FRAME(0, 0, -64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION), // Rotate 90 degrees clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateClockwiseFromSouth[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 128, 0),                                           // Rotate 180 degrees clockwise instantly
+    AFFINEANIMCMD_FRAME(0, 0, -64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION), // Rotate 90 degrees clockwise
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sTileAffineAnim_RotateClockwiseFromWest[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 64, 0),                                           // Rotate 90 degrees clockwise instantly
+    AFFINEANIMCMD_FRAME(0, 0, -64 / DURATION_TILE_ROTATION, DURATION_TILE_ROTATION), // Rotate 90 degrees clockwise
     AFFINEANIMCMD_END
 };
 
 static const union AffineAnimCmd *const sTileAffineAnims[] = {
-    [TILEANIM_BE_COUNTERCLOCKWISE]     = sTileAffineAnim_BeCounterclockwise,
-    [TILEANIM_BE_CLOCKWISE]            = sTileAffineAnim_BeClockwise,
-    [TILEANIM_BE_FLIPPED]              = sTileAffineAnim_BeFlipped,
-    [TILEANIM_ROTATE_COUNTERCLOCKWISE] = sTileAffineAnim_RotateCounterclockwise,
-    [TILEANIM_ROTATE_CLOCKWISE]        = sTileAffineAnim_RotateClockwise
+    [TILEANIM_DUMMY]                             = sTileAffineAnim_Dummy,
+    [TILEANIM_BE_COUNTERCLOCKWISE]               = sTileAffineAnim_BeCounterclockwise,
+    [TILEANIM_BE_CLOCKWISE]                      = sTileAffineAnim_BeClockwise,
+    [TILEANIM_BE_FLIPPED]                        = sTileAffineAnim_BeFlipped,
+    [TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMNORTH] = sTileAffineAnim_RotateCounterclockwiseFromNorth,
+    [TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMWEST]  = sTileAffineAnim_RotateCounterclockwiseFromWest,
+    [TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMSOUTH] = sTileAffineAnim_RotateCounterclockwiseFromSouth,
+    [TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMEAST]  = sTileAffineAnim_RotateCounterclockwiseFromEast,
+    [TILEANIM_ROTATE_CLOCKWISE_FROMNORTH]        = sTileAffineAnim_RotateClockwiseFromNorth,
+    [TILEANIM_ROTATE_CLOCKWISE_FROMEAST]         = sTileAffineAnim_RotateClockwiseFromEast,
+    [TILEANIM_ROTATE_CLOCKWISE_FROMSOUTH]        = sTileAffineAnim_RotateClockwiseFromSouth,
+    [TILEANIM_ROTATE_CLOCKWISE_FROMWEST]         = sTileAffineAnim_RotateClockwiseFromWest
 };
 
 static const struct OamData sOamData_Blocks = {
@@ -536,19 +614,22 @@ static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const struct 
             // Init copy of initial layout
             ptr->blocksInitialLayout.blocksPermutation[y][x] = puzzle->blocksInitialLayout.blocksPermutation[y][x];
             ptr->blocksInitialLayout.blocksOrientation[y][x] = puzzle->blocksInitialLayout.blocksOrientation[y][x];
-            ptr->blocksInitialLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
-            ptr->blocksInitialLayout.hollowIndex[INDEX_Y] = puzzle->blocksInitialLayout.hollowIndex[INDEX_Y];
 
             // Init current layout, starting the same as the initial layout
             ptr->blocksCurrentLayout.blocksPermutation[y][x] = puzzle->blocksInitialLayout.blocksPermutation[y][x];
             ptr->blocksCurrentLayout.blocksOrientation[y][x] = puzzle->blocksInitialLayout.blocksOrientation[y][x];
-            ptr->blocksCurrentLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
-            ptr->blocksCurrentLayout.hollowIndex[INDEX_Y] = puzzle->blocksInitialLayout.hollowIndex[INDEX_Y];
         }
     }
+    ptr->blocksInitialLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
+    ptr->blocksInitialLayout.hollowIndex[INDEX_Y] = puzzle->blocksInitialLayout.hollowIndex[INDEX_Y];
+    ptr->blocksCurrentLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
+    ptr->blocksCurrentLayout.hollowIndex[INDEX_Y] = puzzle->blocksInitialLayout.hollowIndex[INDEX_Y];
+    ptr->cursorIndex[INDEX_X] = 0;
+    ptr->cursorIndex[INDEX_Y] = 0;
     ptr->winCondition = puzzle->winCondition;
 
     ptr->isSliding = FALSE;
+    ptr->isRotating = FALSE;
     ptr->currentMove = SLIDINGMOVE_NONE;
 }
 
@@ -600,6 +681,36 @@ static void CB2_RunSlidingBlocks(void)
     UpdatePaletteFade();
 }
 
+static enum SlidingMove GetInputInModeArrows(void) {
+    if (JOY_NEW(DPAD_UP))
+        return SLIDINGMOVE_SLIDE_UP;
+    if (JOY_NEW(DPAD_DOWN))
+        return SLIDINGMOVE_SLIDE_DOWN;
+    if (JOY_NEW(DPAD_LEFT))
+        return SLIDINGMOVE_SLIDE_LEFT;
+    if (JOY_NEW(DPAD_RIGHT))
+        return SLIDINGMOVE_SLIDE_RIGHT;
+    return SLIDINGMOVE_NONE;
+}
+
+static enum SlidingMove GetInputInModeCursor(void) {
+    if (JOY_NEW(DPAD_UP))
+        return SLIDINGMOVE_CURSOR_UP;
+    if (JOY_NEW(DPAD_DOWN))
+        return SLIDINGMOVE_CURSOR_DOWN;
+    if (JOY_NEW(DPAD_LEFT))
+        return SLIDINGMOVE_CURSOR_LEFT;
+    if (JOY_NEW(DPAD_RIGHT))
+        return SLIDINGMOVE_CURSOR_RIGHT;
+    if (JOY_NEW(L_BUTTON))
+        return SLIDINGMOVE_ROTATE_COUNTERCLOCKWISE;
+    if (JOY_NEW(R_BUTTON))
+        return SLIDINGMOVE_ROTATE_CLOCKWISE;
+    if (JOY_NEW(A_BUTTON))
+        return SLIDINGMOVE_SLIDE_FILL;
+    return SLIDINGMOVE_NONE;
+}
+
 static void MainTask_SlidingBlocksGameLoop(u8 taskId)
 {
     s16 * data = gTasks[taskId].data;
@@ -613,16 +724,16 @@ static void MainTask_SlidingBlocksGameLoop(u8 taskId)
         } else if (JOY_NEW(SELECT_BUTTON)) {
             // Change control mode
             HandleControlModeChange();
-        } else if (JOY_NEW(DPAD_ANY)) {
-            if (JOY_NEW(DPAD_UP))
-                sSlidingBlocksState->currentMove = SLIDINGMOVE_UP;
-            else if (JOY_NEW(DPAD_DOWN))
-                sSlidingBlocksState->currentMove = SLIDINGMOVE_DOWN;
-            else if (JOY_NEW(DPAD_LEFT))
-                sSlidingBlocksState->currentMove = SLIDINGMOVE_LEFT;
-            else if (JOY_NEW(DPAD_RIGHT))
-                sSlidingBlocksState->currentMove = SLIDINGMOVE_RIGHT;
-            data[0]++;
+        } else {
+            if (sSlidingBlocksState->controlMode == CONTROLMODE_ARROWS) {
+                sSlidingBlocksState->currentMove = GetInputInModeArrows();
+            } else if (sSlidingBlocksState->controlMode == CONTROLMODE_CURSOR) {
+                sSlidingBlocksState->currentMove = GetInputInModeCursor();
+            }
+            
+            if (sSlidingBlocksState->currentMove != SLIDINGMOVE_NONE) {
+                data[0]++;
+            }
         }
         break;
     case 1:
@@ -749,35 +860,123 @@ static void HandleControlModeChange(void) {
 
 static void ProcessMove(enum SlidingMove move) {
     switch (move) {
-    case SLIDINGMOVE_UP:
-        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] < 3)
-            SetMainTask(MainTask_SlideBlock);
-        else
-            SetMainTask(MainTask_Bump);
-        break;
-    case SLIDINGMOVE_DOWN:
-        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] > 0)
-            SetMainTask(MainTask_SlideBlock);
-        else
-            SetMainTask(MainTask_Bump);
-        break;
-    case SLIDINGMOVE_LEFT:
-        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] < 3)
-            SetMainTask(MainTask_SlideBlock);
-        else
-            SetMainTask(MainTask_Bump);
-        break;
-    case SLIDINGMOVE_RIGHT:
-        if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] > 0)
-            SetMainTask(MainTask_SlideBlock);
-        else
-            SetMainTask(MainTask_Bump);
-        break;
+        case SLIDINGMOVE_SLIDE_UP:
+            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] < 3)
+                SetMainTask(MainTask_SlideBlock);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_SLIDE_DOWN:
+            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] > 0)
+                SetMainTask(MainTask_SlideBlock);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_SLIDE_LEFT:
+            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] < 3)
+                SetMainTask(MainTask_SlideBlock);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_SLIDE_RIGHT:
+            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] > 0)
+                SetMainTask(MainTask_SlideBlock);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_SLIDE_FILL:
+            // Depending on the cursor's postion, it can be a slide in any direction.
+            // Current move shall be overwritten with the actual direction of the slide.
+            if (
+                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] < 3
+                && sSlidingBlocksState->cursorIndex[INDEX_X] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
+                && sSlidingBlocksState->cursorIndex[INDEX_Y] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] + 1
+            ) {
+                sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_UP;
+                SetMainTask(MainTask_SlideBlock);
+            } else if (
+                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] > 0
+                && sSlidingBlocksState->cursorIndex[INDEX_X]     == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
+                && sSlidingBlocksState->cursorIndex[INDEX_Y] + 1 == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
+            ) {
+                sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_DOWN;
+                SetMainTask(MainTask_SlideBlock);
+            } else if (
+                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] < 3
+                && sSlidingBlocksState->cursorIndex[INDEX_Y] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
+                && sSlidingBlocksState->cursorIndex[INDEX_X] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] + 1
+            ) {
+                sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_LEFT;
+                SetMainTask(MainTask_SlideBlock);
+            } else if (
+                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] > 0
+                && sSlidingBlocksState->cursorIndex[INDEX_Y]     == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
+                && sSlidingBlocksState->cursorIndex[INDEX_X] + 1 == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
+            ) {
+                sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_RIGHT;
+                SetMainTask(MainTask_SlideBlock);
+            } else {
+                SetMainTask(MainTask_Bump);
+            }
+            break;
+        case SLIDINGMOVE_CURSOR_UP:
+            if (sSlidingBlocksState->cursorIndex[INDEX_Y] > 0)
+                SetMainTask(MainTask_MoveCursor);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_CURSOR_DOWN:
+            if (sSlidingBlocksState->cursorIndex[INDEX_Y] < 3)
+                SetMainTask(MainTask_MoveCursor);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_CURSOR_LEFT:
+            if (sSlidingBlocksState->cursorIndex[INDEX_X] > 0)
+                SetMainTask(MainTask_MoveCursor);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_CURSOR_RIGHT:
+            if (sSlidingBlocksState->cursorIndex[INDEX_X] < 3)
+                SetMainTask(MainTask_MoveCursor);
+            else
+                SetMainTask(MainTask_Bump);
+            break;
+        case SLIDINGMOVE_ROTATE_COUNTERCLOCKWISE:
+        case SLIDINGMOVE_ROTATE_CLOCKWISE:
+            if (
+                sSlidingBlocksState->cursorIndex[INDEX_X] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
+                && sSlidingBlocksState->cursorIndex[INDEX_Y] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
+            ) {
+                SetMainTask(MainTask_Bump);
+            } else {
+                SetMainTask(MainTask_RotateBlock);
+            }
+            break;
     }
 }
 
 static bool32 IsSlidingLayoutSolved(const struct SlidingBlocksState *state) {
     return state->winCondition(&state->blocksCurrentLayout);
+}
+
+static void StartTileRotateAnimation(struct Sprite *sprite, enum SlidingMove move, u16 initialOrientation) {
+    if (move == SLIDINGMOVE_ROTATE_CLOCKWISE) {
+        switch (initialOrientation) {
+            case DIR_NORTH: StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_CLOCKWISE_FROMNORTH); break;
+            case DIR_EAST:  StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_CLOCKWISE_FROMEAST);  break;
+            case DIR_SOUTH: StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_CLOCKWISE_FROMSOUTH); break;
+            case DIR_WEST:  StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_CLOCKWISE_FROMWEST);  break;
+        }
+    } else if (move == SLIDINGMOVE_ROTATE_COUNTERCLOCKWISE) {
+        switch (initialOrientation) {
+            case DIR_NORTH: StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMNORTH); break;
+            case DIR_WEST:  StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMWEST);  break;
+            case DIR_SOUTH: StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMSOUTH); break;
+            case DIR_EAST:  StartSpriteAffineAnim(sprite, TILEANIM_ROTATE_COUNTERCLOCKWISE_FROMEAST);  break;
+        }
+    }
 }
 
 static void MainTask_SlideBlock(u8 taskId) {
@@ -792,19 +991,19 @@ static void MainTask_SlideBlock(u8 taskId) {
 
 
     switch (sSlidingBlocksState->currentMove) {
-        case SLIDINGMOVE_UP:
+        case SLIDINGMOVE_SLIDE_UP:
             targetIndexX = hollowIndexX;
             targetIndexY = hollowIndexY + 1;
             break;
-        case SLIDINGMOVE_DOWN:
+        case SLIDINGMOVE_SLIDE_DOWN:
             targetIndexX = hollowIndexX;
             targetIndexY = hollowIndexY - 1;
             break;
-        case SLIDINGMOVE_LEFT:
+        case SLIDINGMOVE_SLIDE_LEFT:
             targetIndexX = hollowIndexX + 1;
             targetIndexY = hollowIndexY;
             break;
-        case SLIDINGMOVE_RIGHT:
+        case SLIDINGMOVE_SLIDE_RIGHT:
             targetIndexX = hollowIndexX - 1;
             targetIndexY = hollowIndexY;
             break;
@@ -817,6 +1016,7 @@ static void MainTask_SlideBlock(u8 taskId) {
     switch (data[0]) {
         case 0:
             SetArrowsSpriteVisible(FALSE);
+            SetHandSpriteVisible(FALSE);
             sSlidingBlocksState->isSliding = TRUE;
             PlaySE(SE_M_STRENGTH);
             data[1] = 32;
@@ -824,9 +1024,8 @@ static void MainTask_SlideBlock(u8 taskId) {
             break;
         case 1:
             hollowSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksGfxManager->hollowSpriteIndex];
-            //hollowSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout[hollowIndexY][hollowIndexX]];
+            targetSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX]];
             if (data[1] > 0) {
-                targetSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX]];
                 if (targetIndexX > hollowIndexX) {
                     hollowSprite->x++;
                     targetSprite->x--;
@@ -847,6 +1046,8 @@ static void MainTask_SlideBlock(u8 taskId) {
             } else {
                 sSlidingBlocksState->isSliding = FALSE;
                 SetArrowsSpritePosition(hollowSprite->x, hollowSprite->y);
+                // If we're in cursor mode, cursor shouldn't move, this way the player has easier access to slideable tiles
+                //SetHandSpritePosition(targetSprite->x + HAND_OFFSET_X, targetSprite->y + HAND_OFFSET_Y);
                 data[0]++;
             }
             break;
@@ -860,12 +1061,115 @@ static void MainTask_SlideBlock(u8 taskId) {
             sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = hollowContent;
             sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] = targetIndexX;
             sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] = targetIndexY;
+            // If we're in cursor mode, cursor shouldn't move, this way the player has easier access to slideable tiles
+            //sSlidingBlocksState->cursorIndex[INDEX_X] = hollowIndexX;
+            //sSlidingBlocksState->cursorIndex[INDEX_Y] = hollowIndexY;
             if (IsSlidingLayoutSolved(sSlidingBlocksState)) {
                 gSpecialVar_Result = 1;
                 SetMainTask(MainTask_VictorySequence);
             } else {
-                SetArrowsSpriteVisible(TRUE);
-                StartSpriteAnim(sSlidingBlocksGfxManager->arrowsSprite, SPRITEANIM_ARROWS_CONVERGE);
+                if (sSlidingBlocksState->controlMode == CONTROLMODE_ARROWS) {
+                    SetArrowsSpriteVisible(TRUE);
+                    StartSpriteAnim(sSlidingBlocksGfxManager->arrowsSprite, SPRITEANIM_ARROWS_CONVERGE);
+                } else {
+                    SetHandSpriteVisible(TRUE);
+                    StartSpriteAnim(sSlidingBlocksGfxManager->handSprite, SPRITEANIM_HAND_POINT);
+                }
+
+                SetMainTask(MainTask_SlidingBlocksGameLoop);
+            }
+            break;
+    }
+}
+
+static void MainTask_MoveCursor(u8 taskId) {
+    struct Sprite ** const blocksSprites = sSlidingBlocksGfxManager->blocksSprites;
+    u16 newCursorIndexX;
+    u16 newCursorIndexY;
+    u16 spriteIndex;
+
+    switch (sSlidingBlocksState->currentMove) {
+        case SLIDINGMOVE_CURSOR_UP:
+            sSlidingBlocksState->cursorIndex[INDEX_Y]--;
+            break;
+        case SLIDINGMOVE_CURSOR_DOWN:
+            sSlidingBlocksState->cursorIndex[INDEX_Y]++;
+            break;
+        case SLIDINGMOVE_CURSOR_LEFT:
+            sSlidingBlocksState->cursorIndex[INDEX_X]--;
+            break;
+        case SLIDINGMOVE_CURSOR_RIGHT:
+            sSlidingBlocksState->cursorIndex[INDEX_X]++;
+            break;
+    }
+    newCursorIndexX = sSlidingBlocksState->cursorIndex[INDEX_X];
+    newCursorIndexY = sSlidingBlocksState->cursorIndex[INDEX_Y];
+    spriteIndex = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[newCursorIndexY][newCursorIndexX];
+    SetHandSpritePosition(blocksSprites[spriteIndex]->x + HAND_OFFSET_X, blocksSprites[spriteIndex]->y + HAND_OFFSET_Y);
+    StartSpriteAnim(sSlidingBlocksGfxManager->handSprite, SPRITEANIM_HAND_POINT); // Reset hand animation
+
+    SetMainTask(MainTask_SlidingBlocksGameLoop);
+}
+
+static void MainTask_RotateBlock(u8 taskId) {
+    s16 *data = gTasks[taskId].data;
+    u32 targetIndexX; // X index of the block that needs to be rotated
+    u32 targetIndexY; // Y index of the block that needs to be rotated
+    struct Sprite *targetSprite;
+
+    targetIndexX = sSlidingBlocksState->cursorIndex[INDEX_X];
+    targetIndexY = sSlidingBlocksState->cursorIndex[INDEX_Y];
+
+    switch (data[0]) {
+        case 0:
+            // Find target sprite
+            targetSprite = sSlidingBlocksGfxManager->blocksSprites[sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX]];
+            // Start the rotating animation
+            StartTileRotateAnimation(
+                targetSprite,
+                sSlidingBlocksState->currentMove,
+                sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX]
+            );
+            // Start the rotating logic
+            SetHandSpriteVisible(FALSE);
+            PlaySE(SE_M_STRENGTH);
+            sSlidingBlocksState->isRotating = TRUE;
+            data[1] = DURATION_TILE_ROTATION;
+            data[0]++;
+            break;
+        case 1:
+            // Wait out rotation animation
+            if (data[1] > 0) {
+                data[1]--;
+            } else {
+                sSlidingBlocksState->isRotating = FALSE;
+                data[0]++;
+            }
+            break;
+        case 2:
+            // Update orientations in puzzle state
+            if (sSlidingBlocksState->currentMove == SLIDINGMOVE_ROTATE_CLOCKWISE) {
+                switch (sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX]) {
+                    case DIR_NORTH: sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_EAST;  break;
+                    case DIR_EAST:  sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_SOUTH; break;
+                    case DIR_SOUTH: sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_WEST;  break;
+                    case DIR_WEST:  sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_NORTH; break;
+                }
+            } else if (sSlidingBlocksState->currentMove == SLIDINGMOVE_ROTATE_COUNTERCLOCKWISE) {
+                switch (sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX]) {
+                    case DIR_NORTH: sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_WEST;  break;
+                    case DIR_WEST:  sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_SOUTH; break;
+                    case DIR_SOUTH: sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_EAST;  break;
+                    case DIR_EAST:  sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = DIR_NORTH; break;
+                }
+            }
+            if (IsSlidingLayoutSolved(sSlidingBlocksState)) {
+                gSpecialVar_Result = 1;
+                SetMainTask(MainTask_VictorySequence);
+            } else {
+                SetHandSpriteVisible(TRUE);
+                StartSpriteAnim(sSlidingBlocksGfxManager->handSprite, SPRITEANIM_HAND_POINT);
+
                 SetMainTask(MainTask_SlidingBlocksGameLoop);
             }
             break;
@@ -1017,8 +1321,9 @@ static void CreateBlocksSprites(u32 indexOfHollowPiece) {
         sSlidingBlocksGfxManager->blocksSprites[i] = &gSprites[spriteId];
         currentSprite = &gSprites[spriteId];
         currentSprite->oam.tileNum = i * 16;
-        currentSprite->oam.matrixNum = AllocOamMatrix();
-        StartSpriteAffineAnim(currentSprite, 0);
+        //currentSprite->oam.matrixNum = AllocOamMatrix();
+        currentSprite->affineAnimPaused = FALSE;
+        StartSpriteAffineAnim(currentSprite, TILEANIM_DUMMY);
     }
     if (indexOfHollowPiece < SLIDING_NUM_BLOCKS) {
         sSlidingBlocksGfxManager->blocksSprites[indexOfHollowPiece]->invisible = TRUE;
@@ -1049,7 +1354,7 @@ static void CreateBlocksSprites(u32 indexOfHollowPiece) {
                 SetArrowsSpritePosition(currentSprite->x, currentSprite->y);
             }
             if (x == 0 && y == 0) {
-                SetHandSpritePosition(currentSprite->x, currentSprite->y);
+                SetHandSpritePosition(currentSprite->x + HAND_OFFSET_X, currentSprite->y + HAND_OFFSET_Y);
             }
         }
     }

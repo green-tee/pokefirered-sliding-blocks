@@ -53,7 +53,7 @@ bool8 HelpMenuSubroutine_HelpItemWaitButton(struct HelpSystemListMenu * helpList
 bool8 GetHelpSystemMenuLevel(void);
 
 // help_system
-bool8 RunHelpSystemCallback(void);
+//bool8 RunHelpSystemCallback(void);
 void SaveCallbacks(void);
 void SaveMapGPURegs(void);
 void SaveMapTiles(void);

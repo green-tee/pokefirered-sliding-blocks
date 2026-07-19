@@ -34,6 +34,22 @@ text PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone {
     "Testing finished."
 }
 
-script PalletTown_PlayersHouse_2F_EventScript_PC {}
+script PalletTown_PlayersHouse_2F_EventScript_PC {
+    lock
+    msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
+    closemessage
+    playslidingblocks(SLIDING_LAYOUT_TEST_HO_OH)
+    msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
+    closemessage
+    release
+}
 
-script PalletTown_PlayersHouse_2F_EventScript_Sign {}
+script PalletTown_PlayersHouse_2F_EventScript_Sign {
+    lock
+    msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
+    closemessage
+    playslidingblocks(SLIDING_LAYOUT_ELECTRODE)
+    msgbox(PalletTown_PlayersHouse_2F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
+    closemessage
+    release
+}
