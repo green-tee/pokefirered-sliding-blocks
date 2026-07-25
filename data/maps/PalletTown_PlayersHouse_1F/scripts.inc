@@ -1,54 +1,45 @@
 PalletTown_PlayersHouse_1F_MapScripts::
 	.byte 0
 
+
 PalletTown_PlayersHouse_1F_EventScript_Mom::
-	lock
-	faceplayer
-	goto_if_set FLAG_BEAT_RIVAL_IN_OAKS_LAB, PalletTown_PlayersHouse_1F_EventScript_MomHeal
-	checkplayergender
-	call_if_eq VAR_RESULT, MALE, PalletTown_PlayersHouse_1F_EventScript_MomOakLookingForYouMale
-	call_if_eq VAR_RESULT, FEMALE, PalletTown_PlayersHouse_1F_EventScript_MomOakLookingForYouFemale
+# 4 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT
+# 5 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
 	closemessage
-	applymovement LOCALID_MOM, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+# 6 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_NUMBERS_1234
+# 7 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT
+# 8 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	closemessage
+# 9 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
 	release
-	end
-
-PalletTown_PlayersHouse_1F_EventScript_MomOakLookingForYouMale::
-	msgbox PalletTown_PlayersHouse_1F_Text_AllBoysLeaveOakLookingForYou
 	return
 
-PalletTown_PlayersHouse_1F_EventScript_MomOakLookingForYouFemale::
-	msgbox PalletTown_PlayersHouse_1F_Text_AllGirlsLeaveOakLookingForYou
-	return
 
-PalletTown_PlayersHouse_1F_EventScript_MomHeal::
-	msgbox PalletTown_PlayersHouse_1F_Text_YouShouldTakeQuickRest
-	closemessage
-	call EventScript_OutOfCenterPartyHeal
-	msgbox PalletTown_PlayersHouse_1F_Text_LookingGreatTakeCare
-	release
-	end
-
-@ Displays special text if interacted with from side or back (which are normally inaccessible)
 PalletTown_PlayersHouse_1F_EventScript_TV::
-	lockall
-	goto_if_eq VAR_FACING, DIR_NORTH, PalletTown_PlayersHouse_1F_EventScript_TVScreen
-	msgbox PalletTown_PlayersHouse_1F_Text_OopsWrongSide
-	releaseall
-	end
-
-PalletTown_PlayersHouse_1F_EventScript_TVScreen::
-	checkplayergender
-	call_if_eq VAR_RESULT, MALE, PalletTown_PlayersHouse_1F_EventScript_TVScreenMale
-	call_if_eq VAR_RESULT, FEMALE, PalletTown_PlayersHouse_1F_EventScript_TVScreenFemale
-	releaseall
-	end
-
-PalletTown_PlayersHouse_1F_EventScript_TVScreenMale::
-	msgbox PalletTown_PlayersHouse_1F_Text_MovieOnTVFourBoysOnRailroad
+# 12 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	lock
+# 13 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT
+# 14 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	closemessage
+# 15 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_NUMBERS_1
+# 16 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT
+# 17 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	closemessage
+# 18 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	release
 	return
 
-PalletTown_PlayersHouse_1F_EventScript_TVScreenFemale::
-	msgbox PalletTown_PlayersHouse_1F_Text_MovieOnTVGirlOnBrickRoad
-	return
+
+PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks::
+# 21 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	.string "Texting whether sliding blocks works.$"
+
+PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone::
+# 25 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	.string "Testing finished.$"

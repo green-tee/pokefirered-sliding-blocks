@@ -40,6 +40,11 @@
 #define HAND_OFFSET_X 16
 #define HAND_OFFSET_Y (-16)
 
+#define BLCFLG_NONE   ((u8) 0)
+#define BLCFLG_SLIDE  ((u8) 1)
+#define BLCFLG_ROTATE ((u8) (1 << 1))
+#define BLCFLG_ALL    ((u8) (BLCFLG_SLIDE | BLCFLG_ROTATE))
+
 
 enum ControlMode {
     CONTROLMODE_ARROWS,
@@ -69,6 +74,7 @@ struct SlidingBlocksLayout
 {
     u16 blocksPermutation[4][4];
     u16 blocksOrientation[4][4];
+    u8 blocksFlags[4][4];
     u16 hollowIndex[2];
 };
 
@@ -174,6 +180,8 @@ static void SlidingBlocks_PrintControlsText(const u8 *str);
 static bool32 WinCondition_AllCorrectPlaces(const struct SlidingBlocksLayout *layout);
 static bool32 WinCondition_AllCorrectOrientations(const struct SlidingBlocksLayout *layout);
 static bool32 WinCondition_AllCorrectPlacesAndOrientations(const struct SlidingBlocksLayout *layout);
+static bool32 WinCondition_TopLeftCorrectPlace(const struct SlidingBlocksLayout *layout);
+static bool32 WinCondition_TopRowCorrectPlaces(const struct SlidingBlocksLayout *layout);
 static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout);
 
 static const u8 sString_SlidingBlocksControlsArrows[] = _("{SELECT_BUTTON}Mode {DPAD_ANY}Slide {B_BUTTON}Give up");
@@ -186,10 +194,13 @@ static const u8 sString_PuzzleSolved[] = _("Congratulations!\nYou solved the puz
 static const u32 sSpriteTiles_HoOh[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh.4bpp.lz");
 static const u32 sSpriteTiles_Voltorb[] = INCBIN_U32("graphics/sliding_blocks/puzzle_voltorb.4bpp.lz");
 static const u32 sSpriteTiles_Electrode[] = INCBIN_U32("graphics/sliding_blocks/puzzle_electrode.4bpp.lz");
+static const u32 sSpriteTiles_Numbers1[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_1.4bpp.lz");
+static const u32 sSpriteTiles_Numbers1234[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_1234.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
 static const u16 sSpritePal_Electrode[] = INCBIN_U16("graphics/sliding_blocks/puzzle_electrode.gbapal");
+static const u16 sSpritePal_Numbers[] = INCBIN_U16("graphics/sliding_blocks/puzzle_numbers.gbapal");
 
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
 static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
@@ -223,6 +234,12 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
                 {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
             },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
             .hollowIndex = {[INDEX_X] = 1, [INDEX_Y] = 1} // Where 0 is
         },
         .winCondition = WinCondition_AllCorrectPlaces
@@ -243,6 +260,12 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL}
             },
             .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 0 is
         },
@@ -265,9 +288,68 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH},
                 {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
             },
+            .blocksFlags = {
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL}
+            },
             .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
         },
         .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_NUMBERS_1] = {
+        .spriteSheet = sSpriteTiles_Numbers1,
+        .palette = sSpritePal_Numbers,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {11, 14, 13, 12},
+                { 7,  5,  6,  8},
+                { 3,  9, 10,  4},
+                { 2,  1,  0, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_TopLeftCorrectPlace
+    },
+    [SLIDING_LAYOUT_NUMBERS_1234] = {
+        .spriteSheet = sSpriteTiles_Numbers1234,
+        .palette = sSpritePal_Numbers,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1, 11,  6},
+                { 4,  5,  7,  2},
+                { 8,  9, 14, 10},
+                {12, 13,  3, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_NONE,  BLCFLG_NONE,  BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_TopRowCorrectPlaces
     }
 
 };
@@ -603,9 +685,6 @@ void PlaySlidingBlocks(u16 puzzleId, MainCallback savedCallback)
 
 static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const struct SlidingBlocksPuzzle *puzzle)
 {
-    /*
-    TODO: Set winning condition according to the puzzle
-    */
     u32 x;
     u32 y;
 
@@ -614,10 +693,12 @@ static void InitSlidingBlocksState(struct SlidingBlocksState *ptr, const struct 
             // Init copy of initial layout
             ptr->blocksInitialLayout.blocksPermutation[y][x] = puzzle->blocksInitialLayout.blocksPermutation[y][x];
             ptr->blocksInitialLayout.blocksOrientation[y][x] = puzzle->blocksInitialLayout.blocksOrientation[y][x];
+            ptr->blocksInitialLayout.blocksFlags[y][x] = puzzle->blocksInitialLayout.blocksFlags[y][x];
 
             // Init current layout, starting the same as the initial layout
             ptr->blocksCurrentLayout.blocksPermutation[y][x] = puzzle->blocksInitialLayout.blocksPermutation[y][x];
             ptr->blocksCurrentLayout.blocksOrientation[y][x] = puzzle->blocksInitialLayout.blocksOrientation[y][x];
+            ptr->blocksCurrentLayout.blocksFlags[y][x] = puzzle->blocksInitialLayout.blocksFlags[y][x];
         }
     }
     ptr->blocksInitialLayout.hollowIndex[INDEX_X] = puzzle->blocksInitialLayout.hollowIndex[INDEX_X];
@@ -807,14 +888,31 @@ static void MainTask_ExitSlidingBlocks(u8 taskId)
 
 static bool32 CanSetControlMode(enum ControlMode mode) {
     // TODO: Rewrite checking if there are blocks that can rotate or slide
+    u32 x;
+    u32 y;
     u16 *hollowIndexVector;
     switch (mode) {
         case CONTROLMODE_ARROWS:
             hollowIndexVector = sSlidingBlocksState->blocksCurrentLayout.hollowIndex;
-            return hollowIndexVector[INDEX_X] < 4 && hollowIndexVector[INDEX_Y] < 4;
+            if (hollowIndexVector[INDEX_X] < 4 && hollowIndexVector[INDEX_Y] < 4) {
+                for (y = 0; y < 4; y++) {
+                    for (x = 0; x < 4; x++) {
+                        if (sSlidingBlocksState->blocksCurrentLayout.blocksFlags[y][x] & BLCFLG_SLIDE)
+                            return TRUE;
+                    }
+                }
+            }
+            return FALSE;
         case CONTROLMODE_CURSOR:
-            return TRUE;
+            for (y = 0; y < 4; y++) {
+                for (x = 0; x < 4; x++) {
+                    if (sSlidingBlocksState->blocksCurrentLayout.blocksFlags[y][x] & BLCFLG_ROTATE)
+                    return TRUE;
+                }
+            }
+            return FALSE;
     }
+    return FALSE; // Failsafe
 }
 
 static void SetControlMode(enum ControlMode mode) {
@@ -859,27 +957,31 @@ static void HandleControlModeChange(void) {
 }
 
 static void ProcessMove(enum SlidingMove move) {
+    const u16 hollowIndexX = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X];
+    const u16 hollowIndexY = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y];
+    const u16 cursorIndexX = sSlidingBlocksState->cursorIndex[INDEX_X];
+    const u16 cursorIndexY = sSlidingBlocksState->cursorIndex[INDEX_Y];
     switch (move) {
         case SLIDINGMOVE_SLIDE_UP:
-            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] < 3)
+            if (hollowIndexY < 3 && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[hollowIndexY + 1][hollowIndexX] & BLCFLG_SLIDE)
                 SetMainTask(MainTask_SlideBlock);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_SLIDE_DOWN:
-            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] > 0)
+            if (hollowIndexY > 0 && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[hollowIndexY - 1][hollowIndexX] & BLCFLG_SLIDE)
                 SetMainTask(MainTask_SlideBlock);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_SLIDE_LEFT:
-            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] < 3)
+            if (hollowIndexX < 3 && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[hollowIndexY][hollowIndexX + 1] & BLCFLG_SLIDE)
                 SetMainTask(MainTask_SlideBlock);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_SLIDE_RIGHT:
-            if (sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] > 0)
+            if (hollowIndexX > 0 && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[hollowIndexY][hollowIndexX - 1] & BLCFLG_SLIDE)
                 SetMainTask(MainTask_SlideBlock);
             else
                 SetMainTask(MainTask_Bump);
@@ -888,30 +990,30 @@ static void ProcessMove(enum SlidingMove move) {
             // Depending on the cursor's postion, it can be a slide in any direction.
             // Current move shall be overwritten with the actual direction of the slide.
             if (
-                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] < 3
-                && sSlidingBlocksState->cursorIndex[INDEX_X] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
-                && sSlidingBlocksState->cursorIndex[INDEX_Y] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] + 1
+                hollowIndexY < 3
+                && cursorIndexX == hollowIndexX
+                && cursorIndexY == hollowIndexY + 1
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_UP;
                 SetMainTask(MainTask_SlideBlock);
             } else if (
-                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] > 0
-                && sSlidingBlocksState->cursorIndex[INDEX_X]     == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
-                && sSlidingBlocksState->cursorIndex[INDEX_Y] + 1 == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
+                hollowIndexY > 0
+                && cursorIndexX     == hollowIndexX
+                && cursorIndexY + 1 == hollowIndexY
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_DOWN;
                 SetMainTask(MainTask_SlideBlock);
             } else if (
-                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] < 3
-                && sSlidingBlocksState->cursorIndex[INDEX_Y] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
-                && sSlidingBlocksState->cursorIndex[INDEX_X] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] + 1
+                hollowIndexX < 3
+                && cursorIndexY == hollowIndexY
+                && cursorIndexX == hollowIndexX + 1
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_LEFT;
                 SetMainTask(MainTask_SlideBlock);
             } else if (
-                sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] > 0
-                && sSlidingBlocksState->cursorIndex[INDEX_Y]     == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
-                && sSlidingBlocksState->cursorIndex[INDEX_X] + 1 == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
+                hollowIndexX > 0
+                && cursorIndexY     == hollowIndexY
+                && cursorIndexX + 1 == hollowIndexX
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_RIGHT;
                 SetMainTask(MainTask_SlideBlock);
@@ -920,39 +1022,37 @@ static void ProcessMove(enum SlidingMove move) {
             }
             break;
         case SLIDINGMOVE_CURSOR_UP:
-            if (sSlidingBlocksState->cursorIndex[INDEX_Y] > 0)
+            if (cursorIndexY > 0)
                 SetMainTask(MainTask_MoveCursor);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_CURSOR_DOWN:
-            if (sSlidingBlocksState->cursorIndex[INDEX_Y] < 3)
+            if (cursorIndexY < 3)
                 SetMainTask(MainTask_MoveCursor);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_CURSOR_LEFT:
-            if (sSlidingBlocksState->cursorIndex[INDEX_X] > 0)
+            if (cursorIndexX > 0)
                 SetMainTask(MainTask_MoveCursor);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_CURSOR_RIGHT:
-            if (sSlidingBlocksState->cursorIndex[INDEX_X] < 3)
+            if (cursorIndexX < 3)
                 SetMainTask(MainTask_MoveCursor);
             else
                 SetMainTask(MainTask_Bump);
             break;
         case SLIDINGMOVE_ROTATE_COUNTERCLOCKWISE:
         case SLIDINGMOVE_ROTATE_CLOCKWISE:
-            if (
-                sSlidingBlocksState->cursorIndex[INDEX_X] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X]
-                && sSlidingBlocksState->cursorIndex[INDEX_Y] == sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y]
-            ) {
+            if (cursorIndexX == hollowIndexX && cursorIndexY == hollowIndexY)
                 SetMainTask(MainTask_Bump);
-            } else {
+            else if (sSlidingBlocksState->blocksCurrentLayout.blocksFlags[cursorIndexY][cursorIndexX] & BLCFLG_ROTATE)
                 SetMainTask(MainTask_RotateBlock);
-            }
+            else
+                SetMainTask(MainTask_Bump);
             break;
     }
 }
@@ -1053,12 +1153,19 @@ static void MainTask_SlideBlock(u8 taskId) {
             break;
         case 2:
             // Swap hollow place with target block
+            // 1) Swap permutations
             hollowContent = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX];
             sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX] = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX];
             sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[targetIndexY][targetIndexX] = hollowContent;
+            // 2) Swap orientations
             hollowContent = sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[hollowIndexY][hollowIndexX];
             sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[hollowIndexY][hollowIndexX] = sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX];
             sSlidingBlocksState->blocksCurrentLayout.blocksOrientation[targetIndexY][targetIndexX] = hollowContent;
+            // 3) Swap flags
+            hollowContent = sSlidingBlocksState->blocksCurrentLayout.blocksFlags[hollowIndexY][hollowIndexX];
+            sSlidingBlocksState->blocksCurrentLayout.blocksFlags[hollowIndexY][hollowIndexX] = sSlidingBlocksState->blocksCurrentLayout.blocksFlags[targetIndexY][targetIndexX];
+            sSlidingBlocksState->blocksCurrentLayout.blocksFlags[targetIndexY][targetIndexX] = (u8) hollowContent;
+            // Update hollow index
             sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X] = targetIndexX;
             sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y] = targetIndexY;
             // If we're in cursor mode, cursor shouldn't move, this way the player has easier access to slideable tiles
@@ -1509,9 +1616,12 @@ static bool8 SlidingTask_GraphicsInit(u8 * state, struct SlidingBlocksSetupTaskD
         //SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN);
         LoadSpriteGraphicsAndAllocateManager();
         CreateArrowsAndHandSprite();
+        indexOfHollowSprite = SLIDING_NUM_BLOCKS;
         hollowIndexX = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_X];
         hollowIndexY = sSlidingBlocksState->blocksCurrentLayout.hollowIndex[INDEX_Y];
-        indexOfHollowSprite = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX];
+        if (hollowIndexX < 4 && hollowIndexY < 4) {
+            indexOfHollowSprite = sSlidingBlocksState->blocksCurrentLayout.blocksPermutation[hollowIndexY][hollowIndexX];
+        }
         CreateBlocksSprites(indexOfHollowSprite);
 
         if (CanSetControlMode(CONTROLMODE_ARROWS)) {
@@ -1688,6 +1798,19 @@ static bool32 WinCondition_AllCorrectPlacesAndOrientations(const struct SlidingB
     return WinCondition_AllCorrectPlaces(layout) && WinCondition_AllCorrectOrientations(layout);
 }
 
+static bool32 WinCondition_TopLeftCorrectPlace(const struct SlidingBlocksLayout *layout) {
+    return layout->blocksPermutation[0][0] == 0;
+}
+
 static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout) {
     return FALSE;
+}
+
+static bool32 WinCondition_TopRowCorrectPlaces(const struct SlidingBlocksLayout *layout) {
+    u32 x;
+    for (x = 0; x < 4; x++) {
+        if (layout->blocksPermutation[0][x] != x)
+            return FALSE;
+    }
+    return TRUE;
 }

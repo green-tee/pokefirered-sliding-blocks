@@ -1,0 +1,27 @@
+mapscripts PalletTown_PlayersHouse_1F_MapScripts {}
+
+script PalletTown_PlayersHouse_1F_EventScript_Mom {
+    msgbox(PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
+    closemessage
+    playslidingblocks(SLIDING_LAYOUT_NUMBERS_1234)
+    msgbox(PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
+    closemessage
+    release
+}
+
+script PalletTown_PlayersHouse_1F_EventScript_TV {lock
+    msgbox(PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
+    closemessage
+    playslidingblocks(SLIDING_LAYOUT_NUMBERS_1)
+    msgbox(PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
+    closemessage
+    release
+}
+
+text PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks {
+    "Texting whether sliding blocks works."
+}
+
+text PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone {
+    "Testing finished."
+}
