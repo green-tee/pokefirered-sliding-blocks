@@ -36,10 +36,26 @@ PalletTown_PlayersHouse_1F_EventScript_TV::
 	return
 
 
+PalletTown_PlayersHouse_1F_EventScript_Psyduck::
+# 22 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT
+# 23 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	closemessage
+# 24 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_NUMBERS_3X3
+# 25 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	msgbox PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT
+# 26 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	closemessage
+# 27 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+	release
+	return
+
+
 PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks::
-# 21 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+# 30 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
 	.string "Texting whether sliding blocks works.$"
 
 PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone::
-# 25 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
+# 34 "data/maps/PalletTown_PlayersHouse_1F/scripts.pory"
 	.string "Testing finished.$"

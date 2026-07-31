@@ -196,6 +196,7 @@ static const u32 sSpriteTiles_Voltorb[] = INCBIN_U32("graphics/sliding_blocks/pu
 static const u32 sSpriteTiles_Electrode[] = INCBIN_U32("graphics/sliding_blocks/puzzle_electrode.4bpp.lz");
 static const u32 sSpriteTiles_Numbers1[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_1.4bpp.lz");
 static const u32 sSpriteTiles_Numbers1234[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_1234.4bpp.lz");
+static const u32 sSpriteTiles_Number3x3[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_3x3.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
@@ -325,6 +326,7 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
         },
         .winCondition = WinCondition_TopLeftCorrectPlace
     },
+
     [SLIDING_LAYOUT_NUMBERS_1234] = {
         .spriteSheet = sSpriteTiles_Numbers1234,
         .palette = sSpritePal_Numbers,
@@ -350,6 +352,33 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
             .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
         },
         .winCondition = WinCondition_TopRowCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_NUMBERS_3X3] = {
+        .spriteSheet = sSpriteTiles_Number3x3,
+        .palette = sSpritePal_Numbers,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                { 4,  9,  6, 14},
+                { 8,  7, 15, 13},
+                {12, 11, 10,  5}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_NONE, BLCFLG_NONE,  BLCFLG_NONE,  BLCFLG_NONE},
+                {BLCFLG_NONE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_NONE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_NONE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 2, [INDEX_Y] = 2} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
     }
 
 };

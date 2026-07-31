@@ -1,0 +1,18 @@
+text MtMoon_1F_Text_UseDPad {
+    "Use {DPAD_ANY} to slide a block in the chosen\n"
+    "direction into the empty space.\p"
+    "Bring the number 1\n"
+    "to the top left corner."
+}
+
+text MtMoon_1F_Text_CantMoveBorderedBlocks {
+    "Blocks with a dashed outline\n"
+    "can't slide.\p"
+    "Complete the top row with the sequence\n"
+    "of numbers from 1 to 4."
+}
+
+text MtMoon_1F_Text_Complete3x3 {
+    "Complete the whole puzzle with\n"
+    "the sequence of numbers from 1 to 15."
+}

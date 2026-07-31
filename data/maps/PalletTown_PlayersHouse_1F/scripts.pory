@@ -18,6 +18,15 @@ script PalletTown_PlayersHouse_1F_EventScript_TV {lock
     release
 }
 
+script PalletTown_PlayersHouse_1F_EventScript_Psyduck {
+    msgbox(PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks, MSGBOX_DEFAULT)
+    closemessage
+    playslidingblocks(SLIDING_LAYOUT_NUMBERS_3X3)
+    msgbox(PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone, MSGBOX_DEFAULT)
+    closemessage
+    release
+}
+
 text PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks {
     "Texting whether sliding blocks works."
 }

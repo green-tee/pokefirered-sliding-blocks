@@ -206,7 +206,7 @@ VermilionCity_Gym_EventScript_SetBeamsOn::
 VermilionCity_Gym_EventScript_LtSurge::
 	famechecker FAMECHECKER_LTSURGE, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_LT_SURGE, VermilionCity_Gym_Text_LtSurgeIntro, VermilionCity_Gym_Text_LtSurgeDefeat, VermilionCity_Gym_EventScript_DefeatedLtSurge, NO_MUSIC
-	goto_if_unset FLAG_GOT_TM34_FROM_SURGE, VermilionCity_Gym_EventScript_GiveTM34
+	@goto_if_unset FLAG_SOLVED_NUMBERS_1234, VermilionCity_Gym_EventScript_GiveTM34
 	msgbox VermilionCity_Gym_Text_LtSurgePostBattle
 	release
 	end
@@ -230,7 +230,7 @@ VermilionCity_Gym_EventScript_GiveTM34::
 	checkitemspace ITEM_TM34
 	goto_if_eq VAR_RESULT, FALSE, VermilionCity_Gym_EventScript_NoRoomForTM34
 	giveitem_msg VermilionCity_Gym_Text_ReceivedTM34FromLtSurge, ITEM_TM34
-	setflag FLAG_GOT_TM34_FROM_SURGE
+	@setflag FLAG_GOT_TM34_FROM_SURGE
 	msgbox VermilionCity_Gym_Text_ExplainTM34
 	release
 	end

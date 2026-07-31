@@ -4,7 +4,7 @@ Route1_MapScripts::
 Route1_EventScript_MartClerk::
 	lock
 	faceplayer
-	goto_if_set FLAG_GOT_POTION_ON_ROUTE_1, Route1_EventScript_AlreadyGotPotion
+	@goto_if_set FLAG_SOLVED_NUMBERS_1, Route1_EventScript_AlreadyGotPotion
 	msgbox Route1_Text_WorkAtPokeMartTakeSample
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	checkitemspace ITEM_POTION
@@ -17,7 +17,7 @@ Route1_EventScript_MartClerk::
 	additem ITEM_POTION
 	msgbox Route1_Text_PutPotionAway
 	call EventScript_RestorePrevTextColor
-	setflag FLAG_GOT_POTION_ON_ROUTE_1
+	@setflag FLAG_SOLVED_NUMBERS_1
 	release
 	end
 

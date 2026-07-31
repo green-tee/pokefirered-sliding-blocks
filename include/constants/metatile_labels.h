@@ -2,8 +2,14 @@
 #define GUARD_METATILE_LABELS_H
 
 // gTileset_Building
-#define METATILE_Building_PCOff  0x062
-#define METATILE_Building_PCOn   0x063
+#define METATILE_Building_PCOff                           0x062
+#define METATILE_Building_PCOn                            0x063
+#define METATILE_Building_PuzzlePalace_Tile               0x240
+#define METATILE_Building_PuzzlePalace_TileShaded         0x241
+#define METATILE_Building_PuzzlePalace_Wall_Bottom        0x24B
+#define METATILE_Building_PuzzlePalace_Wall_BottomPuzzle  0x24C
+#define METATILE_Building_PuzzlePalace_Wall_Top           0x243
+#define METATILE_Building_PuzzlePalace_Wall_TopPuzzle     0x244
 
 // gTileset_Cave
 #define METATILE_Cave_Floor_Ledge_Bottom  0x2E1

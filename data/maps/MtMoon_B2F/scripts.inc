@@ -3,7 +3,7 @@ MtMoon_B2F_MapScripts::
 	.byte 0
 
 MtMoon_B2F_OnTransition::
-	call_if_unset FLAG_GOT_FOSSIL_FROM_MT_MOON, MtMoon_B2F_EventScript_ShowFossils
+	@call_if_unset FLAG_SOLVED_NUMBERS_3X3, MtMoon_B2F_EventScript_ShowFossils
 	end
 
 MtMoon_B2F_EventScript_ShowFossils::
@@ -22,7 +22,7 @@ MtMoon_B2F_EventScript_MiguelTrigger::
 MtMoon_B2F_EventScript_Miguel::
 	lock
 	faceplayer
-	goto_if_set FLAG_GOT_FOSSIL_FROM_MT_MOON, MtMoon_B2F_EventScript_MiguelFossilPicked
+	@goto_if_set FLAG_SOLVED_NUMBERS_3X3, MtMoon_B2F_EventScript_MiguelFossilPicked
 	goto_if_defeated TRAINER_SUPER_NERD_MIGUEL, MtMoon_B2F_EventScript_MiguelGoPickFossil
 	call MtMoon_B2F_EventScript_BattleMiguel
 	release
@@ -70,7 +70,7 @@ MtMoon_B2F_EventScript_DomeFossil::
 	waitfanfare
 	removeobject LOCALID_HELIX_FOSSIL
 	setflag FLAG_GOT_DOME_FOSSIL
-	setflag FLAG_GOT_FOSSIL_FROM_MT_MOON
+	@setflag FLAG_SOLVED_NUMBERS_3X3
 	release
 	end
 
@@ -101,7 +101,7 @@ MtMoon_B2F_EventScript_HelixFossil::
 	waitfanfare
 	removeobject LOCALID_DOME_FOSSIL
 	setflag FLAG_GOT_HELIX_FOSSIL
-	setflag FLAG_GOT_FOSSIL_FROM_MT_MOON
+	@setflag FLAG_SOLVED_NUMBERS_3X3
 	release
 	end
 
