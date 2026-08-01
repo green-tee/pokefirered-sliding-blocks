@@ -196,7 +196,9 @@ static const u32 sSpriteTiles_Voltorb[] = INCBIN_U32("graphics/sliding_blocks/pu
 static const u32 sSpriteTiles_Electrode[] = INCBIN_U32("graphics/sliding_blocks/puzzle_electrode.4bpp.lz");
 static const u32 sSpriteTiles_Numbers1[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_1.4bpp.lz");
 static const u32 sSpriteTiles_Numbers1234[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_1234.4bpp.lz");
-static const u32 sSpriteTiles_Number3x3[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_3x3.4bpp.lz");
+static const u32 sSpriteTiles_Numbers3x3[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_3x3.4bpp.lz");
+static const u32 sSpriteTiles_NumbersRedsRound[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_reds_round.4bpp.lz");
+static const u32 sSpriteTiles_Numbers69[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_69.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
@@ -355,7 +357,7 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
     },
 
     [SLIDING_LAYOUT_NUMBERS_3X3] = {
-        .spriteSheet = sSpriteTiles_Number3x3,
+        .spriteSheet = sSpriteTiles_Numbers3x3,
         .palette = sSpritePal_Numbers,
         .blocksInitialLayout = {
             .blocksPermutation = {
@@ -379,6 +381,60 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
             .hollowIndex = {[INDEX_X] = 2, [INDEX_Y] = 2} // Where 15 is
         },
         .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_NUMBERS_REDS_ROUND] = {
+        .spriteSheet = sSpriteTiles_NumbersRedsRound,
+        .palette = sSpritePal_Numbers,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1, 14,  9},
+                { 4, 15, 10,  3},
+                { 6,  2, 13,  7},
+                {12, 11,  8,  5}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_SOUTH, DIR_WEST,  DIR_EAST},
+                {DIR_SOUTH, DIR_NORTH, DIR_NORTH, DIR_WEST},
+                {DIR_EAST,  DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_EAST,  DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_NONE,   BLCFLG_ROTATE, BLCFLG_ALL,   BLCFLG_ALL},
+                {BLCFLG_ROTATE, BLCFLG_SLIDE,  BLCFLG_SLIDE, BLCFLG_ALL},
+                {BLCFLG_ALL,    BLCFLG_SLIDE,  BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 1, [INDEX_Y] = 1} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_NUMBERS_69] = {
+        .spriteSheet = sSpriteTiles_Numbers69,
+        .palette = sSpritePal_Numbers,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15,  4, 14,  6},
+                { 1,  9,  8,  0},
+                { 7,  5,  3, 11},
+                {13,  2, 10, 12}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_SOUTH, DIR_NORTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
     }
 
 };
@@ -1022,6 +1078,7 @@ static void ProcessMove(enum SlidingMove move) {
                 hollowIndexY < 3
                 && cursorIndexX == hollowIndexX
                 && cursorIndexY == hollowIndexY + 1
+                && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[cursorIndexY][cursorIndexX] & BLCFLG_SLIDE
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_UP;
                 SetMainTask(MainTask_SlideBlock);
@@ -1029,6 +1086,7 @@ static void ProcessMove(enum SlidingMove move) {
                 hollowIndexY > 0
                 && cursorIndexX     == hollowIndexX
                 && cursorIndexY + 1 == hollowIndexY
+                && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[cursorIndexY][cursorIndexX] & BLCFLG_SLIDE
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_DOWN;
                 SetMainTask(MainTask_SlideBlock);
@@ -1036,6 +1094,7 @@ static void ProcessMove(enum SlidingMove move) {
                 hollowIndexX < 3
                 && cursorIndexY == hollowIndexY
                 && cursorIndexX == hollowIndexX + 1
+                && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[cursorIndexY][cursorIndexX] & BLCFLG_SLIDE
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_LEFT;
                 SetMainTask(MainTask_SlideBlock);
@@ -1043,6 +1102,7 @@ static void ProcessMove(enum SlidingMove move) {
                 hollowIndexX > 0
                 && cursorIndexY     == hollowIndexY
                 && cursorIndexX + 1 == hollowIndexX
+                && sSlidingBlocksState->blocksCurrentLayout.blocksFlags[cursorIndexY][cursorIndexX] & BLCFLG_SLIDE
             ) {
                 sSlidingBlocksState->currentMove = SLIDINGMOVE_SLIDE_RIGHT;
                 SetMainTask(MainTask_SlideBlock);

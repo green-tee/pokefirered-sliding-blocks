@@ -6,11 +6,17 @@ script MtMoon_1F_OnLoad {
     if (flag(FLAG_SOLVED_NUMBERS_1)) {
         call(MtMoon_1F_EventScript_ClearPuzzleNumbers1)
     }
-    if (flag(SLIDING_LAYOUT_NUMBERS_1234)) {
+    if (flag(FLAG_SOLVED_NUMBERS_1234)) {
         call(MtMoon_1F_EventScript_ClearPuzzleNumbers1234)
     }
-    if (flag(SLIDING_LAYOUT_NUMBERS_3X3)) {
+    if (flag(FLAG_SOLVED_NUMBERS_3X3)) {
         call(MtMoon_1F_EventScript_ClearPuzzleNumbers3x3)
+    }
+    if (flag(FLAG_SOLVED_NUMBERS_REDS_ROUND)) {
+        call(MtMoon_1F_EventScript_ClearPuzzleNumbersRedsRound)
+    }
+    if (!flag(FLAG_SOLVED_NUMBERS_69)) {
+        call(MtMoon_1F_EventScript_SetPuzzleNumbers69)
     }
 }
 
@@ -22,6 +28,7 @@ script MtMoon_1F_EventScript_PuzzleNumbers1 {
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_1)
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_NUMBERS_1)
+            removeobject(VAR_LAST_TALKED)
             playse(SE_UNLOCK)
             call(MtMoon_1F_EventScript_ClearPuzzleNumbers1)
             special(DrawWholeMapView)
@@ -37,7 +44,8 @@ script MtMoon_1F_EventScript_PuzzleNumbers1234 {
         closemessage
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_1234)
         if (var(VAR_RESULT) != 0) {
-            setflag(SLIDING_LAYOUT_NUMBERS_1234)
+            setflag(FLAG_SOLVED_NUMBERS_1234)
+            removeobject(VAR_LAST_TALKED)
             playse(SE_UNLOCK)
             call(MtMoon_1F_EventScript_ClearPuzzleNumbers1234)
             special(DrawWholeMapView)
@@ -53,7 +61,8 @@ script MtMoon_1F_EventScript_PuzzleNumbers3x3 {
         closemessage
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_3X3)
         if (var(VAR_RESULT) != 0) {
-            setflag(SLIDING_LAYOUT_NUMBERS_3X3)
+            setflag(FLAG_SOLVED_NUMBERS_3X3)
+            removeobject(VAR_LAST_TALKED)
             playse(SE_UNLOCK)
             call(MtMoon_1F_EventScript_ClearPuzzleNumbers3x3)
             special(DrawWholeMapView)
@@ -62,50 +71,117 @@ script MtMoon_1F_EventScript_PuzzleNumbers3x3 {
     }
 }
 
+script MtMoon_1F_EventScript_PuzzleNumbersRedsRound {
+    if (!flag(FLAG_SOLVED_NUMBERS_REDS_ROUND)) {
+        lockall
+        msgbox(MtMoon_1F_Text_CanRotateRoundedBlocks, MSGBOX_DEFAULT)
+        closemessage
+        playslidingblocks(SLIDING_LAYOUT_NUMBERS_REDS_ROUND)
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_NUMBERS_REDS_ROUND)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(MtMoon_1F_EventScript_ClearPuzzleNumbersRedsRound)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script MtMoon_1F_EventScript_PuzzleNumbers69 {
+    if (!flag(FLAG_SOLVED_NUMBERS_69)) {
+        lockall
+        msgbox(MtMoon_1F_Text_ImpossiblePuzzles, MSGBOX_DEFAULT)
+        closemessage
+        playslidingblocks(SLIDING_LAYOUT_NUMBERS_69)
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_NUMBERS_69)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(MtMoon_1F_EventScript_ClearPuzzleNumbers69)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
 script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers1 {
-    setmetatile(2, 27, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 27, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 27, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(2, 28, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 28, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 28, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(2, 29, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 29, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 29, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(2, 30, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 30, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 30, METATILE_Building_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 27, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 27, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 27, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 28, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 28, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 28, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
 }
 
 script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers1234 {
-    setmetatile(2, 20, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 20, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 20, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(2, 21, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 21, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 21, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(2, 22, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 22, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 22, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(2, 23, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(3, 23, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(4, 23, METATILE_Building_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(2, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(3, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(4, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
 }
 
 script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers3x3 {
-    setmetatile(27, 18, METATILE_Building_PuzzlePalace_TileShaded, FALSE)
-    setmetatile(28, 18, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(29, 18, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(27, 19, METATILE_Building_PuzzlePalace_TileShaded, FALSE)
-    setmetatile(28, 19, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(29, 19, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(27, 20, METATILE_Building_PuzzlePalace_TileShaded, FALSE)
-    setmetatile(28, 20, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(29, 20, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(27, 21, METATILE_Building_PuzzlePalace_TileShaded, FALSE)
-    setmetatile(28, 21, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(29, 21, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(27, 22, METATILE_Building_PuzzlePalace_TileShaded, FALSE)
-    setmetatile(28, 22, METATILE_Building_PuzzlePalace_Tile, FALSE)
-    setmetatile(29, 22, METATILE_Building_PuzzlePalace_Tile, FALSE)
+    setmetatile(27, 18, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(28, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(27, 19, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(28, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(27, 20, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(28, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(27, 21, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(28, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(27, 22, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(28, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(30, 22, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script(local) MtMoon_1F_EventScript_ClearPuzzleNumbersRedsRound {
+    setmetatile(28, 13, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(28, 14, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(28, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(28, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 16, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers69 {
+    setmetatile(27, 1, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE)
+    setmetatile(28, 1, METATILE_Lab_PuzzlePalace_DoorTop, TRUE)
+    setmetatile(29, 1, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE)
+    setmetatile(27, 2, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE)
+    setmetatile(28, 2, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE)
+    setmetatile(29, 2, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE)
+    setmetatile(27, 3, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE)
+    setmetatile(28, 3, METATILE_Lab_PuzzlePalace_Upstairs, FALSE)
+    setmetatile(29, 3, METATILE_Lab_PuzzlePalace_DoorRight, TRUE)
+}
+
+script(local) MtMoon_1F_EventScript_SetPuzzleNumbers69 {
+    setmetatile(27, 1, METATILE_Building_Void, TRUE)
+    setmetatile(28, 1, METATILE_Building_Void, TRUE)
+    setmetatile(29, 1, METATILE_Building_Void, TRUE)
+    setmetatile(27, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(28, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(29, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(27, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(28, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+    setmetatile(29, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
 }

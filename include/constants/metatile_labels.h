@@ -2,14 +2,9 @@
 #define GUARD_METATILE_LABELS_H
 
 // gTileset_Building
-#define METATILE_Building_PCOff                           0x062
-#define METATILE_Building_PCOn                            0x063
-#define METATILE_Building_PuzzlePalace_Tile               0x240
-#define METATILE_Building_PuzzlePalace_TileShaded         0x241
-#define METATILE_Building_PuzzlePalace_Wall_Bottom        0x24B
-#define METATILE_Building_PuzzlePalace_Wall_BottomPuzzle  0x24C
-#define METATILE_Building_PuzzlePalace_Wall_Top           0x243
-#define METATILE_Building_PuzzlePalace_Wall_TopPuzzle     0x244
+#define METATILE_Building_PCOff  0x062
+#define METATILE_Building_PCOn   0x063
+#define METATILE_Building_Void   0x008
 
 // gTileset_Cave
 #define METATILE_Cave_Floor_Ledge_Bottom  0x2E1
@@ -79,6 +74,24 @@
 // gTileset_GenericBuilding1
 #define METATILE_GenericBuilding1_PlayersPCOff  0x28F
 #define METATILE_GenericBuilding1_PlayersPCOn   0x28A
+
+// gTileset_Lab
+#define METATILE_Lab_PuzzlePalace_AboveDoor           0x29A
+#define METATILE_Lab_PuzzlePalace_AboveDoorLeft       0x290
+#define METATILE_Lab_PuzzlePalace_AboveDoorRight      0x291
+#define METATILE_Lab_PuzzlePalace_Corner_FacingRight  0x294
+#define METATILE_Lab_PuzzlePalace_DoorLeft            0x298
+#define METATILE_Lab_PuzzlePalace_DoorRight           0x299
+#define METATILE_Lab_PuzzlePalace_DoorTop             0x28F
+#define METATILE_Lab_PuzzlePalace_DoorTopLeft         0x296
+#define METATILE_Lab_PuzzlePalace_DoorTopRight        0x297
+#define METATILE_Lab_PuzzlePalace_Tile                0x280
+#define METATILE_Lab_PuzzlePalace_TileShaded          0x281
+#define METATILE_Lab_PuzzlePalace_Upstairs            0x286
+#define METATILE_Lab_PuzzlePalace_Wall_Bottom         0x28B
+#define METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle   0x28C
+#define METATILE_Lab_PuzzlePalace_Wall_Top            0x283
+#define METATILE_Lab_PuzzlePalace_Wall_TopPuzzle      0x284
 
 // gTileset_LavenderTown
 #define METATILE_LavenderTown_Door  0x2A2

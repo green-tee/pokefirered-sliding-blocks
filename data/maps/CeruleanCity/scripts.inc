@@ -4,7 +4,7 @@ CeruleanCity_MapScripts::
 
 CeruleanCity_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_CERULEAN_CITY
-	call_if_unset FLAG_GOT_SS_TICKET, CeruleanCity_EventScript_BlockExits
+	@call_if_unset FLAG_SOLVED_NUMBERS_69, CeruleanCity_EventScript_BlockExits
 	end
 
 CeruleanCity_EventScript_BlockExits::
@@ -236,7 +236,7 @@ CeruleanCity_EventScript_Policeman::
 CeruleanCity_EventScript_LittleBoy::
 	lock
 	faceplayer
-	goto_if_set FLAG_GOT_SS_TICKET, CeruleanCity_EventScript_LittleBoySlowbroMoved
+	@goto_if_set FLAG_SOLVED_NUMBERS_69, CeruleanCity_EventScript_LittleBoySlowbroMoved
 	msgbox CeruleanCity_Text_IfSlowbroWasntThereCouldCutTree
 	release
 	end

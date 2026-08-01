@@ -8,11 +8,30 @@ text MtMoon_1F_Text_UseDPad {
 text MtMoon_1F_Text_CantMoveBorderedBlocks {
     "Blocks with a dashed outline\n"
     "can't slide.\p"
-    "Complete the top row with the sequence\n"
-    "of numbers from 1 to 4."
+    "Complete the top row with the\n"
+    "sequence of numbers from 1 to 4."
 }
 
 text MtMoon_1F_Text_Complete3x3 {
-    "Complete the whole puzzle with\n"
-    "the sequence of numbers from 1 to 15."
+    "Complete the whole puzzle with the\n"
+    "sequence of numbers from 1 to 15."
+}
+
+text MtMoon_1F_Text_CanRotateRoundedBlocks {
+    "Use {SELECT_BUTTON} to switch between\n"
+    "Arrows Mode and Cursor Mode.\p"
+    "While in Cursor Mode, use {DPAD_ANY} to move\n"
+    "the hand cursor across blocks.\l"
+    "Press {A_BUTTON} to slide the block under\l"
+    "the cursor into the empty space,\l"
+    "or press {L_BUTTON} or {R_BUTTON} to rotate it\l"
+    "counterclockwise or clockwise.\p"
+    "Only blocks with rounded corners can\n"
+    "be rotated."
+}
+
+text MtMoon_1F_Text_ImpossiblePuzzles {
+    "If a puzzle only needs to swap\n"
+    "two blocks to be solved, it is\l"
+    "unsolvable, but this one is not."
 }

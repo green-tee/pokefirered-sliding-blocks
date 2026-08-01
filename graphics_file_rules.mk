@@ -250,6 +250,12 @@ $(SLIDINGBLOCKSGFXDIR)/puzzle_numbers_1234.4bpp: %.4bpp: %.png
 $(SLIDINGBLOCKSGFXDIR)/puzzle_numbers_3x3.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+$(SLIDINGBLOCKSGFXDIR)/puzzle_numbers_reds_round.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_numbers_69.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
 $(SLIDINGBLOCKSGFXDIR)/arrows.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 

@@ -585,8 +585,8 @@
 #define FLAG_SOLVED_NUMBERS_1                            0x230
 #define FLAG_SOLVED_NUMBERS_1234                         0x231
 #define FLAG_SOLVED_NUMBERS_3X3                          0x232
-#define FLAG_HELPED_BILL_IN_SEA_COTTAGE                  0x233
-#define FLAG_GOT_SS_TICKET                               0x234
+#define FLAG_SOLVED_NUMBERS_REDS_ROUND                   0x233
+#define FLAG_SOLVED_NUMBERS_69                           0x234
 #define FLAG_GOT_SS_TICKET_DUP                           0x235
 #define FLAG_GOT_TM42_AT_MEMORIAL_PILLAR                 0x236
 #define FLAG_GOT_HM01                                    0x237
