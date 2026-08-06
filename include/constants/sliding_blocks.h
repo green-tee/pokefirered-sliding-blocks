@@ -9,5 +9,7 @@
 #define SLIDING_LAYOUT_NUMBERS_3X3        5
 #define SLIDING_LAYOUT_NUMBERS_REDS_ROUND 6
 #define SLIDING_LAYOUT_NUMBERS_69         7
+#define SLIDING_LAYOUT_BIRDS              8
+#define SLIDING_LAYOUT_HO_OH_BACK         9
 
 #endif

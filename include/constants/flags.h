@@ -587,8 +587,8 @@
 #define FLAG_SOLVED_NUMBERS_3X3                          0x232
 #define FLAG_SOLVED_NUMBERS_REDS_ROUND                   0x233
 #define FLAG_SOLVED_NUMBERS_69                           0x234
-#define FLAG_GOT_SS_TICKET_DUP                           0x235
-#define FLAG_GOT_TM42_AT_MEMORIAL_PILLAR                 0x236
+#define FLAG_SOLVED_BIRDS                                0x235
+#define FLAG_SOLVED_HO_OH_BACK                           0x236
 #define FLAG_GOT_HM01                                    0x237
 #define FLAG_GOT_HM02                                    0x238
 #define FLAG_GOT_HM03                                    0x239

@@ -25,7 +25,9 @@ script MtMoon_1F_EventScript_PuzzleNumbers1 {
         lockall
         msgbox(MtMoon_1F_Text_UseDPad, MSGBOX_DEFAULT)
         closemessage
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_1)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_NUMBERS_1)
             removeobject(VAR_LAST_TALKED)
@@ -42,7 +44,9 @@ script MtMoon_1F_EventScript_PuzzleNumbers1234 {
         lockall
         msgbox(MtMoon_1F_Text_CantMoveBorderedBlocks, MSGBOX_DEFAULT)
         closemessage
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_1234)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_NUMBERS_1234)
             removeobject(VAR_LAST_TALKED)
@@ -59,7 +63,9 @@ script MtMoon_1F_EventScript_PuzzleNumbers3x3 {
         lockall
         msgbox(MtMoon_1F_Text_Complete3x3, MSGBOX_DEFAULT)
         closemessage
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_3X3)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_NUMBERS_3X3)
             removeobject(VAR_LAST_TALKED)
@@ -76,7 +82,9 @@ script MtMoon_1F_EventScript_PuzzleNumbersRedsRound {
         lockall
         msgbox(MtMoon_1F_Text_CanRotateRoundedBlocks, MSGBOX_DEFAULT)
         closemessage
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_REDS_ROUND)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_NUMBERS_REDS_ROUND)
             removeobject(VAR_LAST_TALKED)
@@ -93,7 +101,9 @@ script MtMoon_1F_EventScript_PuzzleNumbers69 {
         lockall
         msgbox(MtMoon_1F_Text_ImpossiblePuzzles, MSGBOX_DEFAULT)
         closemessage
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_69)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_NUMBERS_69)
             removeobject(VAR_LAST_TALKED)

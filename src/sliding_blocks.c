@@ -199,11 +199,15 @@ static const u32 sSpriteTiles_Numbers1234[] = INCBIN_U32("graphics/sliding_block
 static const u32 sSpriteTiles_Numbers3x3[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_3x3.4bpp.lz");
 static const u32 sSpriteTiles_NumbersRedsRound[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_reds_round.4bpp.lz");
 static const u32 sSpriteTiles_Numbers69[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_69.4bpp.lz");
+static const u32 sSpriteTiles_Birds[] = INCBIN_U32("graphics/sliding_blocks/puzzle_birds.4bpp.lz");
+static const u32 sSpriteTiles_HoOhBack[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh_back.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
 static const u16 sSpritePal_Electrode[] = INCBIN_U16("graphics/sliding_blocks/puzzle_electrode.gbapal");
 static const u16 sSpritePal_Numbers[] = INCBIN_U16("graphics/sliding_blocks/puzzle_numbers.gbapal");
+static const u16 sSpritePal_Birds[] = INCBIN_U16("graphics/sliding_blocks/puzzle_birds.gbapal");
+static const u16 sSpritePal_HoOhBack[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh_back.gbapal");
 
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
 static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
@@ -435,6 +439,60 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
             .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
         },
         .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_BIRDS] = {
+        .spriteSheet = sSpriteTiles_Birds,
+        .palette = sSpritePal_Birds,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                { 4,  5,  6,  7},
+                { 8,  9, 10, 11},
+                {12, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_EAST,  DIR_EAST, DIR_NORTH},
+                {DIR_EAST,  DIR_EAST,  DIR_WEST, DIR_SOUTH},
+                {DIR_WEST,  DIR_EAST,  DIR_WEST, DIR_WEST},
+                {DIR_NORTH, DIR_SOUTH, DIR_WEST, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_NONE,   BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_NONE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_NONE,   BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_NONE}
+            },
+            .hollowIndex = {[INDEX_X] = 4, [INDEX_Y] = 4} // No empty space
+        },
+        .winCondition = WinCondition_AllCorrectOrientations
+    },
+
+    [SLIDING_LAYOUT_HO_OH_BACK] = {
+        .spriteSheet = sSpriteTiles_HoOhBack,
+        .palette = sSpritePal_HoOhBack,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                { 4,  5,  6,  7},
+                { 8,  9, 10, 11},
+                {12, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_WEST,  DIR_NORTH, DIR_EAST,  DIR_WEST},
+                {DIR_SOUTH, DIR_WEST,  DIR_SOUTH, DIR_SOUTH},
+                {DIR_EAST,  DIR_WEST,  DIR_EAST,  DIR_NORTH},
+                {DIR_WEST,  DIR_EAST,  DIR_WEST,  DIR_SOUTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE}
+            },
+            .hollowIndex = {[INDEX_X] = 4, [INDEX_Y] = 4} // No empty space
+        },
+        .winCondition = WinCondition_AllCorrectOrientations
     }
 
 };
@@ -1420,6 +1478,11 @@ static void MainTask_VictorySequence(u8 taskId) {
                 hollowSprite->invisible = FALSE;
                 data[0]++;
             }
+        } else {
+            if (data[1] > 0)
+                data[1]--;
+            else
+                data[0]++;
         }
         break;
     case 2:
