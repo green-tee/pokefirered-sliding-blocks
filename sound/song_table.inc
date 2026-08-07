@@ -279,7 +279,7 @@ gSongTable::
 	song mus_intro_fight, 0, 0
 	song mus_title, 0, 0
 	song mus_cinnabar, 0, 0
-	song mus_lavender, 0, 0
+	song mus_puzzle_tower, 0, 0
 	song mus_heal_unused, 0, 0
 	song mus_cycling, 0, 0
 	song mus_encounter_rocket, 0, 0
@@ -331,7 +331,7 @@ gSongTable::
 	song mus_mystery_gift, 0, 0
 	song mus_berry_pick, 0, 0
 	song mus_sevii_cave, 0, 0
-	song mus_teachy_tv_show, 0, 0
+	song mus_puzzle, 0, 0
 	song mus_sevii_route, 0, 0
 	song mus_sevii_dungeon, 0, 0
 	song mus_sevii_123, 0, 0

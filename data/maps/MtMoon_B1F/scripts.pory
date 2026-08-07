@@ -14,7 +14,9 @@ script MtMoon_B1F_OnLoad {
 script MtMoon_B1F_EventScript_PuzzleBirds {
     if (!flag(FLAG_SOLVED_BIRDS)) {
         lockall
+        playbgm(MUS_PUZZLE, 0)
         playslidingblocks(SLIDING_LAYOUT_BIRDS)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_BIRDS)
             removeobject(VAR_LAST_TALKED)
@@ -29,7 +31,9 @@ script MtMoon_B1F_EventScript_PuzzleBirds {
 script MtMoon_B1F_EventScript_PuzzleHoOhBack {
     if (!flag(FLAG_SOLVED_HO_OH_BACK)) {
         lockall
+        playbgm(MUS_PUZZLE, 0)
         playslidingblocks(SLIDING_LAYOUT_HO_OH_BACK)
+        fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
             setflag(FLAG_SOLVED_HO_OH_BACK)
             removeobject(VAR_LAST_TALKED)
