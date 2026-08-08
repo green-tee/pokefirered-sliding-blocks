@@ -1,0 +1,7 @@
+text MtMoon_B2F_Text_MakeElectrode {
+    "Make ELECTRODE."
+}
+
+text MtMoon_B2F_Text_MakeElectrodeAgain {
+    "Make ELECTRODE again."
+}

@@ -1180,12 +1180,12 @@
     {
       "id": "LAYOUT_MT_MOON_B2F",
       "name": "MtMoon_B2F_Layout",
-      "width": 48,
+      "width": 44,
       "height": 40,
       "border_width": 2,
       "border_height": 2,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Cave",
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Lab",
       "border_filepath": "data/layouts/MtMoon_B2F/border.bin",
       "blockdata_filepath": "data/layouts/MtMoon_B2F/map.bin"
     },

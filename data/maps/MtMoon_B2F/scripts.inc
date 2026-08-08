@@ -1,136 +1,330 @@
 MtMoon_B2F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, MtMoon_B2F_OnTransition
+# 2 "data/maps/MtMoon_B2F/scripts.pory"
+	map_script MAP_SCRIPT_ON_LOAD, MtMoon_B2F_OnLoad
 	.byte 0
 
-MtMoon_B2F_OnTransition::
-	@call_if_unset FLAG_SOLVED_NUMBERS_3X3, MtMoon_B2F_EventScript_ShowFossils
-	end
 
-MtMoon_B2F_EventScript_ShowFossils::
-	clearflag FLAG_HIDE_DOME_FOSSIL
-	clearflag FLAG_HIDE_HELIX_FOSSIL
+MtMoon_B2F_OnLoad::
+# 6 "data/maps/MtMoon_B2F/scripts.pory"
+	goto_if_set FLAG_SOLVED_VOLTORB, MtMoon_B2F_OnLoad_2
+MtMoon_B2F_OnLoad_1:
+# 10 "data/maps/MtMoon_B2F/scripts.pory"
+	goto_if_unset FLAG_SOLVED_ELECTRODE, MtMoon_B2F_OnLoad_4
 	return
 
-MtMoon_B2F_EventScript_MiguelTrigger::
+MtMoon_B2F_OnLoad_2:
+# 7 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_ClearPuzzleVoltorb
+# 8 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode
+	goto MtMoon_B2F_OnLoad_1
+
+MtMoon_B2F_OnLoad_4:
+# 11 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_SetPuzzleElectrode
+	return
+
+
+MtMoon_B2F_EventScript_PuzzleVoltorb::
+# 16 "data/maps/MtMoon_B2F/scripts.pory"
+	goto_if_unset FLAG_SOLVED_VOLTORB, MtMoon_B2F_EventScript_PuzzleVoltorb_1
+	return
+
+MtMoon_B2F_EventScript_PuzzleVoltorb_1:
+# 17 "data/maps/MtMoon_B2F/scripts.pory"
 	lockall
-	applymovement LOCALID_MIGUEL, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	call MtMoon_B2F_EventScript_BattleMiguel
+# 18 "data/maps/MtMoon_B2F/scripts.pory"
+	msgbox MtMoon_B2F_Text_MakeElectrode, MSGBOX_DEFAULT
+# 19 "data/maps/MtMoon_B2F/scripts.pory"
+	closemessage
+# 20 "data/maps/MtMoon_B2F/scripts.pory"
+	playbgm MUS_PUZZLE, 0
+# 21 "data/maps/MtMoon_B2F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_VOLTORB
+# 22 "data/maps/MtMoon_B2F/scripts.pory"
+	fadedefaultbgm
+# 23 "data/maps/MtMoon_B2F/scripts.pory"
+	compare VAR_RESULT, 0
+	goto_if_ne MtMoon_B2F_EventScript_PuzzleVoltorb_4
+MtMoon_B2F_EventScript_PuzzleVoltorb_3:
+# 32 "data/maps/MtMoon_B2F/scripts.pory"
 	releaseall
-	end
-
-MtMoon_B2F_EventScript_Miguel::
-	lock
-	faceplayer
-	@goto_if_set FLAG_SOLVED_NUMBERS_3X3, MtMoon_B2F_EventScript_MiguelFossilPicked
-	goto_if_defeated TRAINER_SUPER_NERD_MIGUEL, MtMoon_B2F_EventScript_MiguelGoPickFossil
-	call MtMoon_B2F_EventScript_BattleMiguel
-	release
-	end
-
-MtMoon_B2F_EventScript_BattleMiguel::
-	textcolor NPC_TEXT_COLOR_MALE
-	message MtMoon_B2F_Text_MiguelIntro
-	waitmessage
-	playbgm MUS_ENCOUNTER_GYM_LEADER, 0
-	waitbuttonpress
-	setvar VAR_LAST_TALKED, LOCALID_MIGUEL
-	trainerbattle_no_intro TRAINER_SUPER_NERD_MIGUEL, MtMoon_B2F_Text_MiguelDefeat
-	setvar VAR_MAP_SCENE_MT_MOON_B2F, 1
-	msgbox MtMoon_B2F_Text_WellEachTakeAFossil
 	return
 
-MtMoon_B2F_EventScript_MiguelFossilPicked::
-	msgbox MtMoon_B2F_Text_LabOnCinnabarRegeneratesFossils
-	release
-	end
+MtMoon_B2F_EventScript_PuzzleVoltorb_4:
+# 24 "data/maps/MtMoon_B2F/scripts.pory"
+	setflag FLAG_SOLVED_VOLTORB
+# 25 "data/maps/MtMoon_B2F/scripts.pory"
+	removeobject VAR_LAST_TALKED
+# 26 "data/maps/MtMoon_B2F/scripts.pory"
+	playse SE_UNLOCK
+# 27 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_ClearPuzzleVoltorb
+# 28 "data/maps/MtMoon_B2F/scripts.pory"
+	special DrawWholeMapView
+# 29 "data/maps/MtMoon_B2F/scripts.pory"
+	delay 30
+# 30 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_ShowClearPathToPuzzleElectrode
+	goto MtMoon_B2F_EventScript_PuzzleVoltorb_3
 
-MtMoon_B2F_EventScript_MiguelGoPickFossil::
-	msgbox MtMoon_B2F_Text_WellEachTakeAFossil
-	release
-	end
 
-MtMoon_B2F_EventScript_DomeFossil::
-	lock
-	faceplayer
-	msgbox MtMoon_B2F_Text_YouWantDomeFossil, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, MtMoon_B2F_EventScript_DontTakeFossil
-	removeobject LOCALID_DOME_FOSSIL
-	giveitem_msg MtMoon_B2F_Text_ObtainedDomeFossil, ITEM_DOME_FOSSIL, 1, MUS_OBTAIN_KEY_ITEM
+MtMoon_b2F_EventScript_PuzzleElectrode::
+# 37 "data/maps/MtMoon_B2F/scripts.pory"
+	goto_if_unset FLAG_SOLVED_ELECTRODE, MtMoon_b2F_EventScript_PuzzleElectrode_1
+	return
+
+MtMoon_b2F_EventScript_PuzzleElectrode_1:
+# 38 "data/maps/MtMoon_B2F/scripts.pory"
+	lockall
+# 39 "data/maps/MtMoon_B2F/scripts.pory"
+	msgbox MtMoon_B2F_Text_MakeElectrodeAgain, MSGBOX_DEFAULT
+# 40 "data/maps/MtMoon_B2F/scripts.pory"
 	closemessage
-	special QuestLog_CutRecording
-	delay 10
-	applymovement LOCALID_MIGUEL, MtMoon_B2F_Movement_MiguelToHelixFossil
-	waitmovement 0
-	copyobjectxytoperm LOCALID_MIGUEL
-	textcolor NPC_TEXT_COLOR_MALE
-	playfanfare MUS_OBTAIN_KEY_ITEM
-	message MtMoon_B2F_Text_ThenThisFossilIsMine
-	waitmessage
-	waitfanfare
-	removeobject LOCALID_HELIX_FOSSIL
-	setflag FLAG_GOT_DOME_FOSSIL
-	@setflag FLAG_SOLVED_NUMBERS_3X3
-	release
-	end
+# 41 "data/maps/MtMoon_B2F/scripts.pory"
+	playbgm MUS_PUZZLE, 0
+# 42 "data/maps/MtMoon_B2F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_ELECTRODE
+# 43 "data/maps/MtMoon_B2F/scripts.pory"
+	fadedefaultbgm
+# 44 "data/maps/MtMoon_B2F/scripts.pory"
+	compare VAR_RESULT, 0
+	goto_if_ne MtMoon_b2F_EventScript_PuzzleElectrode_4
+MtMoon_b2F_EventScript_PuzzleElectrode_3:
+# 51 "data/maps/MtMoon_B2F/scripts.pory"
+	releaseall
+	return
 
-MtMoon_B2F_Movement_MiguelToHelixFossil::
-	walk_right
-	walk_up
-	walk_up
-	walk_up
+MtMoon_b2F_EventScript_PuzzleElectrode_4:
+# 45 "data/maps/MtMoon_B2F/scripts.pory"
+	setflag FLAG_SOLVED_ELECTRODE
+# 46 "data/maps/MtMoon_B2F/scripts.pory"
+	removeobject VAR_LAST_TALKED
+# 47 "data/maps/MtMoon_B2F/scripts.pory"
+	playse SE_UNLOCK
+# 48 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_ClearPuzzleElectrode
+# 49 "data/maps/MtMoon_B2F/scripts.pory"
+	special DrawWholeMapView
+	goto MtMoon_b2F_EventScript_PuzzleElectrode_3
+
+
+MtMoon_B2F_EventScript_ShowClearPathToPuzzleElectrode:
+# 56 "data/maps/MtMoon_B2F/scripts.pory"
+	special SpawnCameraObject
+# 57 "data/maps/MtMoon_B2F/scripts.pory"
+	applymovement LOCALID_CAMERA, MtMoon_B2F_Movement_PanToPathToElectrode
+# 58 "data/maps/MtMoon_B2F/scripts.pory"
+	waitmovement LOCALID_CAMERA
+# 59 "data/maps/MtMoon_B2F/scripts.pory"
+	delay 30
+# 60 "data/maps/MtMoon_B2F/scripts.pory"
+	playse SE_UNLOCK
+# 61 "data/maps/MtMoon_B2F/scripts.pory"
+	call MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode
+# 62 "data/maps/MtMoon_B2F/scripts.pory"
+	special DrawWholeMapView
+# 63 "data/maps/MtMoon_B2F/scripts.pory"
+	delay 30
+# 64 "data/maps/MtMoon_B2F/scripts.pory"
+	applymovement LOCALID_CAMERA, MtMoon_B2F_Movement_PanToVoltorb
+# 65 "data/maps/MtMoon_B2F/scripts.pory"
+	waitmovement LOCALID_CAMERA
+# 66 "data/maps/MtMoon_B2F/scripts.pory"
+	special RemoveCameraObject
+	return
+
+
+# 69 "data/maps/MtMoon_B2F/scripts.pory"
+MtMoon_B2F_Movement_PanToPathToElectrode:
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 70 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_down
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
+# 71 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_left
 	step_end
 
-MtMoon_B2F_EventScript_HelixFossil::
-	lock
-	faceplayer
-	msgbox MtMoon_B2F_Text_YouWantHelixFossil, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, MtMoon_B2F_EventScript_DontTakeFossil
-	removeobject LOCALID_HELIX_FOSSIL
-	giveitem_msg MtMoon_B2F_Text_ObtainedHelixFossil, ITEM_HELIX_FOSSIL, 1, MUS_OBTAIN_KEY_ITEM
-	closemessage
-	special QuestLog_CutRecording
-	delay 10
-	applymovement LOCALID_MIGUEL, MtMoon_B2F_Movement_MiguelToDomeFossil
-	waitmovement 0
-	copyobjectxytoperm LOCALID_MIGUEL
-	textcolor NPC_TEXT_COLOR_MALE
-	playfanfare MUS_OBTAIN_KEY_ITEM
-	message MtMoon_B2F_Text_ThenThisFossilIsMine
-	waitmessage
-	waitfanfare
-	removeobject LOCALID_DOME_FOSSIL
-	setflag FLAG_GOT_HELIX_FOSSIL
-	@setflag FLAG_SOLVED_NUMBERS_3X3
-	release
-	end
-
-MtMoon_B2F_EventScript_DontTakeFossil::
-	release
-	end
-
-MtMoon_B2F_Movement_MiguelToDomeFossil::
-	walk_up
-	walk_up
-	walk_up
+# 74 "data/maps/MtMoon_B2F/scripts.pory"
+MtMoon_B2F_Movement_PanToVoltorb:
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 75 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_right
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
+# 76 "data/maps/MtMoon_B2F/scripts.pory"
+	walk_faster_up
 	step_end
 
-MtMoon_B2F_EventScript_Grunt1::
-	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT, MtMoon_B2F_Text_Grunt1Intro, MtMoon_B2F_Text_Grunt1Defeat
-	msgbox MtMoon_B2F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
-	end
+MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode:
+# 80 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 81 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 82 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 83 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 84 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 85 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 86 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 87 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 88 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 89 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 90 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 91 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 92 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 24, 18, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE
+	return
 
-MtMoon_B2F_EventScript_Grunt2::
-	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_2, MtMoon_B2F_Text_Grunt2Intro, MtMoon_B2F_Text_Grunt2Defeat
-	msgbox MtMoon_B2F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
-	end
 
-MtMoon_B2F_EventScript_Grunt3::
-	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_3, MtMoon_B2F_Text_Grunt3Intro, MtMoon_B2F_Text_Grunt3Defeat
-	msgbox MtMoon_B2F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
-	end
+MtMoon_B2F_EventScript_ClearPuzzleVoltorb:
+# 96 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 36, 4, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
+# 97 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 36, 5, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE
+	return
 
-MtMoon_B2F_EventScript_Grunt4::
-	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_4, MtMoon_B2F_Text_Grunt4Intro, MtMoon_B2F_Text_Grunt4Defeat
-	msgbox MtMoon_B2F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
-	end
+
+MtMoon_B2F_EventScript_ClearPuzzleElectrode:
+# 101 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 1, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE
+# 102 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 1, METATILE_Lab_PuzzlePalace_DoorTop, TRUE
+# 103 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 1, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE
+# 104 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 2, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE
+# 105 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 2, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE
+# 106 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 2, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE
+# 107 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 3, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE
+# 108 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 3, METATILE_Lab_PuzzlePalace_Upstairs, FALSE
+# 109 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 3, METATILE_Lab_PuzzlePalace_DoorRight, TRUE
+	return
+
+
+MtMoon_B2F_EventScript_SetPuzzleElectrode:
+# 113 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 1, METATILE_Building_Void, TRUE
+# 114 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 1, METATILE_Building_Void, TRUE
+# 115 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 1, METATILE_Building_Void, TRUE
+# 116 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
+# 117 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE
+# 118 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
+# 119 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE
+# 120 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE
+# 121 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE
+	return
+

@@ -1,0 +1,122 @@
+mapscripts MtMoon_B2F_MapScripts {
+    MAP_SCRIPT_ON_LOAD: MtMoon_B2F_OnLoad
+}
+
+script MtMoon_B2F_OnLoad {
+    if (flag(FLAG_SOLVED_VOLTORB)) {
+        call(MtMoon_B2F_EventScript_ClearPuzzleVoltorb)
+        call(MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode)
+    }
+    if (!flag(FLAG_SOLVED_ELECTRODE)) {
+        call(MtMoon_B2F_EventScript_SetPuzzleElectrode)
+    }
+}
+
+script MtMoon_B2F_EventScript_PuzzleVoltorb {
+    if (!flag(FLAG_SOLVED_VOLTORB)) {
+        lockall
+        msgbox(MtMoon_B2F_Text_MakeElectrode, MSGBOX_DEFAULT)
+        closemessage
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_VOLTORB)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_VOLTORB)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(MtMoon_B2F_EventScript_ClearPuzzleVoltorb)
+            special(DrawWholeMapView)
+            delay(30)
+            call(MtMoon_B2F_EventScript_ShowClearPathToPuzzleElectrode)
+        }
+        releaseall
+    }
+}
+
+script MtMoon_b2F_EventScript_PuzzleElectrode {
+    if (!flag(FLAG_SOLVED_ELECTRODE)) {
+        lockall
+        msgbox(MtMoon_B2F_Text_MakeElectrodeAgain, MSGBOX_DEFAULT)
+        closemessage
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_ELECTRODE)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_ELECTRODE)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(MtMoon_B2F_EventScript_ClearPuzzleElectrode)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script(local) MtMoon_B2F_EventScript_ShowClearPathToPuzzleElectrode {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, MtMoon_B2F_Movement_PanToPathToElectrode)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    call(MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, MtMoon_B2F_Movement_PanToVoltorb)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement MtMoon_B2F_Movement_PanToPathToElectrode {
+    walk_faster_down * 12
+    walk_faster_left * 14
+}
+
+movement MtMoon_B2F_Movement_PanToVoltorb {
+    walk_faster_right * 14
+    walk_faster_up * 12
+}
+
+script(local) MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode {
+    setmetatile(21, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(22, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(23, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(22, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(23, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(22, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(23, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(22, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(23, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(24, 18, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script(local) MtMoon_B2F_EventScript_ClearPuzzleVoltorb {
+    setmetatile(36, 4, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(36, 5, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) MtMoon_B2F_EventScript_ClearPuzzleElectrode {
+    setmetatile(21, 1, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE)
+    setmetatile(22, 1, METATILE_Lab_PuzzlePalace_DoorTop, TRUE)
+    setmetatile(23, 1, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE)
+    setmetatile(21, 2, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE)
+    setmetatile(22, 2, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE)
+    setmetatile(23, 2, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE)
+    setmetatile(21, 3, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE)
+    setmetatile(22, 3, METATILE_Lab_PuzzlePalace_Upstairs, FALSE)
+    setmetatile(23, 3, METATILE_Lab_PuzzlePalace_DoorRight, TRUE)
+}
+
+script(local) MtMoon_B2F_EventScript_SetPuzzleElectrode {
+    setmetatile(21, 1, METATILE_Building_Void, TRUE)
+    setmetatile(22, 1, METATILE_Building_Void, TRUE)
+    setmetatile(23, 1, METATILE_Building_Void, TRUE)
+    setmetatile(21, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(22, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(23, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(21, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(22, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+    setmetatile(23, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}

@@ -34,3 +34,24 @@ text PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocks {
 text PalletTown_PlayersHouse_1F_Text_TestingSlidingBlocksDone {
     "Testing finished."
 }
+
+script PalletTown_PlayerHouse_1F_EventScript_ProfOak {
+    lock
+    faceplayer
+    msgbox(PalletTown_PlayerHouse_1F_Text_WantPokemon, MSGBOX_YESNO)
+    if (var(VAR_RESULT) == YES) {
+        msgbox(PalletTown_PlayerHouse_1F_Text_HereYouAre, MSGBOX_DEFAULT)
+        givemon(SPECIES_ABSOL, 35)
+        playfanfare(MUS_OBTAIN_KEY_ITEM)
+    }
+    closemessage
+    release
+}
+
+text PalletTown_PlayerHouse_1F_Text_WantPokemon {
+    "Do you want a Pokémon?"
+}
+
+text PalletTown_PlayerHouse_1F_Text_HereYouAre {
+    "OK, here you are."
+}

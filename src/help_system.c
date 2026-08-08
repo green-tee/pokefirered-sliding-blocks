@@ -2241,10 +2241,10 @@ static bool8 IsHelpSystemSubmenuEnabled(u8 id)
 
 static bool8 HasGottenAtLeastOneHM(void)
 {
-    if (FlagGet(FLAG_GOT_HM01) == TRUE)
-        return TRUE;
-    if (FlagGet(FLAG_GOT_HM02) == TRUE)
-        return TRUE;
+    //if (FlagGet(FLAG_SOLVED_VOLTORB) == TRUE)
+    //    return TRUE;
+    //if (FlagGet(FLAG_SOLVED_ELECTRODE) == TRUE)
+    //    return TRUE;
     if (FlagGet(FLAG_GOT_HM03) == TRUE)
         return TRUE;
     if (FlagGet(FLAG_GOT_HM04) == TRUE)

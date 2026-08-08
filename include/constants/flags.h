@@ -589,8 +589,8 @@
 #define FLAG_SOLVED_NUMBERS_69                           0x234
 #define FLAG_SOLVED_BIRDS                                0x235
 #define FLAG_SOLVED_HO_OH_BACK                           0x236
-#define FLAG_GOT_HM01                                    0x237
-#define FLAG_GOT_HM02                                    0x238
+#define FLAG_SOLVED_VOLTORB                              0x237
+#define FLAG_SOLVED_ELECTRODE                            0x238
 #define FLAG_GOT_HM03                                    0x239
 #define FLAG_GOT_HM04                                    0x23A
 #define FLAG_GOT_HM05                                    0x23B
