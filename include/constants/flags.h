@@ -591,9 +591,9 @@
 #define FLAG_SOLVED_HO_OH_BACK                           0x236
 #define FLAG_SOLVED_VOLTORB                              0x237
 #define FLAG_SOLVED_ELECTRODE                            0x238
-#define FLAG_GOT_HM03                                    0x239
-#define FLAG_GOT_HM04                                    0x23A
-#define FLAG_GOT_HM05                                    0x23B
+#define FLAG_SOLVED_WHIRLPOOL_ISLANDS                    0x239
+#define FLAG_SOLVED_EUSINE                               0x23A
+#define FLAG_SOLVED_LUGIA                                0x23B
 #define FLAG_RESCUED_MR_FUJI                             0x23C
 #define FLAG_GOT_POKE_FLUTE                              0x23D
 #define FLAG_0x23E                                       0x23E

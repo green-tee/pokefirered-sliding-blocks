@@ -4,13 +4,13 @@ SafariZone_SecretHouse_MapScripts::
 SafariZone_SecretHouse_EventScript_Attendant::
 	lock
 	faceplayer
-	goto_if_set FLAG_GOT_HM03, SafariZone_SecretHouse_EventScript_ExplainSurf
+	@goto_if_set FLAG_SOLVED_WHIRLPOOL_ISLANDS, SafariZone_SecretHouse_EventScript_ExplainSurf
 	msgbox SafariZone_SecretHouse_Text_CongratsYouveWon
 	checkitemspace ITEM_HM03
 	goto_if_eq VAR_RESULT, FALSE, SafariZone_SecretHouse_EventScript_NoRoomForHM03
 	giveitem_msg SafariZone_SecretHouse_Text_ReceivedHM03FromAttendant, ITEM_HM03
 	msgbox SafariZone_SecretHouse_Text_ExplainSurf
-	setflag FLAG_GOT_HM03
+	@setflag FLAG_SOLVED_WHIRLPOOL_ISLANDS
 	release
 	end
 

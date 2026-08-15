@@ -2296,12 +2296,12 @@
     {
       "id": "LAYOUT_DIGLETTS_CAVE_NORTH_ENTRANCE",
       "name": "DiglettsCave_NorthEntrance_Layout",
-      "width": 10,
-      "height": 8,
+      "width": 30,
+      "height": 50,
       "border_width": 2,
       "border_height": 2,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_DiglettsCave",
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Lab",
       "border_filepath": "data/layouts/DiglettsCave_NorthEntrance/border.bin",
       "blockdata_filepath": "data/layouts/DiglettsCave_NorthEntrance/map.bin"
     },

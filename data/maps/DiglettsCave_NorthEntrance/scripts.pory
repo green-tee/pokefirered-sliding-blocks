@@ -1,0 +1,122 @@
+mapscripts DiglettsCave_NorthEntrance_MapScripts {
+    MAP_SCRIPT_ON_LOAD: DiglettsCave_NorthEntrance_OnLoad
+}
+
+script DiglettsCave_NorthEntrance_OnLoad {
+    if (flag(FLAG_SOLVED_WHIRLPOOL_ISLANDS)) {
+        call(DiglettsCave_NorthEntrance_EventScript_ClearPuzzleWhirlpoolIslands)
+    }
+    if (flag(FLAG_SOLVED_EUSINE)) {
+        call(DiglettsCave_NorthEntrance_EventScript_ClearPuzzleEusine)
+    }
+    if (!flag(FLAG_SOLVED_LUGIA)) {
+        call(DiglettsCave_NorthEntrance_EventScript_SetPuzzleLugia)
+    }
+}
+
+script DiglettsCave_NorthEntrance_EventScript_PuzzleWhirlpoolIslands {
+    if (!flag(FLAG_SOLVED_WHIRLPOOL_ISLANDS)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_WHIRLPOOL_ISLANDS)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_WHIRLPOOL_ISLANDS)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(DiglettsCave_NorthEntrance_EventScript_ClearPuzzleWhirlpoolIslands)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script DiglettsCave_NorthEntrance_EventScript_PuzzleEusine {
+    if (!flag(FLAG_SOLVED_EUSINE)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_EUSINE)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_EUSINE)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(DiglettsCave_NorthEntrance_EventScript_ClearPuzzleEusine)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script DiglettsCave_NorthEntrance_EventScript_PuzzleLugia {
+    if (!flag(FLAG_SOLVED_LUGIA)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_LUGIA)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_LUGIA)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(DiglettsCave_NorthEntrance_EventScript_ClearPuzzleLugia)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script DiglettsCave_NorthEntrance_EventScript_ClearPuzzleWhirlpoolIslands {
+    setmetatile(19, 38, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 38, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 38, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 39, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 39, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 39, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 40, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 40, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 40, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 41, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 41, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 41, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(22, 41, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script DiglettsCave_NorthEntrance_EventScript_ClearPuzzleEusine {
+    setmetatile(19, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 21, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(21, 22, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(22, 22, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script DiglettsCave_NorthEntrance_EventScript_ClearPuzzleLugia {
+    setmetatile(19, 1, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE)
+    setmetatile(20, 1, METATILE_Lab_PuzzlePalace_DoorTop, TRUE)
+    setmetatile(21, 1, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE)
+    setmetatile(19, 2, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE)
+    setmetatile(20, 2, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE)
+    setmetatile(21, 2, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE)
+    setmetatile(19, 3, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE)
+    setmetatile(20, 3, METATILE_Lab_PuzzlePalace_Upstairs, FALSE)
+    setmetatile(21, 3, METATILE_Lab_PuzzlePalace_DoorRight, TRUE)
+}
+
+script DiglettsCave_NorthEntrance_EventScript_SetPuzzleLugia {
+    setmetatile(19, 1, METATILE_Building_Void, TRUE)
+    setmetatile(20, 1, METATILE_Building_Void, TRUE)
+    setmetatile(21, 1, METATILE_Building_Void, TRUE)
+    setmetatile(19, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(20, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(21, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(19, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(20, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+    setmetatile(21, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}

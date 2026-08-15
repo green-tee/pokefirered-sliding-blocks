@@ -2245,12 +2245,12 @@ static bool8 HasGottenAtLeastOneHM(void)
     //    return TRUE;
     //if (FlagGet(FLAG_SOLVED_ELECTRODE) == TRUE)
     //    return TRUE;
-    if (FlagGet(FLAG_GOT_HM03) == TRUE)
-        return TRUE;
-    if (FlagGet(FLAG_GOT_HM04) == TRUE)
-        return TRUE;
-    if (FlagGet(FLAG_GOT_HM05) == TRUE)
-        return TRUE;
+    //if (FlagGet(FLAG_SOLVED_WHIRLPOOL_ISLANDS) == TRUE)
+    //    return TRUE;
+    //if (FlagGet(FLAG_SOLVED_EUSINE) == TRUE)
+    //    return TRUE;
+    //if (FlagGet(FLAG_SOLVED_LUGIA) == TRUE)
+    //    return TRUE;
     if (FlagGet(FLAG_GOT_HM06) == TRUE)
         return TRUE;
     if (FlagGet(FLAG_HIDE_FOUR_ISLAND_ICEFALL_CAVE_1F_HM07) == TRUE)

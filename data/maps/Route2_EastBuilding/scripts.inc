@@ -7,7 +7,7 @@ Route2_EastBuilding_EventScript_Aide::
 	lock
 	faceplayer
 	call Route2_EastBuilding_EventScript_GetAideRequestInfo
-	goto_if_set FLAG_GOT_HM05, Route2_EastBuilding_EventScript_AlreadyGotHM05
+	@goto_if_set FLAG_SOLVED_LUGIA, Route2_EastBuilding_EventScript_AlreadyGotHM05
 	msgbox Route2_EastBuilding_Text_GiveHM05IfSeen10Mons, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Aide_EventScript_DeclineCheckMons
 	setvar VAR_0x8004, 0
@@ -19,7 +19,7 @@ Route2_EastBuilding_EventScript_Aide::
 	checkitemspace ITEM_HM05
 	goto_if_eq VAR_RESULT, FALSE, Aide_EventScript_NoRoomForItem
 	giveitem_msg Route2_EastBuilding_Text_ReceivedHM05FromAide, ITEM_HM05
-	setflag FLAG_GOT_HM05
+	@setflag FLAG_SOLVED_LUGIA
 	msgbox Route2_EastBuilding_Text_ExplainHM05
 	release
 	end

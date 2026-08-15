@@ -622,8 +622,9 @@ static bool8 TryPushBoulder(s16 x, s16 y, u8 direction)
 {
     u8 objectEventId;
     u8 direction_ = direction;
-    if (!FlagGet(FLAG_SYS_USE_STRENGTH))
-        return FALSE;
+    // Strength always active
+    //if (!FlagGet(FLAG_SYS_USE_STRENGTH))
+    //    return FALSE;
 
     objectEventId = GetObjectEventIdByXY(x, y);
     if (objectEventId == OBJECT_EVENTS_COUNT)
