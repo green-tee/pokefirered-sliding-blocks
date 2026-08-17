@@ -140,8 +140,8 @@
       "x": 20,
       "y": 3,
       "elevation": 3,
-      "dest_map": "MAP_ROUTE2",
-      "dest_warp_id": "3"
+      "dest_map": "MAP_DIGLETTS_CAVE_B1F",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

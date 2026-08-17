@@ -1,0 +1,92 @@
+mapscripts DiglettsCave_B1F_MapScripts {
+    MAP_SCRIPT_ON_LOAD: DiglettsCave_B1F_OnLoad
+}
+
+script DiglettsCave_B1F_OnLoad {
+    if (!flag(FLAG_SOLVED_HO_OH_BACK_SHINY)) {
+        call(DiglettsCave_B1F_EventScript_SetPuzzleHoOhBackShiny)
+    }
+}
+
+script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShiny {
+    if (!flag(FLAG_SOLVED_HO_OH_BACK_SHINY)) {
+        lockall
+        playslidingblocks(SLIDING_LAYOUT_HO_OH_BACK_SHINY)
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_HO_OH_BACK_SHINY)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(DiglettsCave_B1F_EventScript_ClearPuzzleHoOhBackShiny)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable1 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_1)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_B1F_Text_ThisPuzzleIsUnsolvable, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable2 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_2)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_B1F_Text_ThisPuzzleIsUnsolvable, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable3 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_3)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_B1F_Text_ThisPuzzleIsUnsolvable, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable4 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_4)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_B1F_Text_ThisPuzzleIsUnsolvable, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_B1F_EventScript_ClearPuzzleHoOhBackShiny {
+    setmetatile(7, 12, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE)
+    setmetatile(8, 12, METATILE_Lab_PuzzlePalace_DoorTop, TRUE)
+    setmetatile(9, 12, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE)
+    setmetatile(7, 13, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE)
+    setmetatile(8, 13, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE)
+    setmetatile(9, 13, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE)
+    setmetatile(7, 14, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE)
+    setmetatile(8, 14, METATILE_Lab_PuzzlePalace_Upstairs, FALSE)
+    setmetatile(9, 14, METATILE_Lab_PuzzlePalace_DoorRight, TRUE)
+    setmetatile(7, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+}
+
+script DiglettsCave_B1F_EventScript_SetPuzzleHoOhBackShiny {
+    setmetatile(7, 12, METATILE_Building_Void, TRUE)
+    setmetatile(8, 12, METATILE_Building_Void, TRUE)
+    setmetatile(9, 12, METATILE_Building_Void, TRUE)
+    setmetatile(7, 13, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(8, 13, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(9, 13, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(7, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE)
+    setmetatile(8, 14, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+    setmetatile(9, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE)
+    setmetatile(7, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE)
+    setmetatile(9, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE)
+}

@@ -594,7 +594,7 @@
 #define FLAG_SOLVED_WHIRLPOOL_ISLANDS                    0x239
 #define FLAG_SOLVED_EUSINE                               0x23A
 #define FLAG_SOLVED_LUGIA                                0x23B
-#define FLAG_RESCUED_MR_FUJI                             0x23C
+#define FLAG_SOLVED_HO_OH_BACK_SHINY                     0x23C
 #define FLAG_GOT_POKE_FLUTE                              0x23D
 #define FLAG_0x23E                                       0x23E
 #define FLAG_GOT_TM28_FROM_ROCKET                        0x23F

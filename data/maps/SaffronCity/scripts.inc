@@ -4,7 +4,7 @@ SaffronCity_MapScripts::
 
 SaffronCity_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_SAFFRON_CITY
-	call_if_unset FLAG_RESCUED_MR_FUJI, SaffronCity_EventScript_MoveDoorGuardGrunt
+	@call_if_unset FLAG_SOLVED_HO_OH_BACK_SHINY, SaffronCity_EventScript_MoveDoorGuardGrunt
 	end
 
 SaffronCity_EventScript_MoveDoorGuardGrunt::
@@ -41,7 +41,7 @@ SaffronCity_EventScript_RocketGrunt7::
 
 SaffronCity_EventScript_DoorGuardGrunt::
 	lock
-	goto_if_set FLAG_RESCUED_MR_FUJI, SaffronCity_EventScript_DoorGuardAsleep
+	@goto_if_set FLAG_SOLVED_HO_OH_BACK_SHINY, SaffronCity_EventScript_DoorGuardAsleep
 	applymovement LOCALID_SAFFRON_DOOR_GUARD_GRUNT, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox SaffronCity_Text_ImASecurityGuard

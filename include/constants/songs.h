@@ -284,7 +284,7 @@
 #define MUS_JIGGLYPUFF            276 // MUS_PURIN
 #define MUS_INTRO_FIGHT           277 // MUS_DEMO
 #define MUS_TITLE                 278 // MUS_TITLE
-#define MUS_CINNABAR              279 // MUS_GUREN
+#define MUS_PUZZLE_DEDUCTIONS     279 // MUS_GUREN
 #define MUS_PUZZLE_TOWER          280 // MUS_SHION
 #define MUS_HEAL_UNUSED           281 // MUS_KAIHUKU
 #define MUS_CYCLING               282 // MUS_CYCLING

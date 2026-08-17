@@ -1,18 +1,23 @@
 #ifndef GUARD_CONSTANTS_SLIDING_BLOCKS_H
 #define GUARD_CONSTANTS_SLIDING_BLOCKS_H
 
-#define SLIDING_LAYOUT_TEST_HO_OH          0
-#define SLIDING_LAYOUT_VOLTORB             1
-#define SLIDING_LAYOUT_ELECTRODE           2
-#define SLIDING_LAYOUT_NUMBERS_1           3
-#define SLIDING_LAYOUT_NUMBERS_1234        4
-#define SLIDING_LAYOUT_NUMBERS_3X3         5
-#define SLIDING_LAYOUT_NUMBERS_REDS_ROUND  6
-#define SLIDING_LAYOUT_NUMBERS_69          7
-#define SLIDING_LAYOUT_BIRDS               8
-#define SLIDING_LAYOUT_HO_OH_BACK          9
-#define SLIDING_LAYOUT_WHIRLPOOL_ISLANDS  10
-#define SLIDING_LAYOUT_LUGIA              11
-#define SLIDING_LAYOUT_EUSINE             12
+#define SLIDING_LAYOUT_TEST_HO_OH                     0
+#define SLIDING_LAYOUT_VOLTORB                        1
+#define SLIDING_LAYOUT_ELECTRODE                      2
+#define SLIDING_LAYOUT_NUMBERS_1                      3
+#define SLIDING_LAYOUT_NUMBERS_1234                   4
+#define SLIDING_LAYOUT_NUMBERS_3X3                    5
+#define SLIDING_LAYOUT_NUMBERS_REDS_ROUND             6
+#define SLIDING_LAYOUT_NUMBERS_69                     7
+#define SLIDING_LAYOUT_BIRDS                          8
+#define SLIDING_LAYOUT_HO_OH_BACK                     9
+#define SLIDING_LAYOUT_WHIRLPOOL_ISLANDS             10
+#define SLIDING_LAYOUT_LUGIA                         11
+#define SLIDING_LAYOUT_EUSINE                        12
+#define SLIDING_LAYOUT_HO_OH_BACK_SHINY              13
+#define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_1 14
+#define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_2 15
+#define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_3 16
+#define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_4 17
 
 #endif

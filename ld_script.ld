@@ -897,7 +897,7 @@ SECTIONS {
         sound/songs/midi/mus_jigglypuff.o(.rodata);
         sound/songs/midi/mus_intro_fight.o(.rodata);
         sound/songs/midi/mus_title.o(.rodata);
-        sound/songs/midi/mus_cinnabar.o(.rodata);
+        sound/songs/midi/mus_puzzle_deductions.o(.rodata);
         sound/songs/midi/mus_puzzle_tower.o(.rodata);
         sound/songs/midi/mus_heal_unused.o(.rodata);
         sound/songs/midi/mus_cycling.o(.rodata);

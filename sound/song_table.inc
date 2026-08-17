@@ -278,7 +278,7 @@ gSongTable::
 	song mus_jigglypuff, 2, 2
 	song mus_intro_fight, 0, 0
 	song mus_title, 0, 0
-	song mus_cinnabar, 0, 0
+	song mus_puzzle_deductions, 0, 0
 	song mus_puzzle_tower, 0, 0
 	song mus_heal_unused, 0, 0
 	song mus_cycling, 0, 0

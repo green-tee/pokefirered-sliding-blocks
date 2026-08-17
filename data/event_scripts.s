@@ -544,7 +544,7 @@ gStdScriptsEnd::
 	.include "data/maps/UndergroundPath_SouthEntrance/text.inc"
 	.include "data/maps/UndergroundPath_WestEntrance/text.inc"
 	.include "data/maps/UndergroundPath_EastEntrance/text.inc"
-	.include "data/maps/DiglettsCave_NorthEntrance/text.inc"
+	.include "data/maps/DiglettsCave_B1F/text.inc"
 	.include "data/maps/DiglettsCave_SouthEntrance/text.inc"
 	.include "data/maps/VictoryRoad_1F/text.inc"
 	.include "data/maps/VictoryRoad_2F/text.inc"

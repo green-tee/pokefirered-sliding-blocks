@@ -76,22 +76,25 @@
 #define METATILE_GenericBuilding1_PlayersPCOn   0x28A
 
 // gTileset_Lab
-#define METATILE_Lab_PuzzlePalace_AboveDoor           0x29A
-#define METATILE_Lab_PuzzlePalace_AboveDoorLeft       0x290
-#define METATILE_Lab_PuzzlePalace_AboveDoorRight      0x291
-#define METATILE_Lab_PuzzlePalace_Corner_FacingRight  0x294
-#define METATILE_Lab_PuzzlePalace_DoorLeft            0x298
-#define METATILE_Lab_PuzzlePalace_DoorRight           0x299
-#define METATILE_Lab_PuzzlePalace_DoorTop             0x28F
-#define METATILE_Lab_PuzzlePalace_DoorTopLeft         0x296
-#define METATILE_Lab_PuzzlePalace_DoorTopRight        0x297
-#define METATILE_Lab_PuzzlePalace_Tile                0x280
-#define METATILE_Lab_PuzzlePalace_TileShaded          0x281
-#define METATILE_Lab_PuzzlePalace_Upstairs            0x286
-#define METATILE_Lab_PuzzlePalace_Wall_Bottom         0x28B
-#define METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle   0x28C
-#define METATILE_Lab_PuzzlePalace_Wall_Top            0x283
-#define METATILE_Lab_PuzzlePalace_Wall_TopPuzzle      0x284
+#define METATILE_Lab_PuzzlePalace_AboveDoor                  0x29A
+#define METATILE_Lab_PuzzlePalace_AboveDoorLeft              0x290
+#define METATILE_Lab_PuzzlePalace_AboveDoorRight             0x291
+#define METATILE_Lab_PuzzlePalace_Corner_FacingRight         0x294
+#define METATILE_Lab_PuzzlePalace_DoorLeft                   0x298
+#define METATILE_Lab_PuzzlePalace_DoorRight                  0x299
+#define METATILE_Lab_PuzzlePalace_DoorTop                    0x28F
+#define METATILE_Lab_PuzzlePalace_DoorTopLeft                0x296
+#define METATILE_Lab_PuzzlePalace_DoorTopRight               0x297
+#define METATILE_Lab_PuzzlePalace_SmallTree_Bottom           0x2AC
+#define METATILE_Lab_PuzzlePalace_SmallTree_Top              0x2A4
+#define METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom  0x2A7
+#define METATILE_Lab_PuzzlePalace_Tile                       0x280
+#define METATILE_Lab_PuzzlePalace_TileShaded                 0x281
+#define METATILE_Lab_PuzzlePalace_Upstairs                   0x286
+#define METATILE_Lab_PuzzlePalace_Wall_Bottom                0x28B
+#define METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle          0x28C
+#define METATILE_Lab_PuzzlePalace_Wall_Top                   0x283
+#define METATILE_Lab_PuzzlePalace_Wall_TopPuzzle             0x284
 
 // gTileset_LavenderTown
 #define METATILE_LavenderTown_Door  0x2A2

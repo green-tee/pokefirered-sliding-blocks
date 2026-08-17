@@ -204,6 +204,7 @@ static const u32 sSpriteTiles_HoOhBack[] = INCBIN_U32("graphics/sliding_blocks/p
 static const u32 sSpriteTiles_WhirlpoolIslands[] = INCBIN_U32("graphics/sliding_blocks/puzzle_whirlpool_islands.4bpp.lz");
 static const u32 sSpriteTiles_Lugia[] = INCBIN_U32("graphics/sliding_blocks/puzzle_lugia.4bpp.lz");
 static const u32 sSpriteTiles_Eusine[] = INCBIN_U32("graphics/sliding_blocks/puzzle_eusine.4bpp.lz");
+static const u32 sSpriteTiles_HoOhBackShiny[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh_back_shiny.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
@@ -214,6 +215,7 @@ static const u16 sSpritePal_HoOhBack[] = INCBIN_U16("graphics/sliding_blocks/puz
 static const u16 sSpritePal_WhirlpoolIslands[] = INCBIN_U16("graphics/sliding_blocks/puzzle_whirlpool_islands.gbapal");
 static const u16 sSpritePal_Lugia[] = INCBIN_U16("graphics/sliding_blocks/puzzle_lugia.gbapal");
 static const u16 sSpritePal_Eusine[] = INCBIN_U16("graphics/sliding_blocks/puzzle_eusine.gbapal");
+static const u16 sSpritePal_HoOhBackShiny[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh_back_shiny.gbapal");
 
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
 static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
@@ -580,6 +582,141 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
             .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 1} // Where 15 is
         },
         .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_HO_OH_BACK_SHINY] = {
+        .spriteSheet = sSpriteTiles_HoOhBackShiny,
+        .palette = sSpritePal_HoOhBackShiny,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 5,  3,  6, 15},
+                {10, 13,  2, 12},
+                { 1, 11,  7,  0},
+                { 4, 14,  8,  9}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 1} // Where 12 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_1] = {
+        .spriteSheet = sSpriteTiles_HoOhBackShiny,
+        .palette = sSpritePal_HoOhBackShiny,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 5,  9, 13,  7},
+                { 2, 15, 11, 12},
+                { 1,  0,  8,  3},
+                {14,  4, 10,  6}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 1} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_2] = {
+        .spriteSheet = sSpriteTiles_HoOhBackShiny,
+        .palette = sSpritePal_HoOhBackShiny,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {13, 10,  5,  3},
+                {15,  2,  8, 12},
+                { 0, 11,  4,  7},
+                { 9,  1,  6, 14}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 1} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_3] = {
+        .spriteSheet = sSpriteTiles_HoOhBackShiny,
+        .palette = sSpritePal_HoOhBackShiny,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15,  0,  5,  1},
+                { 4,  9,  3, 12},
+                {14, 10, 11,  6},
+                { 8, 13,  7,  2}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 1} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_4] = {
+        .spriteSheet = sSpriteTiles_HoOhBackShiny,
+        .palette = sSpritePal_HoOhBackShiny,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  9,  3, 15},
+                { 1, 14, 13, 12},
+                { 5,  7, 10, 11},
+                { 8,  6,  4,  2}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 1} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
     }
 
 };
