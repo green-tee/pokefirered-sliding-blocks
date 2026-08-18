@@ -292,7 +292,7 @@
 #define MUS_ENCOUNTER_GIRL        284 // MUS_SHOUJO
 #define MUS_ENCOUNTER_BOY         285 // MUS_SHOUNEN
 #define MUS_HALL_OF_FAME          286 // MUS_DENDOU
-#define MUS_VIRIDIAN_FOREST       287 // MUS_T_MORI
+#define MUS_PUZZLE_LOST_WOODS     287 // MUS_T_MORI
 #define MUS_MT_MOON               288 // MUS_OTSUKIMI
 #define MUS_POKE_MANSION          289 // MUS_POKEYASHI
 #define MUS_CREDITS               290 // MUS_ENDING

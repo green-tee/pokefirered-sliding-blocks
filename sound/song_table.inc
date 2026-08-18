@@ -286,7 +286,7 @@ gSongTable::
 	song mus_encounter_girl, 0, 0
 	song mus_encounter_boy, 0, 0
 	song mus_hall_of_fame, 0, 0
-	song mus_viridian_forest, 0, 0
+	song mus_puzzle_lost_woods, 0, 0
 	song mus_mt_moon, 0, 0
 	song mus_poke_mansion, 0, 0
 	song mus_credits, 0, 0
