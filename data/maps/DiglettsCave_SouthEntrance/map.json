@@ -17,33 +17,747 @@
   "object_events": [
     {
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
-      "x": 4,
-      "y": 4,
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 13,
+      "y": 26,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
-      "movement_range_x": 1,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft1",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 15,
+      "y": 26,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp1",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 22,
+      "y": 26,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown1",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 24,
+      "y": 26,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight1",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 13,
+      "y": 52,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft2",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 15,
+      "y": 52,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp2",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 22,
+      "y": 52,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown2",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 24,
+      "y": 52,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight2",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 13,
+      "y": 78,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft3",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 15,
+      "y": 78,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp3",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 22,
+      "y": 78,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown3",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 24,
+      "y": 78,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight3",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 13,
+      "y": 104,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft4",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 15,
+      "y": 104,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp4",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 22,
+      "y": 104,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown4",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 24,
+      "y": 104,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight4",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 13,
+      "y": 130,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft5",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 15,
+      "y": 130,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp5",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 22,
+      "y": 130,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown5",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 24,
+      "y": 130,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight5",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 13,
+      "y": 156,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft6",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 15,
+      "y": 156,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp6",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 22,
+      "y": 156,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown6",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PSYDUCK",
+      "x": 24,
+      "y": 156,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight6",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_BUG_CATCHER",
+      "x": 3,
+      "y": 7,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
+      "movement_range_x": 2,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "DiglettsCave_SouthEntrance_EventScript_OldMan",
+      "script": "DiglettsCave_SouthEntrance_EventScript_LostBoy",
       "flag": "0"
     }
   ],
   "warp_events": [
     {
       "x": 4,
-      "y": 6,
+      "y": 2,
       "elevation": 3,
       "dest_map": "MAP_DIGLETTS_CAVE_B1F",
       "dest_warp_id": "1"
     },
     {
-      "x": 6,
-      "y": 4,
+      "x": 33,
+      "y": 2,
       "elevation": 3,
-      "dest_map": "MAP_DIGLETTS_CAVE_B1F",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_VICTORY_ROAD_1F",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 10,
+      "y": 31,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 10,
+      "y": 32,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 18,
+      "y": 26,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "16"
+    },
+    {
+      "x": 19,
+      "y": 26,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "17"
+    },
+    {
+      "x": 18,
+      "y": 37,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 19,
+      "y": 37,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 27,
+      "y": 31,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 27,
+      "y": 32,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 10,
+      "y": 57,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "10"
+    },
+    {
+      "x": 10,
+      "y": 58,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "11"
+    },
+    {
+      "x": 18,
+      "y": 52,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "8"
+    },
+    {
+      "x": 19,
+      "y": 52,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "9"
+    },
+    {
+      "x": 18,
+      "y": 63,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 19,
+      "y": 63,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 27,
+      "y": 57,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "20"
+    },
+    {
+      "x": 27,
+      "y": 58,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "21"
+    },
+    {
+      "x": 10,
+      "y": 83,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "10"
+    },
+    {
+      "x": 10,
+      "y": 84,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "11"
+    },
+    {
+      "x": 18,
+      "y": 78,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "8"
+    },
+    {
+      "x": 19,
+      "y": 78,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "9"
+    },
+    {
+      "x": 18,
+      "y": 89,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "30"
+    },
+    {
+      "x": 19,
+      "y": 89,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "31"
+    },
+    {
+      "x": 27,
+      "y": 83,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 27,
+      "y": 84,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 10,
+      "y": 109,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "10"
+    },
+    {
+      "x": 10,
+      "y": 110,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "11"
+    },
+    {
+      "x": 18,
+      "y": 104,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "8"
+    },
+    {
+      "x": 19,
+      "y": 104,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "9"
+    },
+    {
+      "x": 18,
+      "y": 115,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 19,
+      "y": 115,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 27,
+      "y": 109,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "36"
+    },
+    {
+      "x": 27,
+      "y": 110,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "37"
+    },
+    {
+      "x": 10,
+      "y": 135,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "50"
+    },
+    {
+      "x": 10,
+      "y": 136,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "51"
+    },
+    {
+      "x": 18,
+      "y": 130,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "8"
+    },
+    {
+      "x": 19,
+      "y": 130,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "9"
+    },
+    {
+      "x": 18,
+      "y": 141,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 19,
+      "y": 141,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 27,
+      "y": 135,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 27,
+      "y": 136,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 10,
+      "y": 161,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "10"
+    },
+    {
+      "x": 10,
+      "y": 162,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "11"
+    },
+    {
+      "x": 18,
+      "y": 156,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "52"
+    },
+    {
+      "x": 19,
+      "y": 156,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "53"
+    },
+    {
+      "x": 18,
+      "y": 167,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 19,
+      "y": 167,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 27,
+      "y": 161,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 27,
+      "y": 162,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 30,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "46"
+    },
+    {
+      "x": 31,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "47"
+    },
+    {
+      "x": 26,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "10"
+    },
+    {
+      "x": 26,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_DIGLETTS_CAVE_SOUTH_ENTRANCE",
+      "dest_warp_id": "11"
     }
   ],
   "coord_events": [],

@@ -205,6 +205,10 @@ static const u32 sSpriteTiles_WhirlpoolIslands[] = INCBIN_U32("graphics/sliding_
 static const u32 sSpriteTiles_Lugia[] = INCBIN_U32("graphics/sliding_blocks/puzzle_lugia.4bpp.lz");
 static const u32 sSpriteTiles_Eusine[] = INCBIN_U32("graphics/sliding_blocks/puzzle_eusine.4bpp.lz");
 static const u32 sSpriteTiles_HoOhBackShiny[] = INCBIN_U32("graphics/sliding_blocks/puzzle_ho_oh_back_shiny.4bpp.lz");
+static const u32 sSpriteTiles_ArrowUp[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_up.4bpp.lz");
+static const u32 sSpriteTiles_ArrowDown[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_down.4bpp.lz");
+static const u32 sSpriteTiles_ArrowLeft[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_left.4bpp.lz");
+static const u32 sSpriteTiles_ArrowRight[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_right.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
@@ -216,6 +220,7 @@ static const u16 sSpritePal_WhirlpoolIslands[] = INCBIN_U16("graphics/sliding_bl
 static const u16 sSpritePal_Lugia[] = INCBIN_U16("graphics/sliding_blocks/puzzle_lugia.gbapal");
 static const u16 sSpritePal_Eusine[] = INCBIN_U16("graphics/sliding_blocks/puzzle_eusine.gbapal");
 static const u16 sSpritePal_HoOhBackShiny[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh_back_shiny.gbapal");
+static const u16 sSpritePal_Arrow[] = INCBIN_U16("graphics/sliding_blocks/puzzle_arrow.gbapal");
 
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
 static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
@@ -717,15 +722,665 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
             .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 1} // Where 12 is
         },
         .winCondition = WinCondition_NeverWin
-    }
+    },
+
+    [SLIDING_LAYOUT_ARROW_UP_1] = {
+        .spriteSheet = sSpriteTiles_ArrowUp,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  8,  2,  5},
+                { 6, 13,  7,  4},
+                {12,  3, 10, 11},
+                { 9,  1, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_ARROW_UP_2] = {
+        .spriteSheet = sSpriteTiles_ArrowUp,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0, 12,  5,  7},
+                { 2,  4,  8,  9},
+                { 1,  6, 10, 11},
+                {13,  3, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_UP_3] = {
+        .spriteSheet = sSpriteTiles_ArrowUp,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  6, 13, 12},
+                { 8,  2,  7,  3},
+                { 5,  4, 10, 11},
+                { 1,  9, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_UP_4] = {
+        .spriteSheet = sSpriteTiles_ArrowUp,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  9,  2,  3},
+                {12,  1, 13,  7},
+                { 4,  5, 10, 11},
+                { 8,  6, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_UP_5] = {
+        .spriteSheet = sSpriteTiles_ArrowUp,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  2, 12,  3},
+                { 1,  4,  5,  9},
+                {13,  7, 10, 11},
+                { 6,  8, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_UP_6] = {
+        .spriteSheet = sSpriteTiles_ArrowUp,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  3,  7},
+                { 4,  6,  5, 12},
+                {13,  2, 10, 11},
+                { 9,  8, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_ARROW_DOWN_1] = {
+        .spriteSheet = sSpriteTiles_ArrowDown,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1, 10,  7},
+                { 4,  5,  6, 13},
+                {14,  9,  8, 11},
+                {12,  3,  2, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_DOWN_2] = {
+        .spriteSheet = sSpriteTiles_ArrowDown,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  7,  2},
+                { 4,  5, 13,  3},
+                { 8,  9, 14, 11},
+                {12, 10,  6, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_DOWN_3] = {
+        .spriteSheet = sSpriteTiles_ArrowDown,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1, 11,  9},
+                { 4,  5, 10,  7},
+                {12,  6,  3,  2},
+                {13,  8, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_ARROW_DOWN_4] = {
+        .spriteSheet = sSpriteTiles_ArrowDown,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  6, 10},
+                { 4,  5, 13, 12},
+                { 3,  7,  2,  9},
+                {14,  8, 11, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_DOWN_5] = {
+        .spriteSheet = sSpriteTiles_ArrowDown,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1, 13,  6},
+                { 4,  5,  2,  9},
+                {12, 10,  7, 14},
+                {11,  8,  3, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_DOWN_6] = {
+        .spriteSheet = sSpriteTiles_ArrowDown,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  6,  2},
+                { 4,  5, 13, 12},
+                { 8, 10, 14,  9},
+                { 7,  3, 11, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_LEFT_1] = {
+        .spriteSheet = sSpriteTiles_ArrowLeft,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {13,  0,  2,  3},
+                {14,  8,  6,  7},
+                { 9,  1, 15, 10},
+                {12,  4,  5, 11}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_LEFT_2] = {
+        .spriteSheet = sSpriteTiles_ArrowLeft,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 8,  1,  2,  3},
+                {13,  0,  6,  7},
+                {11, 14,  4,  5},
+                {12,  9, 10, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_LEFT_3] = {
+        .spriteSheet = sSpriteTiles_ArrowLeft,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15,  9,  2,  3},
+                { 5,  8,  6,  7},
+                { 0, 10, 11, 14},
+                {12,  4,  1, 13}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_LEFT_4] = {
+        .spriteSheet = sSpriteTiles_ArrowLeft,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 4, 10,  2,  3},
+                { 9, 11,  6,  7},
+                {15,  1,  8, 13},
+                {12, 14,  5,  0}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_LEFT_5] = {
+        .spriteSheet = sSpriteTiles_ArrowLeft,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15, 11,  2,  3},
+                {14, 10,  6,  7},
+                {13,  8,  5,  1},
+                {12,  9,  4,  0}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_ARROW_LEFT_6] = {
+        .spriteSheet = sSpriteTiles_ArrowLeft,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 4,  8,  2,  3},
+                {14, 11,  6,  7},
+                {15,  0,  1,  9},
+                {12, 10,  5, 13}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_RIGHT_1] = {
+        .spriteSheet = sSpriteTiles_ArrowRight,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 4,  5, 11,  3},
+                { 2,  1,  0,  6},
+                { 8,  9, 14, 10},
+                {12, 13, 15,  7}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_RIGHT_2] = {
+        .spriteSheet = sSpriteTiles_ArrowRight,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 1,  2,  7,  3},
+                { 0,  6, 15, 11},
+                { 8,  9, 10,  4},
+                {12, 13,  5, 14}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_ARROW_RIGHT_3] = {
+        .spriteSheet = sSpriteTiles_ArrowRight,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 5, 15, 14,  3},
+                { 0,  1,  4, 10},
+                { 8,  9,  7, 11},
+                {12, 13,  2,  6}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_RIGHT_4] = {
+        .spriteSheet = sSpriteTiles_ArrowRight,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 1,  0,  6,  3},
+                { 5,  4,  7,  2},
+                { 8,  9, 11, 10},
+                {12, 13, 15, 14}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_ARROW_RIGHT_5] = {
+        .spriteSheet = sSpriteTiles_ArrowRight,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {14,  1,  4,  3},
+                { 7, 10, 11,  5},
+                { 8,  9,  2,  6},
+                {12, 13, 15,  0}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_ARROW_RIGHT_6] = {
+        .spriteSheet = sSpriteTiles_ArrowRight,
+        .palette = sSpritePal_Arrow,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 4,  2, 11,  3},
+                { 1,  0,  5,  6},
+                { 8,  9, 15,  7},
+                {12, 13, 10, 14}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
 
 };
 
+/*
 static const u8 sReelIconBldY[] = {
     0x10, 0x10, 0x10, 0x10, 0x0f, 0x0e, 0x0d, 0x0d, 0x0c, 0x0b, 0x0a, 0x0a, 0x09, 0x08, 0x07, 0x07, 0x06, 0x05, 0x04, 0x04, 0x03, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x03, 0x04, 0x05, 0x06, 0x06, 0x07, 0x08, 0x09, 0x09, 0x0a, 0x0b, 0x0c, 0x0c, 0x0d, 0x0e, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f
 };
+*/
 
 enum TileAnimation {
     TILEANIM_DUMMY,

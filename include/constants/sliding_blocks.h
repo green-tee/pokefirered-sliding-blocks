@@ -19,5 +19,29 @@
 #define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_2 15
 #define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_3 16
 #define SLIDING_LAYOUT_HO_OH_BACK_SHINY_UNSOLVABLE_4 17
+#define SLIDING_LAYOUT_ARROW_UP_1                    18
+#define SLIDING_LAYOUT_ARROW_UP_2                    19
+#define SLIDING_LAYOUT_ARROW_UP_3                    20
+#define SLIDING_LAYOUT_ARROW_UP_4                    21
+#define SLIDING_LAYOUT_ARROW_UP_5                    22
+#define SLIDING_LAYOUT_ARROW_UP_6                    23
+#define SLIDING_LAYOUT_ARROW_DOWN_1                  24
+#define SLIDING_LAYOUT_ARROW_DOWN_2                  25
+#define SLIDING_LAYOUT_ARROW_DOWN_3                  26
+#define SLIDING_LAYOUT_ARROW_DOWN_4                  27
+#define SLIDING_LAYOUT_ARROW_DOWN_5                  28
+#define SLIDING_LAYOUT_ARROW_DOWN_6                  29
+#define SLIDING_LAYOUT_ARROW_LEFT_1                  30
+#define SLIDING_LAYOUT_ARROW_LEFT_2                  31
+#define SLIDING_LAYOUT_ARROW_LEFT_3                  32
+#define SLIDING_LAYOUT_ARROW_LEFT_4                  33
+#define SLIDING_LAYOUT_ARROW_LEFT_5                  34
+#define SLIDING_LAYOUT_ARROW_LEFT_6                  35
+#define SLIDING_LAYOUT_ARROW_RIGHT_1                 36
+#define SLIDING_LAYOUT_ARROW_RIGHT_2                 37
+#define SLIDING_LAYOUT_ARROW_RIGHT_3                 38
+#define SLIDING_LAYOUT_ARROW_RIGHT_4                 39
+#define SLIDING_LAYOUT_ARROW_RIGHT_5                 40
+#define SLIDING_LAYOUT_ARROW_RIGHT_6                 41
 
 #endif

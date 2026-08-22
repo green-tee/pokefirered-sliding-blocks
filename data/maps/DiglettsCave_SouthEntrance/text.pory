@@ -1,0 +1,61 @@
+text DiglettsCave_SouthEntrance_Text_1 {
+    "I"
+}
+
+text DiglettsCave_SouthEntrance_Text_2 {
+    "II"
+}
+
+text DiglettsCave_SouthEntrance_Text_3 {
+    "III"
+}
+
+text DiglettsCave_SouthEntrance_Text_4 {
+    "IV"
+}
+
+text DiglettsCave_SouthEntrance_Text_5 {
+    "V"
+}
+
+text DiglettsCave_SouthEntrance_Text_6 {
+    "VI"
+}
+
+text DiglettsCave_SouthEntrance_Text_Impossible1 {
+    "I\n"
+    "{FONT_SMALL}This puzzle is supposed to be impossible"
+}
+
+text DiglettsCave_SouthEntrance_Text_Impossible2 {
+    "II\n"
+    "{FONT_SMALL}This puzzle is supposed to be impossible"
+}
+
+text DiglettsCave_SouthEntrance_Text_Impossible3 {
+    "III\n"
+    "{FONT_SMALL}This puzzle is supposed to be impossible"
+}
+
+text DiglettsCave_SouthEntrance_Text_Impossible4 {
+    "IV\n"
+    "{FONT_SMALL}This puzzle is supposed to be impossible"
+}
+
+text DiglettsCave_SouthEntrance_Text_Impossible5 {
+    "V\n"
+    "{FONT_SMALL}This puzzle is supposed to be impossible"
+}
+
+text DiglettsCave_SouthEntrance_Text_Impossible6 {
+    "VI\n"
+    "{FONT_SMALL}This puzzle is supposed to be impossible"
+}
+
+text DiglettsCave_SouthEntrance_Text_KeepGoingLeft {
+    "I'm stuck, I can't figure out how to\n"
+    "traverse this floor.\p"
+    "If you're lost, keep going left and\n"
+    "you'll come back here eventually.\l"
+    "That much, I was able to find out."
+}

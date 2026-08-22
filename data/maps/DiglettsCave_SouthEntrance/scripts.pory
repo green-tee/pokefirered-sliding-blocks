@@ -1,0 +1,245 @@
+mapscripts DiglettsCave_SouthEntrance_MapScripts {}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp1 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_UP_1)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_1, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp2 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_UP_2)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible2, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp3 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_UP_3)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible3, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp4 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_UP_4)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible4, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp5 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_UP_5)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible5, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp6 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_UP_6)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_6, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown1 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_DOWN_1)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible1, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown2 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_DOWN_2)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible2, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown3 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_DOWN_3)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_3, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown4 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_DOWN_4)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible4, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown5 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_DOWN_5)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible5, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowDown6 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_DOWN_6)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible6, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft1 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_LEFT_1)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible1, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft2 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_LEFT_2)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible2, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft3 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_LEFT_3)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible3, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft4 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_LEFT_4)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible4, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft5 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_LEFT_5)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_5, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowLeft6 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_LEFT_6)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible6, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight1 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_RIGHT_1)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible1, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight2 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_RIGHT_2)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_2, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight3 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_RIGHT_3)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible3, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight4 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_RIGHT_4)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_4, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight5 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_RIGHT_5)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible5, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight6 {
+    lockall
+    playslidingblocks(SLIDING_LAYOUT_ARROW_RIGHT_6)
+    if (var(VAR_RESULT) != 0) {
+        msgbox(DiglettsCave_SouthEntrance_Text_Impossible6, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script DiglettsCave_SouthEntrance_EventScript_LostBoy {
+    msgbox(DiglettsCave_SouthEntrance_Text_KeepGoingLeft, MSGBOX_NPC)
+}
