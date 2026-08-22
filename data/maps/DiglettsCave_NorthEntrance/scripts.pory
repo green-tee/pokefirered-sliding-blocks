@@ -14,6 +14,10 @@ script DiglettsCave_NorthEntrance_OnLoad {
     }
 }
 
+script DiglettsCave_NorthEntrance_EventScript_FloorSign {
+    msgbox(DiglettsCave_NorthEntrance_Text_FloorName, MSGBOX_NPC)
+}
+
 script DiglettsCave_NorthEntrance_EventScript_PuzzleWhirlpoolIslands {
     if (!flag(FLAG_SOLVED_WHIRLPOOL_ISLANDS)) {
         lockall

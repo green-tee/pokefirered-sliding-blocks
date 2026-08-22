@@ -1,3 +1,8 @@
+text MtMoon_B2F_Text_FloorName {
+    "Floor II"
+    "-- VOLTORB Flip --"
+}
+
 text MtMoon_B2F_Text_MakeElectrode {
     "Make ELECTRODE."
 }

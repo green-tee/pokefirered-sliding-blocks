@@ -1,5 +1,9 @@
 mapscripts DiglettsCave_SouthEntrance_MapScripts {}
 
+script DiglettsCave_SouthEntrance_EventScript_FloorSign {
+    msgbox(DiglettsCave_SouthEntrance_Text_FloorName, MSGBOX_SIGN)
+}
+
 script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowUp1 {
     lockall
     playslidingblocks(SLIDING_LAYOUT_ARROW_UP_1)

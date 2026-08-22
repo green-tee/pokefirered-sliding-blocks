@@ -516,6 +516,7 @@ gStdScriptsEnd::
 
 	.include "data/maps/ViridianForest/text.inc"
 	.include "data/maps/MtMoon_1F/text.inc"
+	.include "data/maps/MtMoon_B1F/text.inc"
 	.include "data/maps/MtMoon_B2F/text.inc"
 	.include "data/maps/SSAnne_1F_Corridor/text.inc"
 	.include "data/maps/SSAnne_2F_Corridor/text.inc"
@@ -544,6 +545,7 @@ gStdScriptsEnd::
 	.include "data/maps/UndergroundPath_SouthEntrance/text.inc"
 	.include "data/maps/UndergroundPath_WestEntrance/text.inc"
 	.include "data/maps/UndergroundPath_EastEntrance/text.inc"
+	.include "data/maps/DiglettsCave_NorthEntrance/text.inc"
 	.include "data/maps/DiglettsCave_B1F/text.inc"
 	.include "data/maps/DiglettsCave_SouthEntrance/text.inc"
 	.include "data/maps/VictoryRoad_1F/text.inc"

@@ -1,0 +1,3 @@
+MtMoon_B1F_Text_FloorName::
+# 1 "data/maps/MtMoon_B1F/text.pory"
+	.string "-- The whole picture --$"

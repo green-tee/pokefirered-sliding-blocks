@@ -89,6 +89,7 @@
 #define METATILE_Lab_PuzzlePalace_SmallTree_Top              0x2A4
 #define METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom  0x2A7
 #define METATILE_Lab_PuzzlePalace_Tile                       0x280
+#define METATILE_Lab_PuzzlePalace_TileArrowUp                0x2C2
 #define METATILE_Lab_PuzzlePalace_TileShaded                 0x281
 #define METATILE_Lab_PuzzlePalace_Upstairs                   0x286
 #define METATILE_Lab_PuzzlePalace_Wall_Bottom                0x28B

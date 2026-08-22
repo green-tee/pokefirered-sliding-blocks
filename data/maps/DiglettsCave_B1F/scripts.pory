@@ -8,6 +8,10 @@ script DiglettsCave_B1F_OnLoad {
     }
 }
 
+script DiglettsCave_B1F_EventScript_FloorSign {
+    msgbox(DiglettsCave_B1F_Text_FloorName, MSGBOX_SIGN)
+}
+
 script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShiny {
     if (!flag(FLAG_SOLVED_HO_OH_BACK_SHINY)) {
         lockall
@@ -75,6 +79,7 @@ script DiglettsCave_B1F_EventScript_ClearPuzzleHoOhBackShiny {
     setmetatile(9, 14, METATILE_Lab_PuzzlePalace_DoorRight, TRUE)
     setmetatile(7, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
     setmetatile(9, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(8, 16, METATILE_Lab_PuzzlePalace_TileArrowUp, FALSE)
 }
 
 script DiglettsCave_B1F_EventScript_SetPuzzleHoOhBackShiny {
@@ -89,4 +94,5 @@ script DiglettsCave_B1F_EventScript_SetPuzzleHoOhBackShiny {
     setmetatile(9, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE)
     setmetatile(7, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE)
     setmetatile(9, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE)
+    setmetatile(8, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
 }

@@ -12,6 +12,10 @@ script MtMoon_B2F_OnLoad {
     }
 }
 
+script MtMoon_B2F_FloorSign {
+    msgbox(MtMoon_B2F_Text_FloorName, MSGBOX_SIGN)
+}
+
 script MtMoon_B2F_EventScript_PuzzleVoltorb {
     if (!flag(FLAG_SOLVED_VOLTORB)) {
         lockall

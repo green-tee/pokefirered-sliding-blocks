@@ -1,3 +1,8 @@
+text DiglettsCave_B1F_Text_FloorName {
+    "Floor IV"
+    "-- The eye of truth --"
+}
+
 text DiglettsCave_B1F_Text_ThisPuzzleIsUnsolvable {
     "This puzzle is supposed to be\n"
     "impossible."
