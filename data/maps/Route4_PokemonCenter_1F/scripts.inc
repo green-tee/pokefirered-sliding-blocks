@@ -23,7 +23,7 @@ Route4_PokemonCenter_1F_EventScript_Gentleman::
 Route4_PokemonCenter_1F_EventScript_MagikarpSalesman::
 	lock
 	faceplayer
-	goto_if_set FLAG_BOUGHT_MAGIKARP, Route4_PokemonCenter_1F_EventScript_AlreadyBoughtMagikarp
+	@goto_if_set FLAG_SOLVED_NUMBERS_MAGIC, Route4_PokemonCenter_1F_EventScript_AlreadyBoughtMagikarp
 	showmoneybox 0, 0
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, Route4_PokemonCenter_1F_EventScript_AskBuyMagikarpMale
@@ -93,7 +93,7 @@ Route4_PokemonCenter_1F_EventScript_EndPurchaseMagikarp::
 	end
 
 Route4_PokemonCenter_1F_EventScript_BoughtMagikarp::
-	setflag FLAG_BOUGHT_MAGIKARP
+	@setflag FLAG_SOLVED_NUMBERS_MAGIC
 	release
 	end
 

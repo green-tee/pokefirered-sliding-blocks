@@ -1,0 +1,909 @@
+mapscripts VictoryRoad_1F_MapScripts {
+    MAP_SCRIPT_ON_LOAD: VictoryRoad_1F_OnLoad
+}
+
+script VictoryRoad_1F_OnLoad {
+    if (flag(FLAG_SOLVED_ALAKAZAM)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleAlakazam)
+    }
+    if (flag(FLAG_SOLVED_SNORLAX)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleSnorlax)
+    } else {
+        call(VictoryRoad_1F_EventScript_BlockPathToPuzzleDugtrio)
+    }
+    if (flag(FLAG_SOLVED_DUGTRIO)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleDugtrio)
+        call(VictoryRoad_1F_EventScript_ClearPathToPuzzleRaichu)
+    } else {
+        setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_BLASTOISE, 11, 18)
+        call(VictoryRoad_1F_EventScript_ClearPuzzleBlastoise)
+    }
+    if (flag(FLAG_SOLVED_RAICHU)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleRaichu)
+    }
+    if (flag(FLAG_SOLVED_BLASTOISE)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleBlastoise)
+        call(VictoryRoad_1F_EventScript_ClearPathToPuzzleVenusaur)
+    }
+    if (flag(FLAG_SOLVED_VENUSAUR)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleVenusaur)
+        call(VictoryRoad_1F_EventScript_ClearPathToSouthWestPuzzles)
+    }
+    if (flag(FLAG_SOLVED_PIDGEOT)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzlePidgeot)
+    }
+    if (flag(FLAG_SOLVED_HITMONCHAN)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleHitmonchan)
+    }
+    if (flag(FLAG_SOLVED_GENGAR)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleGengar)
+    } else {
+        setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_WALREIN, 6, 2)
+        setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_STEELIX, 10, 2)
+        setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_HERACROSS, 14, 2)
+        call(VictoryRoad_1F_EventScript_ClearPuzzlesNorthWest)
+    }
+    if (flag(FLAG_SOLVED_CHARIZARD)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleCharizard)
+        call(VictoryRoad_1F_EventScript_ClearPathToNorthWestPuzzles)
+    }
+    if (flag(FLAG_SOLVED_WALREIN)) {
+        call(VictoryRoad_1F_EventScript_ClearPuzzleWalrein)
+    } else {
+        setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_SALAMENCE, 26, 5)
+    }
+    if (flag(FLAG_SOLVED_SALAMENCE)) {
+        if (!flag(FLAG_SOLVED_NUMBERS_MAGIC)) {
+            call(VictoryRoad_1F_EventScript_ClearPathToFinalPuzzle)
+        }
+    } else {
+        call(VictoryRoad_1F_EventScript_BlockPathToFinalPuzzle)
+        if (flag(FLAG_SOLVED_WALREIN)) {
+            call(VictoryRoad_1F_EventScript_SetPuzzleSalamence)
+        }
+    }
+}
+
+script VictoryRoad_1F_EventScript_FloorSign {
+    msgbox(VictoryRoad_1F_Text_FloorName, MSGBOX_SIGN)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleAlakazam {
+    if (!flag(FLAG_SOLVED_ALAKAZAM)) {
+        lockall
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
+        playslidingblocks(SLIDING_LAYOUT_ALAKAZAM)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_ALAKAZAM)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleAlakazam)
+            special(DrawWholeMapView)
+            msgbox(VictoryRoad_1F_Text_NothingHappened, MSGBOX_DEFAULT)
+            closemessage
+        }
+        releaseall
+    }
+}
+
+script VictoryRoad_1F_EventScript_PuzzleSnorlax {
+    if (!flag(FLAG_SOLVED_SNORLAX)) {
+        lockall
+        playbgm(MUS_PUZZLE_TUTORIAL, 0)
+        playslidingblocks(SLIDING_LAYOUT_SNORLAX)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_SNORLAX)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleSnorlax)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowClearPathToPuzzleDugtrio)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowClearPathToPuzzleDugtrio {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToPathToDugtrio)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    call(VictoryRoad_1F_EventScript_ClearPathToPuzzleDugtrio)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToSnorlax)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToPathToDugtrio {
+    walk_faster_right * 12
+    walk_faster_down * 2
+}
+
+movement VictoryRoad_1F_Movement_PanToSnorlax {
+    walk_faster_up * 2
+    walk_faster_left * 12
+}
+
+script(local) VictoryRoad_1F_EventScript_BlockPathToPuzzleDugtrio {
+    setmetatile(27, 23, METATILE_Building_Void, TRUE)
+    setmetatile(28, 23, METATILE_Building_Void, TRUE)
+    setmetatile(29, 23, METATILE_Building_Void, TRUE)
+    setmetatile(30, 23, METATILE_Building_Void, TRUE)
+    setmetatile(31, 23, METATILE_Building_Void, TRUE)
+    setmetatile(32, 23, METATILE_Building_Void, TRUE)
+    setmetatile(28, 24, METATILE_Building_Void, TRUE)
+    setmetatile(29, 24, METATILE_Building_Void, TRUE)
+    setmetatile(30, 24, METATILE_Building_Void, TRUE)
+    setmetatile(31, 24, METATILE_Building_Void, TRUE)
+    setmetatile(28, 25, METATILE_Building_Void, TRUE)
+    setmetatile(29, 25, METATILE_Building_Void, TRUE)
+    setmetatile(30, 25, METATILE_Building_Void, TRUE)
+    setmetatile(31, 25, METATILE_Building_Void, TRUE)
+    setmetatile(28, 26, METATILE_Building_Void, TRUE)
+    setmetatile(29, 26, METATILE_Building_Void, TRUE)
+    setmetatile(30, 26, METATILE_Building_Void, TRUE)
+    setmetatile(31, 26, METATILE_Building_Void, TRUE)
+    setmetatile(32, 26, METATILE_Building_Void, TRUE)
+    setmetatile(28, 27, METATILE_Building_Void, TRUE)
+    setmetatile(29, 27, METATILE_Building_Void, TRUE)
+    setmetatile(30, 27, METATILE_Building_Void, TRUE)
+    setmetatile(31, 27, METATILE_Building_Void, TRUE)
+    setmetatile(32, 27, METATILE_Building_Void, TRUE)
+    setmetatile(33, 27, METATILE_Building_Void, TRUE)
+    setmetatile(34, 27, METATILE_Building_Void, TRUE)
+    setmetatile(35, 27, METATILE_Building_Void, TRUE)
+    setmetatile(36, 27, METATILE_Building_Void, TRUE)
+    setmetatile(37, 27, METATILE_Building_Void, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPathToPuzzleDugtrio {
+    setmetatile(27, 23, METATILE_Lab_PuzzlePalace_TileCornerSouthWest, TRUE)
+    setmetatile(28, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(29, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(30, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(31, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(32, 23, METATILE_Lab_PuzzlePalace_TileCornerSouthEast, TRUE)
+    setmetatile(28, 24, METATILE_Lab_PuzzlePalace_LedgeLeft, TRUE)
+    setmetatile(29, 24, METATILE_Lab_PuzzlePalace_Ledge, TRUE)
+    setmetatile(30, 24, METATILE_Lab_PuzzlePalace_Ledge, TRUE)
+    setmetatile(31, 24, METATILE_Lab_PuzzlePalace_LedgeRight, TRUE)
+    setmetatile(28, 25, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(29, 25, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(30, 25, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(31, 25, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(28, 26, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(29, 26, METATILE_Lab_PuzzlePalace_TallGrass, FALSE)
+    setmetatile(30, 26, METATILE_Lab_PuzzlePalace_TallGrass, FALSE)
+    setmetatile(31, 26, METATILE_Lab_PuzzlePalace_TallGrass, FALSE)
+    setmetatile(32, 26, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthEast, TRUE)
+    setmetatile(28, 27, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(29, 27, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(30, 27, METATILE_Lab_PuzzlePalace_TallGrass, FALSE)
+    setmetatile(31, 27, METATILE_Lab_PuzzlePalace_TallGrass, FALSE)
+    setmetatile(32, 27, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthEast, TRUE)
+    setmetatile(33, 27, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(34, 27, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(35, 27, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(36, 27, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(37, 27, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleDugtrio {
+    if (!flag(FLAG_SOLVED_DUGTRIO)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_DUGTRIO)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_DUGTRIO)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleDugtrio)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowSetPuzzleBlastoiseAndClearPathToPuzzleRaichu)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowSetPuzzleBlastoiseAndClearPathToPuzzleRaichu {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToBlastoiseFromDugtrio)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_BLASTOISE, 11, 19)
+    call(VictoryRoad_1F_EventScript_SetPuzzleBlastoise)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToPathToRaichu)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    call(VictoryRoad_1F_EventScript_ClearPathToPuzzleRaichu)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToDugtrio)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToBlastoiseFromDugtrio {
+    walk_faster_down * 3
+    walk_faster_left * 28
+}
+
+movement VictoryRoad_1F_Movement_PanToPathToRaichu {
+    walk_faster_right * 19
+    walk_faster_down * 9
+}
+
+movement VictoryRoad_1F_Movement_PanToDugtrio {
+    walk_faster_right * 9
+    walk_faster_up * 12
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPathToPuzzleRaichu {
+    setmetatile(30, 30, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(31, 30, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(32, 30, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(33, 30, METATILE_Lab_PuzzlePalace_TileCornerSouthEastShaded, TRUE)
+    setmetatile(30, 31, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(31, 31, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(32, 31, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(30, 32, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(31, 32, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(32, 32, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(30, 33, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(31, 33, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(32, 33, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(30, 34, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(31, 34, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(32, 34, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(30, 35, METATILE_Lab_PuzzlePalace_LedgeLeft, TRUE)
+    setmetatile(31, 35, METATILE_Lab_PuzzlePalace_Ledge, TRUE)
+    setmetatile(32, 35, METATILE_Lab_PuzzlePalace_LedgeRight, TRUE)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleRaichu {
+    if (!flag(FLAG_SOLVED_RAICHU)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_RAICHU)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_RAICHU)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleRaichu)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script VictoryRoad_1F_EventScript_PuzzleBlastoise {
+    if (!flag(FLAG_SOLVED_BLASTOISE)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_BLASTOISE)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_BLASTOISE)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleBlastoise)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowClearPathToPuzzleVenusaur)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowClearPathToPuzzleVenusaur {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToPathToVenusaur)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    call(VictoryRoad_1F_EventScript_ClearPathToPuzzleVenusaur)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToBlastoiseFromVenusaur)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToPathToVenusaur {
+    walk_faster_right * 6
+}
+
+movement VictoryRoad_1F_Movement_PanToBlastoiseFromVenusaur {
+    walk_faster_left * 6
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPathToPuzzleVenusaur {
+    setmetatile(13, 12, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(14, 12, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(15, 12, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(13, 13, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(14, 13, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(15, 13, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(13, 14, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(14, 14, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(15, 14, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(16, 14, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(13, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(14, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(15, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(16, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    //setmetatile(15, 16, METATILE_Lab_PuzzlePalace_TileCornerSouthWest, TRUE)
+    setmetatile(16, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(18, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(15, 17, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthWest, TRUE)
+    setmetatile(16, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(18, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 17, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthEast, TRUE)
+    setmetatile(15, 18, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthWest, TRUE)
+    setmetatile(16, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(18, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 18, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthEast, TRUE)
+    setmetatile(15, 19, METATILE_Lab_PuzzlePalace_Corner_FacingLeftShaded, TRUE)
+    setmetatile(16, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(18, 19, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 19, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+    setmetatile(14, 20, METATILE_Lab_PuzzlePalace_TreeMiddleRight, TRUE)
+    setmetatile(15, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(19, 20, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(20, 20, METATILE_Lab_PuzzlePalace_TreeMiddleLeft, TRUE)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleVenusaur {
+    if (!flag(FLAG_SOLVED_VENUSAUR)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_VENUSAUR)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_VENUSAUR)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleVenusaur)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowClearPathToSouthWestPuzzles)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowClearPathToSouthWestPuzzles {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToPathToSouthWest)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    call(VictoryRoad_1F_EventScript_ClearPathToSouthWestPuzzles)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToVenusaur)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToPathToSouthWest {
+    walk_faster_down * 9
+    walk_faster_left
+}
+
+movement VictoryRoad_1F_Movement_PanToVenusaur {
+    walk_faster_right
+    walk_faster_up * 9
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPathToSouthWestPuzzles {
+    setmetatile(9, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(12, 23, METATILE_Lab_PuzzlePalace_TileCornerSouthEast, TRUE)
+    setmetatile(9, 24, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 24, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 24, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(9, 25, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 25, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 25, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(9, 26, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 26, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 26, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(9, 27, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 27, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 27, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(9, 28, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 28, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 28, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(9, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(9, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(10, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(11, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(12, 30, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleGolem {
+    lockall
+    playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+    playslidingblocks(SLIDING_LAYOUT_GOLEM)
+    fadedefaultbgm
+    if (var(VAR_RESULT) != 0) {
+        msgbox(VictoryRoad_1F_Text_ImpossibleNothingHappened, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script VictoryRoad_1F_EventScript_PuzzleMuk {
+    lockall
+    playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+    playslidingblocks(SLIDING_LAYOUT_MUK)
+    fadedefaultbgm
+    if (var(VAR_RESULT) != 0) {
+        msgbox(VictoryRoad_1F_Text_ImpossibleNothingHappened, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script VictoryRoad_1F_EventScript_PuzzleHoundoom {
+    lockall
+    playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+    playslidingblocks(SLIDING_LAYOUT_HOUNDOOM)
+    fadedefaultbgm
+    if (var(VAR_RESULT) != 0) {
+        msgbox(VictoryRoad_1F_Text_ImpossibleNothingHappened, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script VictoryRoad_1F_EventScript_PuzzlePidgeot {
+    if (!flag(FLAG_SOLVED_PIDGEOT)) {
+        lockall
+        playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+        playslidingblocks(SLIDING_LAYOUT_PIDGEOT)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_PIDGEOT)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzlePidgeot)
+            special(DrawWholeMapView)
+            msgbox(VictoryRoad_1F_Text_NothingHappened, MSGBOX_DEFAULT)
+            closemessage
+        }
+        releaseall
+    }
+}
+
+script VictoryRoad_1F_EventScript_PuzzleHitmonchan {
+    if (!flag(FLAG_SOLVED_HITMONCHAN)) {
+        lockall
+        playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+        playslidingblocks(SLIDING_LAYOUT_HITMONCHAN)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_HITMONCHAN)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleHitmonchan)
+            special(DrawWholeMapView)
+            msgbox(VictoryRoad_1F_Text_NothingHappened, MSGBOX_DEFAULT)
+            closemessage
+        }
+        releaseall
+    }
+}
+
+script VictoryRoad_1F_EventScript_PuzzleGengar {
+    if (!flag(FLAG_SOLVED_GENGAR)) {
+        lockall
+        playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+        playslidingblocks(SLIDING_LAYOUT_GENGAR)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_GENGAR)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleGengar)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowSetPuzzlesNorthWest)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowSetPuzzlesNorthWest {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToNorthWestFromGengar)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_WALREIN, 6, 3)
+    setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_STEELIX, 10, 3)
+    setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_HERACROSS, 14, 3)
+    call(VictoryRoad_1F_EventScript_SetPuzzlesNorthWest)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToGengar)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToNorthWestFromGengar {
+    walk_faster_up * 36
+}
+
+movement VictoryRoad_1F_Movement_PanToGengar {
+    walk_faster_down * 36
+}
+
+script(local) VictoryRoad_1F_EventScript_SetPuzzlesNorthWest {
+    call(VictoryRoad_1F_EventScript_SetPuzzleWalrein)
+    call(VictoryRoad_1F_EventScript_SetPuzzleSteelix)
+    call(VictoryRoad_1F_EventScript_SetPuzzleHeracross)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzlesNorthWest {
+    call(VictoryRoad_1F_EventScript_ClearPuzzleWalrein)
+    call(VictoryRoad_1F_EventScript_ClearPuzzleSteelix)
+    call(VictoryRoad_1F_EventScript_ClearPuzzleHeracross)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleCharizard {
+    if (!flag(FLAG_SOLVED_CHARIZARD)) {
+        lockall
+        playbgm(MUS_PUZZLE_LOST_WOODS, 0)
+        playslidingblocks(SLIDING_LAYOUT_CHARIZARD)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_CHARIZARD)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleCharizard)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowClearPathToNorthWestPuzzles)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowClearPathToNorthWestPuzzles {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToPathToNorthWest)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    call(VictoryRoad_1F_EventScript_ClearPathToNorthWestPuzzles)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToCharizard)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToPathToNorthWest {
+    walk_faster_up * 18
+    walk_faster_right
+}
+
+movement VictoryRoad_1F_Movement_PanToCharizard {
+    walk_faster_left
+    walk_faster_down * 18
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPathToNorthWestPuzzles {
+    setmetatile(17, 10, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 11, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 12, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(17, 13, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(18, 13, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleSteelix {
+    lockall
+    playbgm(MUS_PUZZLE_DEDUCTIONS, 0)
+    playslidingblocks(SLIDING_LAYOUT_STEELIX)
+    fadedefaultbgm
+    if (var(VAR_RESULT) != 0) {
+        msgbox(VictoryRoad_1F_Text_ImpossibleNothingHappened, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script VictoryRoad_1F_EventScript_PuzzleHeracross {
+    lockall
+    playbgm(MUS_PUZZLE_DEDUCTIONS, 0)
+    playslidingblocks(SLIDING_LAYOUT_HERACROSS)
+    fadedefaultbgm
+    if (var(VAR_RESULT) != 0) {
+        msgbox(VictoryRoad_1F_Text_ImpossibleNothingHappened, MSGBOX_DEFAULT)
+        closemessage
+    }
+    releaseall
+}
+
+script VictoryRoad_1F_EventScript_PuzzleWalrein {
+    if (!flag(FLAG_SOLVED_WALREIN)) {
+        lockall
+        playbgm(MUS_PUZZLE_DEDUCTIONS, 0)
+        playslidingblocks(SLIDING_LAYOUT_WALREIN)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_WALREIN)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleWalrein)
+            special(DrawWholeMapView)
+            delay(30)
+            call(VictoryRoad_1F_EventScript_ShowSetPuzzleSalamence)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ShowSetPuzzleSalamence {
+    special(SpawnCameraObject)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToSalamence)
+    waitmovement(LOCALID_CAMERA)
+    delay(30)
+    playse(SE_UNLOCK)
+    setobjectxyperm(LOCALID_MASTEROFALLTRADES_PUZZLE_SALAMENCE, 26, 6)
+    call(VictoryRoad_1F_EventScript_SetPuzzleSalamence)
+    special(DrawWholeMapView)
+    delay(30)
+    applymovement(LOCALID_CAMERA, VictoryRoad_1F_Movement_PanToWalrein)
+    waitmovement(LOCALID_CAMERA)
+    special(RemoveCameraObject)
+}
+
+movement VictoryRoad_1F_Movement_PanToSalamence {
+    walk_faster_down * 3
+    walk_faster_right * 20
+}
+
+movement VictoryRoad_1F_Movement_PanToWalrein {
+    walk_faster_left * 20
+    walk_faster_up * 3
+}
+
+script VictoryRoad_1F_EventScript_PuzzleSalamence {
+    if (!flag(FLAG_SOLVED_SALAMENCE)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        playslidingblocks(SLIDING_LAYOUT_SALAMENCE)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(FLAG_SOLVED_SALAMENCE)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPathToFinalPuzzle)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_BlockPathToFinalPuzzle {
+    setmetatile(25, 3, METATILE_Building_Void, TRUE)
+    setmetatile(26, 3, METATILE_Building_Void, TRUE)
+    setmetatile(27, 3, METATILE_Building_Void, TRUE)
+    setmetatile(24, 4, METATILE_Building_Void, TRUE)
+    setmetatile(25, 4, METATILE_Building_Void, TRUE)
+    setmetatile(26, 4, METATILE_Building_Void, TRUE)
+    setmetatile(27, 4, METATILE_Building_Void, TRUE)
+    setmetatile(28, 4, METATILE_Building_Void, TRUE)
+    setmetatile(24, 5, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(25, 5, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(26, 5, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(27, 5, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(28, 5, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(24, 6, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(25, 6, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE)
+    setmetatile(26, 6, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(27, 6, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE)
+    setmetatile(28, 6, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(26, 7, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPathToFinalPuzzle {
+    setmetatile(25, 3, METATILE_Building_Void, TRUE)
+    setmetatile(26, 3, METATILE_Building_Void, TRUE)
+    setmetatile(27, 3, METATILE_Building_Void, TRUE)
+    setmetatile(24, 4, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthWest, TRUE)
+    setmetatile(25, 4, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(26, 4, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(27, 4, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(28, 4, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthEast, TRUE)
+    setmetatile(24, 5, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthWest, TRUE)
+    setmetatile(25, 5, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(26, 5, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+    setmetatile(27, 5, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(28, 5, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthEast, TRUE)
+    setmetatile(24, 6, METATILE_Lab_PuzzlePalace_Corner_FacingLeftShaded, TRUE)
+    setmetatile(25, 6, METATILE_Lab_PuzzlePalace_SmallTree_TopShaded, FALSE)
+    setmetatile(26, 6, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(27, 6, METATILE_Lab_PuzzlePalace_SmallTree_TopShaded, FALSE)
+    setmetatile(28, 6, METATILE_Lab_PuzzlePalace_Corner_FacingRightShaded, TRUE)
+    setmetatile(26, 7, METATILE_Lab_PuzzlePalace_TileArrowUp, FALSE)
+}
+
+script VictoryRoad_1F_EventScript_PuzzleNumbersMagic {
+    if (!flag(FLAG_SOLVED_NUMBERS_MAGIC)) {
+        lockall
+        playbgm(MUS_PUZZLE, 0)
+        msgbox(VictoryRoad_1F_Text_MagicSquare, MSGBOX_DEFAULT)
+        closemessage
+        playslidingblocks(SLIDING_LAYOUT_NUMBERS_MAGIC)
+        fadedefaultbgm
+        if (var(VAR_RESULT) != 0) {
+            setflag(SLIDING_LAYOUT_NUMBERS_MAGIC)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_1F_EventScript_ClearPuzzleNumbersMagic)
+            special(DrawWholeMapView)
+        }
+        releaseall
+    }
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleAlakazam {
+    setmetatile(23, 18, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(23, 19, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleSnorlax {
+    setmetatile(17, 18, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(17, 19, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleDugtrio {
+    setmetatile(39, 15, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(39, 16, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleRaichu {
+    setmetatile(41, 29, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(36, 30, METATILE_Lab_PuzzlePalace_TileCornerSouthWestShaded, TRUE)
+    setmetatile(37, 30, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(37, 31, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 31, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 31, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 31, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 31, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(37, 32, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 32, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 32, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 32, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 32, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(37, 33, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 33, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 33, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 33, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 33, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(37, 34, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 34, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 34, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 34, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 34, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(37, 35, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 35, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 35, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 35, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 35, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(37, 36, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(38, 36, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(39, 36, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(40, 36, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(41, 36, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+}
+
+script(local) VictoryRoad_1F_EventScript_SetPuzzleBlastoise {
+    setmetatile(11, 18, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(11, 19, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleBlastoise {
+    setmetatile(11, 18, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(11, 19, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleVenusaur {
+    setmetatile(11, 11, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(11, 12, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzlePidgeot {
+    setmetatile(6, 29, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(6, 30, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleHitmonchan {
+    setmetatile(8, 38, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(8, 39, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleGengar {
+    setmetatile(10, 38, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(10, 39, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleCharizard {
+    setmetatile(16, 29, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(16, 30, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_SetPuzzleSteelix {
+    setmetatile(10, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(10, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleSteelix {
+    setmetatile(10, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(10, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_SetPuzzleHeracross {
+    setmetatile(14, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(14, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleHeracross {
+    setmetatile(14, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(14, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_SetPuzzleWalrein {
+    setmetatile(6, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(6, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleWalrein {
+    setmetatile(6, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(6, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_SetPuzzleSalamence {
+    setmetatile(26, 5, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(26, 6, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+}
+
+script(local) VictoryRoad_1F_EventScript_ClearPuzzleNumbersMagic {
+    setmetatile(25, 3, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE)
+    setmetatile(26, 3, METATILE_Lab_PuzzlePalace_DoorTop, TRUE)
+    setmetatile(27, 3, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE)
+    setmetatile(25, 4, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE)
+    setmetatile(26, 4, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE)
+    setmetatile(27, 4, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE)
+    setmetatile(25, 5, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE)
+    setmetatile(26, 5, METATILE_Lab_PuzzlePalace_Upstairs, FALSE)
+    setmetatile(27, 5, METATILE_Lab_PuzzlePalace_DoorRight, TRUE)
+}

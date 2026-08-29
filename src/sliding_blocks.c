@@ -182,6 +182,7 @@ static bool32 WinCondition_AllCorrectOrientations(const struct SlidingBlocksLayo
 static bool32 WinCondition_AllCorrectPlacesAndOrientations(const struct SlidingBlocksLayout *layout);
 static bool32 WinCondition_TopLeftCorrectPlace(const struct SlidingBlocksLayout *layout);
 static bool32 WinCondition_TopRowCorrectPlaces(const struct SlidingBlocksLayout *layout);
+static bool32 WinCondition_MagicSquare(const struct SlidingBlocksLayout *layout);
 static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout);
 
 static const u8 sString_SlidingBlocksControlsArrows[] = _("{SELECT_BUTTON}Mode {DPAD_ANY}Slide {B_BUTTON}Give up");
@@ -209,6 +210,24 @@ static const u32 sSpriteTiles_ArrowUp[] = INCBIN_U32("graphics/sliding_blocks/pu
 static const u32 sSpriteTiles_ArrowDown[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_down.4bpp.lz");
 static const u32 sSpriteTiles_ArrowLeft[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_left.4bpp.lz");
 static const u32 sSpriteTiles_ArrowRight[] = INCBIN_U32("graphics/sliding_blocks/puzzle_arrow_right.4bpp.lz");
+static const u32 sSpriteTiles_Snorlax[] = INCBIN_U32("graphics/sliding_blocks/puzzle_snorlax.4bpp.lz");
+static const u32 sSpriteTiles_Venusaur[] = INCBIN_U32("graphics/sliding_blocks/puzzle_venusaur.4bpp.lz");
+static const u32 sSpriteTiles_Charizard[] = INCBIN_U32("graphics/sliding_blocks/puzzle_charizard.4bpp.lz");
+static const u32 sSpriteTiles_Blastoise[] = INCBIN_U32("graphics/sliding_blocks/puzzle_blastoise.4bpp.lz");
+static const u32 sSpriteTiles_Raichu[] = INCBIN_U32("graphics/sliding_blocks/puzzle_raichu.4bpp.lz");
+static const u32 sSpriteTiles_Pidgeot[] = INCBIN_U32("graphics/sliding_blocks/puzzle_pidgeot.4bpp.lz");
+static const u32 sSpriteTiles_Heracross[] = INCBIN_U32("graphics/sliding_blocks/puzzle_heracross.4bpp.lz");
+static const u32 sSpriteTiles_Muk[] = INCBIN_U32("graphics/sliding_blocks/puzzle_muk.4bpp.lz");
+static const u32 sSpriteTiles_Dugtrio[] = INCBIN_U32("graphics/sliding_blocks/puzzle_dugtrio.4bpp.lz");
+static const u32 sSpriteTiles_Golem[] = INCBIN_U32("graphics/sliding_blocks/puzzle_golem.4bpp.lz");
+static const u32 sSpriteTiles_Steelix[] = INCBIN_U32("graphics/sliding_blocks/puzzle_steelix.4bpp.lz");
+static const u32 sSpriteTiles_Walrein[] = INCBIN_U32("graphics/sliding_blocks/puzzle_walrein.4bpp.lz");
+static const u32 sSpriteTiles_Hitmonchan[] = INCBIN_U32("graphics/sliding_blocks/puzzle_hitmonchan.4bpp.lz");
+static const u32 sSpriteTiles_Alakazam[] = INCBIN_U32("graphics/sliding_blocks/puzzle_alakazam.4bpp.lz");
+static const u32 sSpriteTiles_Gengar[] = INCBIN_U32("graphics/sliding_blocks/puzzle_gengar.4bpp.lz");
+static const u32 sSpriteTiles_Houndoom[] = INCBIN_U32("graphics/sliding_blocks/puzzle_houndoom.4bpp.lz");
+static const u32 sSpriteTiles_Salamence[] = INCBIN_U32("graphics/sliding_blocks/puzzle_salamence.4bpp.lz");
+static const u32 sSpriteTiles_NumbersMagic[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_magic.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
@@ -221,6 +240,23 @@ static const u16 sSpritePal_Lugia[] = INCBIN_U16("graphics/sliding_blocks/puzzle
 static const u16 sSpritePal_Eusine[] = INCBIN_U16("graphics/sliding_blocks/puzzle_eusine.gbapal");
 static const u16 sSpritePal_HoOhBackShiny[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh_back_shiny.gbapal");
 static const u16 sSpritePal_Arrow[] = INCBIN_U16("graphics/sliding_blocks/puzzle_arrow.gbapal");
+static const u16 sSpritePal_Snorlax[] = INCBIN_U16("graphics/sliding_blocks/puzzle_snorlax.gbapal");
+static const u16 sSpritePal_Venusaur[] = INCBIN_U16("graphics/sliding_blocks/puzzle_venusaur.gbapal");
+static const u16 sSpritePal_Charizard[] = INCBIN_U16("graphics/sliding_blocks/puzzle_charizard.gbapal");
+static const u16 sSpritePal_Blastoise[] = INCBIN_U16("graphics/sliding_blocks/puzzle_blastoise.gbapal");
+static const u16 sSpritePal_Raichu[] = INCBIN_U16("graphics/sliding_blocks/puzzle_raichu.gbapal");
+static const u16 sSpritePal_Pidgeot[] = INCBIN_U16("graphics/sliding_blocks/puzzle_pidgeot.gbapal");
+static const u16 sSpritePal_Heracross[] = INCBIN_U16("graphics/sliding_blocks/puzzle_heracross.gbapal");
+static const u16 sSpritePal_Muk[] = INCBIN_U16("graphics/sliding_blocks/puzzle_muk.gbapal");
+static const u16 sSpritePal_Dugtrio[] = INCBIN_U16("graphics/sliding_blocks/puzzle_dugtrio.gbapal");
+static const u16 sSpritePal_Golem[] = INCBIN_U16("graphics/sliding_blocks/puzzle_golem.gbapal");
+static const u16 sSpritePal_Steelix[] = INCBIN_U16("graphics/sliding_blocks/puzzle_steelix.gbapal");
+static const u16 sSpritePal_Walrein[] = INCBIN_U16("graphics/sliding_blocks/puzzle_walrein.gbapal");
+static const u16 sSpritePal_Hitmonchan[] = INCBIN_U16("graphics/sliding_blocks/puzzle_hitmonchan.gbapal");
+static const u16 sSpritePal_Alakazam[] = INCBIN_U16("graphics/sliding_blocks/puzzle_alakazam.gbapal");
+static const u16 sSpritePal_Gengar[] = INCBIN_U16("graphics/sliding_blocks/puzzle_gengar.gbapal");
+static const u16 sSpritePal_Houndoom[] = INCBIN_U16("graphics/sliding_blocks/puzzle_houndoom.gbapal");
+static const u16 sSpritePal_Salamence[] = INCBIN_U16("graphics/sliding_blocks/puzzle_salamence.gbapal");
 
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
 static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
@@ -1371,6 +1407,492 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
         },
         .winCondition = WinCondition_NeverWin
     },
+
+    [SLIDING_LAYOUT_SNORLAX] = {
+        .spriteSheet = sSpriteTiles_Snorlax,
+        .palette = sSpritePal_Snorlax,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                {15, 12, 13, 14},
+                {10,  9, 11,  8},
+                { 4,  7,  5,  6}
+            },
+            .blocksOrientation = {
+                {DIR_SOUTH, DIR_WEST,  DIR_SOUTH, DIR_EAST},
+                {DIR_NORTH, DIR_EAST,  DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_WEST,  DIR_NORTH, DIR_WEST},
+                {DIR_NORTH, DIR_NORTH, DIR_EAST,  DIR_SOUTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_SLIDE,  BLCFLG_ALL,    BLCFLG_SLIDE,  BLCFLG_SLIDE},
+                {BLCFLG_SLIDE,  BLCFLG_ALL,    BLCFLG_SLIDE,  BLCFLG_ALL},
+                {BLCFLG_ALL,    BLCFLG_SLIDE,  BLCFLG_ALL,    BLCFLG_ALL}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 1} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_VENUSAUR] = {
+        .spriteSheet = sSpriteTiles_Venusaur,
+        .palette = sSpritePal_Venusaur,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 9,  6,  4,  3},
+                { 5,  0,  1,  7},
+                { 8, 10,  2, 11},
+                {12, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_WEST,  DIR_NORTH, DIR_EAST,  DIR_SOUTH},
+                {DIR_SOUTH, DIR_NORTH, DIR_EAST,  DIR_NORTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_NORTH, DIR_NORTH},
+                {DIR_SOUTH, DIR_WEST,  DIR_EAST,  DIR_SOUTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_ROTATE},
+                {BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_ROTATE},
+                {BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_ALL,    BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+            },
+            .hollowIndex = {[INDEX_X] = 1, [INDEX_Y] = 1} // Where 0 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_CHARIZARD] = {
+        .spriteSheet = sSpriteTiles_Charizard,
+        .palette = sSpritePal_Charizard,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                { 9,  4, 13,  7},
+                { 8, 14,  6, 11},
+                {12,  5, 10, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_EAST,  DIR_SOUTH, DIR_WEST,  DIR_NORTH},
+                {DIR_SOUTH, DIR_WEST,  DIR_EAST,  DIR_NORTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_WEST,  DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_NONE,   BLCFLG_NONE, BLCFLG_NONE, BLCFLG_NONE},
+                {BLCFLG_ALL,    BLCFLG_ALL,  BLCFLG_ALL,  BLCFLG_NONE},
+                {BLCFLG_ALL,    BLCFLG_ALL,  BLCFLG_ALL,  BLCFLG_NONE},
+                {BLCFLG_SLIDE,  BLCFLG_ALL,  BLCFLG_ALL,  BLCFLG_NONE},
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3} // Where 12 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_BLASTOISE] = {
+        .spriteSheet = sSpriteTiles_Blastoise,
+        .palette = sSpritePal_Blastoise,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  2,  1,  3},
+                { 4,  6,  5,  7},
+                { 8,  9, 10, 11},
+                {12, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_RAICHU] = {
+        .spriteSheet = sSpriteTiles_Raichu,
+        .palette = sSpritePal_Raichu,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 3,  6, 14,  4},
+                {15,  8, 11, 10},
+                { 1,  0, 12, 13},
+                { 2,  9,  5,  7}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_EAST,  DIR_EAST},
+                {DIR_NORTH, DIR_NORTH, DIR_WEST,  DIR_SOUTH},
+                {DIR_NORTH, DIR_WEST,  DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE},
+                {BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_ALL},
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_PIDGEOT] = {
+        .spriteSheet = sSpriteTiles_Pidgeot,
+        .palette = sSpritePal_Pidgeot,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15,  6,  7,  9},
+                { 4, 14, 13, 11},
+                { 5, 12,  8, 10},
+                { 3,  2,  1,  0}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_EAST,  DIR_SOUTH},
+                {DIR_WEST,  DIR_EAST,  DIR_SOUTH, DIR_EAST},
+                {DIR_NORTH, DIR_WEST,  DIR_SOUTH, DIR_NORTH},
+                {DIR_SOUTH, DIR_SOUTH, DIR_SOUTH, DIR_SOUTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_ALL, BLCFLG_SLIDE},
+                {BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL, BLCFLG_ALL}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_HERACROSS] = {
+        .spriteSheet = sSpriteTiles_Heracross,
+        .palette = sSpritePal_Heracross,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15, 11, 10,  3},
+                { 9,  7,  6,  5},
+                { 1, 13,  2, 14},
+                { 0,  4,  8, 12}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_WEST,  DIR_SOUTH, DIR_EAST},
+                {DIR_EAST,  DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_WEST,  DIR_NORTH, DIR_SOUTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL},
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE},
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 15 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_MUK] = {
+        .spriteSheet = sSpriteTiles_Muk,
+        .palette = sSpritePal_Muk,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 8,  2, 13,  5},
+                {10,  3, 11,  7},
+                { 4, 15, 14,  6},
+                { 9,  1, 12,  0}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 0 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_GOLEM] = {
+        .spriteSheet = sSpriteTiles_Golem,
+        .palette = sSpritePal_Golem,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                { 4,  5,  6,  7},
+                { 8,  9, 10, 15},
+                {12, 13, 14, 11}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_SOUTH, DIR_NORTH, DIR_SOUTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_NORTH, DIR_EAST},
+                {DIR_NORTH, DIR_WEST,  DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_WEST,  DIR_NORTH, DIR_WEST}
+            },
+            .blocksFlags = {
+                {BLCFLG_NONE, BLCFLG_ROTATE, BLCFLG_NONE, BLCFLG_ROTATE},
+                {BLCFLG_NONE, BLCFLG_ROTATE, BLCFLG_NONE, BLCFLG_ROTATE},
+                {BLCFLG_NONE, BLCFLG_ROTATE, BLCFLG_NONE, BLCFLG_ROTATE},
+                {BLCFLG_NONE, BLCFLG_ROTATE, BLCFLG_NONE, BLCFLG_ROTATE}
+            },
+            .hollowIndex = {[INDEX_X] = 4, [INDEX_Y] = 4} // No empty space
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_DUGTRIO] = {
+        .spriteSheet = sSpriteTiles_Dugtrio,
+        .palette = sSpritePal_Dugtrio,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 1,  5,  4,  8},
+                {15,  0, 14,  9},
+                { 3,  2, 11, 12},
+                {13, 10,  7,  6}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 2} // Where 12 is
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_STEELIX] = {
+        .spriteSheet = sSpriteTiles_Steelix,
+        .palette = sSpritePal_Steelix,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {12,  8,  4, 10},
+                {13,  3, 15,  6},
+                {14,  5, 11,  0},
+                { 7,  1,  2,  9}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_SOUTH, DIR_NORTH, DIR_WEST},
+                {DIR_WEST,  DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_WEST,  DIR_NORTH, DIR_WEST},
+                {DIR_SOUTH, DIR_NORTH, DIR_SOUTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL},
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL},
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 12 is
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_WALREIN] = {
+        .spriteSheet = sSpriteTiles_Walrein,
+        .palette = sSpritePal_Walrein,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {11,  7,  1,  0},
+                { 5, 14, 13,  3},
+                { 9, 10, 12,  2},
+                {15,  6,  8,  4}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_SOUTH, DIR_NORTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_NORTH, DIR_SOUTH},
+                {DIR_EAST,  DIR_NORTH, DIR_EAST,  DIR_NORTH},
+                {DIR_NORTH, DIR_WEST,  DIR_NORTH, DIR_WEST}
+            },
+            .blocksFlags = {
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL},
+                {BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_ALL}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 0} // Where 0 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_HITMONCHAN] = {
+        .spriteSheet = sSpriteTiles_Hitmonchan,
+        .palette = sSpritePal_Hitmonchan,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2,  3},
+                { 4,  5,  6,  7},
+                { 8,  9, 10, 11},
+                {12, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_SOUTH, DIR_EAST,  DIR_EAST,  DIR_EAST},
+                {DIR_SOUTH, DIR_WEST,  DIR_SOUTH, DIR_SOUTH},
+                {DIR_WEST,  DIR_EAST,  DIR_EAST,  DIR_SOUTH},
+                {DIR_WEST,  DIR_SOUTH, DIR_SOUTH, DIR_EAST}
+            },
+            .blocksFlags = {
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE},
+                {BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE, BLCFLG_ROTATE}
+            },
+            .hollowIndex = {[INDEX_X] = 4, [INDEX_Y] = 4} // No empty space
+        },
+        .winCondition = WinCondition_AllCorrectOrientations
+    },
+
+    [SLIDING_LAYOUT_ALAKAZAM] = {
+        .spriteSheet = sSpriteTiles_Alakazam,
+        .palette = sSpritePal_Alakazam,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {10,  4,  3,  1},
+                { 5,  7, 13,  2},
+                { 8, 14,  9, 11},
+                {12,  6,  0, 15}
+            },
+            .blocksOrientation = {
+                {DIR_EAST,  DIR_WEST,  DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_EAST,  DIR_SOUTH, DIR_NORTH},
+                {DIR_NORTH, DIR_SOUTH, DIR_WEST,  DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_SLIDE},
+                {BLCFLG_NONE,  BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_NONE },
+                {BLCFLG_NONE,  BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_NONE }
+            },
+            .hollowIndex = {[INDEX_X] = 2, [INDEX_Y] = 0} // Where 3 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_GENGAR] = {
+        .spriteSheet = sSpriteTiles_Gengar,
+        .palette = sSpritePal_Gengar,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {10, 14,  4,  3},
+                { 7,  5, 12,  2},
+                {13,  9,  8, 11},
+                { 0,  1,  6, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_NONE},
+                {BLCFLG_SLIDE, BLCFLG_NONE,  BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_NONE,  BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_NONE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 3}
+        },
+        .winCondition = WinCondition_AllCorrectPlaces
+    },
+
+    [SLIDING_LAYOUT_HOUNDOOM] = {
+        .spriteSheet = sSpriteTiles_Houndoom,
+        .palette = sSpritePal_Houndoom,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 3,  1,  2,  0},
+                { 7,  5,  6,  4},
+                {11,  9, 10,  8},
+                {12, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3}
+        },
+        .winCondition = WinCondition_NeverWin
+    },
+
+    [SLIDING_LAYOUT_SALAMENCE] = {
+        .spriteSheet = sSpriteTiles_Salamence,
+        .palette = sSpritePal_Salamence,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {11, 13,  9,  8},
+                {10,  5, 14,  4},
+                {12,  6,  7, 15},
+                { 2,  3,  0,  1}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_WEST,  DIR_NORTH, DIR_SOUTH, DIR_EAST}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL,   BLCFLG_ALL}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0} // Where 11 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
+    },
+
+    [SLIDING_LAYOUT_NUMBERS_MAGIC] = {
+        .spriteSheet = sSpriteTiles_NumbersMagic,
+        .palette = sSpritePal_Numbers,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                { 0,  1,  2, 12},
+                { 4,  5, 10,  7},
+                { 8,  9,  6, 11},
+                { 3, 13, 14, 15}
+            },
+            .blocksOrientation = {
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH},
+                {DIR_NORTH, DIR_NORTH, DIR_NORTH, DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_NONE,  BLCFLG_NONE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE, BLCFLG_SLIDE},
+                {BLCFLG_NONE,  BLCFLG_NONE,  BLCFLG_SLIDE, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0}
+        },
+        .winCondition = WinCondition_MagicSquare
+    }
 
 };
 
@@ -2833,10 +3355,6 @@ static bool32 WinCondition_TopLeftCorrectPlace(const struct SlidingBlocksLayout 
     return layout->blocksPermutation[0][0] == 0;
 }
 
-static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout) {
-    return FALSE;
-}
-
 static bool32 WinCondition_TopRowCorrectPlaces(const struct SlidingBlocksLayout *layout) {
     u32 x;
     for (x = 0; x < 4; x++) {
@@ -2844,4 +3362,51 @@ static bool32 WinCondition_TopRowCorrectPlaces(const struct SlidingBlocksLayout 
             return FALSE;
     }
     return TRUE;
+}
+
+static bool32 WinCondition_MagicSquare(const struct SlidingBlocksLayout *layout) {
+    u32 diagonalSum;
+    u32 tempSum;
+
+    u32 x, y;
+    diagonalSum = 0;
+    for (x = 0; x < 4; x++) {
+        y = x;
+        diagonalSum += layout->blocksPermutation[y][x];
+    }
+
+    // Validate antidiagonal sum
+    tempSum = 0;
+    for (x = 0; x < 4; x++) {
+        y = 3 - x;
+        tempSum += layout->blocksPermutation[y][x];
+    }
+    if (tempSum != diagonalSum)
+        return FALSE;
+    
+    // Validate rows sums
+    for (y = 0; y < 4; y++) {
+        tempSum = 0;
+        for (x = 0; x < 4; x++) {
+            tempSum += layout->blocksPermutation[y][x];
+        }
+        if (tempSum != diagonalSum)
+            return FALSE;
+    }
+
+    // Validate columns sums
+    for (x = 0; x < 4; x++) {
+        tempSum = 0;
+        for (y = 0; y < 4; y++) {
+            tempSum += layout->blocksPermutation[y][x];
+        }
+        if (tempSum != diagonalSum)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+static bool32 WinCondition_NeverWin(const struct SlidingBlocksLayout *layout) {
+    return FALSE;
 }

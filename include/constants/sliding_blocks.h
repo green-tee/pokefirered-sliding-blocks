@@ -43,5 +43,23 @@
 #define SLIDING_LAYOUT_ARROW_RIGHT_4                 39
 #define SLIDING_LAYOUT_ARROW_RIGHT_5                 40
 #define SLIDING_LAYOUT_ARROW_RIGHT_6                 41
+#define SLIDING_LAYOUT_SNORLAX                       42
+#define SLIDING_LAYOUT_VENUSAUR                      43
+#define SLIDING_LAYOUT_CHARIZARD                     44
+#define SLIDING_LAYOUT_BLASTOISE                     45
+#define SLIDING_LAYOUT_RAICHU                        46
+#define SLIDING_LAYOUT_PIDGEOT                       47
+#define SLIDING_LAYOUT_HERACROSS                     48
+#define SLIDING_LAYOUT_MUK                           49
+#define SLIDING_LAYOUT_GOLEM                         50
+#define SLIDING_LAYOUT_DUGTRIO                       51
+#define SLIDING_LAYOUT_STEELIX                       52
+#define SLIDING_LAYOUT_WALREIN                       53
+#define SLIDING_LAYOUT_HITMONCHAN                    54
+#define SLIDING_LAYOUT_ALAKAZAM                      55
+#define SLIDING_LAYOUT_GENGAR                        56
+#define SLIDING_LAYOUT_HOUNDOOM                      57
+#define SLIDING_LAYOUT_SALAMENCE                     58
+#define SLIDING_LAYOUT_NUMBERS_MAGIC                 59
 
 #endif

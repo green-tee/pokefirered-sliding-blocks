@@ -286,6 +286,60 @@ $(SLIDINGBLOCKSGFXDIR)/puzzle_arrow_left.4bpp: %.4bpp: %.png
 $(SLIDINGBLOCKSGFXDIR)/puzzle_arrow_right.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+$(SLIDINGBLOCKSGFXDIR)/puzzle_snorlax.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_venusaur.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_charizard.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_blastoise.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_raichu.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_pidgeot.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_heracross.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_muk.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_dugtrio.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_golem.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_steelix.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_walrein.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_hitmonchan.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_alakazam.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_gengar.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_houndoom.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_salamence.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(SLIDINGBLOCKSGFXDIR)/puzzle_numbers_magic.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
 $(SLIDINGBLOCKSGFXDIR)/arrows.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 

@@ -1,0 +1,22 @@
+text VictoryRoad_1F_Text_FloorName {
+    "Floor VI\n"
+    "-- Master of all trades --"
+}
+
+text VictoryRoad_1F_Text_NothingHappened {
+    "Nothing happened."
+}
+
+text VictoryRoad_1F_Text_ImpossibleNothingHappened {
+    "{FONT_SMALL}This puzzle is supposed to be impossible.\n"
+    "Nothing happened."
+}
+
+text VictoryRoad_1F_Text_MagicSquare {
+    "This puzzle is called\n"
+    "a magic square.\p"
+    "Arrange the tiles so that all rows,\n"
+    "all columns and both diagonals\l"
+    "add up to the same number.\p"
+    "The empty space is equal to 1."
+}

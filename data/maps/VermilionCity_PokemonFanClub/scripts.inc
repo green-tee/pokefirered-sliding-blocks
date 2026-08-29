@@ -7,7 +7,7 @@ VermilionCity_PokemonFanClub_MapScripts::
 VermilionCity_PokemonFanClub_EventScript_Chairman::
 	lock
 	faceplayer
-	goto_if_set FLAG_GOT_BIKE_VOUCHER, VermilionCity_PokemonFanClub_EventScript_AlreadyHeardStory
+	@goto_if_set FLAG_SOLVED_BLASTOISE, VermilionCity_PokemonFanClub_EventScript_AlreadyHeardStory
 	msgbox VermilionCity_PokemonFanClub_Text_DidYouComeToHearAboutMyMons, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, VermilionCity_PokemonFanClub_EventScript_ChairmanStory
 	msgbox VermilionCity_PokemonFanClub_Text_ComeBackToHearStory
@@ -23,7 +23,7 @@ VermilionCity_PokemonFanClub_EventScript_ChairmanStory::
 	msgbox VermilionCity_PokemonFanClub_Text_ChairmansStory
 	checkitemspace ITEM_BIKE_VOUCHER
 	goto_if_eq VAR_RESULT, FALSE, VermilionCity_PokemonFanClub_EventScript_NoRoomForBikeVoucher
-	setflag FLAG_GOT_BIKE_VOUCHER
+	@setflag FLAG_SOLVED_BLASTOISE
 	giveitem_msg VermilionCity_PokemonFanClub_Text_ReceivedBikeVoucherFromChairman, ITEM_BIKE_VOUCHER, 1, MUS_OBTAIN_KEY_ITEM
 	msgbox VermilionCity_PokemonFanClub_Text_ExplainBikeVoucher
 	release

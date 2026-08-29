@@ -184,7 +184,7 @@ CeruleanCity_EventScript_GruntDefeated::
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_CERULEAN_GRUNT
 	fadescreen FADE_FROM_BLACK
-	setflag FLAG_GOT_TM28_FROM_ROCKET
+	@setflag FLAG_SOLVED_DUGTRIO
 	release
 	end
 

@@ -1641,63 +1641,63 @@
             "encounter_rate": 7,
             "mons": [
               {
-                "min_level": 32,
-                "max_level": 32,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_MACHOP"
               },
               {
-                "min_level": 32,
-                "max_level": 32,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_GEODUDE"
               },
               {
-                "min_level": 40,
-                "max_level": 40,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_ONIX"
               },
               {
-                "min_level": 43,
-                "max_level": 43,
+                "min_level": 21,
+                "max_level": 21,
                 "species": "SPECIES_ONIX"
               },
               {
-                "min_level": 46,
-                "max_level": 46,
+                "min_level": 22,
+                "max_level": 22,
                 "species": "SPECIES_ONIX"
               },
               {
-                "min_level": 32,
-                "max_level": 32,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_ZUBAT"
               },
               {
-                "min_level": 44,
-                "max_level": 44,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_ARBOK"
               },
               {
-                "min_level": 44,
-                "max_level": 44,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_GOLBAT"
               },
               {
-                "min_level": 44,
-                "max_level": 44,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_MAROWAK"
               },
               {
-                "min_level": 44,
-                "max_level": 44,
+                "min_level": 20,
+                "max_level": 20,
                 "species": "SPECIES_MACHOKE"
               },
               {
-                "min_level": 46,
-                "max_level": 46,
+                "min_level": 21,
+                "max_level": 21,
                 "species": "SPECIES_MACHOKE"
               },
               {
-                "min_level": 46,
-                "max_level": 46,
+                "min_level": 21,
+                "max_level": 21,
                 "species": "SPECIES_MAROWAK"
               }
             ]
