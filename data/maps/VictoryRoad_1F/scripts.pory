@@ -694,7 +694,7 @@ movement VictoryRoad_1F_Movement_PanToWalrein {
 script VictoryRoad_1F_EventScript_PuzzleSalamence {
     if (!flag(FLAG_SOLVED_SALAMENCE)) {
         lockall
-        playbgm(MUS_PUZZLE, 0)
+        playbgm(MUS_PUZZLE_IMPORTANT, 0)
         playslidingblocks(SLIDING_LAYOUT_SALAMENCE)
         fadedefaultbgm
         if (var(VAR_RESULT) != 0) {
@@ -755,7 +755,7 @@ script(local) VictoryRoad_1F_EventScript_ClearPathToFinalPuzzle {
 script VictoryRoad_1F_EventScript_PuzzleNumbersMagic {
     if (!flag(FLAG_SOLVED_NUMBERS_MAGIC)) {
         lockall
-        playbgm(MUS_PUZZLE, 0)
+        playbgm(MUS_PUZZLE_IMPORTANT, 0)
         msgbox(VictoryRoad_1F_Text_MagicSquare, MSGBOX_DEFAULT)
         closemessage
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_MAGIC)

@@ -1907,7 +1907,7 @@ VictoryRoad_1F_EventScript_PuzzleSalamence_1:
 # 696 "data/maps/VictoryRoad_1F/scripts.pory"
 	lockall
 # 697 "data/maps/VictoryRoad_1F/scripts.pory"
-	playbgm MUS_PUZZLE, 0
+	playbgm MUS_PUZZLE_IMPORTANT, 0
 # 698 "data/maps/VictoryRoad_1F/scripts.pory"
 	playslidingblocks SLIDING_LAYOUT_SALAMENCE
 # 699 "data/maps/VictoryRoad_1F/scripts.pory"
@@ -2027,7 +2027,7 @@ VictoryRoad_1F_EventScript_PuzzleNumbersMagic_1:
 # 757 "data/maps/VictoryRoad_1F/scripts.pory"
 	lockall
 # 758 "data/maps/VictoryRoad_1F/scripts.pory"
-	playbgm MUS_PUZZLE, 0
+	playbgm MUS_PUZZLE_IMPORTANT, 0
 # 759 "data/maps/VictoryRoad_1F/scripts.pory"
 	msgbox VictoryRoad_1F_Text_MagicSquare, MSGBOX_DEFAULT
 # 760 "data/maps/VictoryRoad_1F/scripts.pory"

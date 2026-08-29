@@ -931,7 +931,7 @@ SECTIONS {
         sound/songs/midi/mus_victory_trainer.o(.rodata);
         sound/songs/midi/mus_victory_wild.o(.rodata);
         sound/songs/midi/mus_victory_gym_leader.o(.rodata);
-        sound/songs/midi/mus_vermillion.o(.rodata);
+        sound/songs/midi/mus_puzzle_important.o(.rodata);
         sound/songs/midi/mus_pewter.o(.rodata);
         sound/songs/midi/mus_encounter_rival.o(.rodata);
         sound/songs/midi/mus_rival_exit.o(.rodata);
