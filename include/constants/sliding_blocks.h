@@ -61,5 +61,6 @@
 #define SLIDING_LAYOUT_HOUNDOOM                      57
 #define SLIDING_LAYOUT_SALAMENCE                     58
 #define SLIDING_LAYOUT_NUMBERS_MAGIC                 59
+#define SLIDING_LAYOUT_RAYQUAZA                      60
 
 #endif

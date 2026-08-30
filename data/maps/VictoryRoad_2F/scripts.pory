@@ -1,0 +1,9 @@
+mapscripts VictoryRoad_2F_MapScripts {}
+
+script VictoryRoad_2F_EventScript_PuzzleRayquaza {
+    lockall
+    playbgm(MUS_FINAL_BATTLE, 0)
+    playslidingblocks(SLIDING_LAYOUT_RAYQUAZA)
+    fadedefaultbgm
+    releaseall
+}

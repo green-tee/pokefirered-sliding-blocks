@@ -228,6 +228,7 @@ static const u32 sSpriteTiles_Gengar[] = INCBIN_U32("graphics/sliding_blocks/puz
 static const u32 sSpriteTiles_Houndoom[] = INCBIN_U32("graphics/sliding_blocks/puzzle_houndoom.4bpp.lz");
 static const u32 sSpriteTiles_Salamence[] = INCBIN_U32("graphics/sliding_blocks/puzzle_salamence.4bpp.lz");
 static const u32 sSpriteTiles_NumbersMagic[] = INCBIN_U32("graphics/sliding_blocks/puzzle_numbers_magic.4bpp.lz");
+static const u32 sSpriteTiles_Rayquaza[] = INCBIN_U32("graphics/sliding_blocks/puzzle_rayquaza.4bpp.lz");
 
 static const u16 sSpritePal_HoOh[] = INCBIN_U16("graphics/sliding_blocks/puzzle_ho_oh.gbapal");
 static const u16 sSpritePal_Voltorb[] = INCBIN_U16("graphics/sliding_blocks/puzzle_voltorb.gbapal");
@@ -257,6 +258,7 @@ static const u16 sSpritePal_Alakazam[] = INCBIN_U16("graphics/sliding_blocks/puz
 static const u16 sSpritePal_Gengar[] = INCBIN_U16("graphics/sliding_blocks/puzzle_gengar.gbapal");
 static const u16 sSpritePal_Houndoom[] = INCBIN_U16("graphics/sliding_blocks/puzzle_houndoom.gbapal");
 static const u16 sSpritePal_Salamence[] = INCBIN_U16("graphics/sliding_blocks/puzzle_salamence.gbapal");
+static const u16 sSpritePal_Rayquaza[] = INCBIN_U16("graphics/sliding_blocks/puzzle_rayquaza.gbapal");
 
 static const u32 sSpriteTiles_Arrows[] = INCBIN_U32("graphics/sliding_blocks/arrows.4bpp.lz");
 static const u32 sSpriteTiles_Hand[] = INCBIN_U32("graphics/sliding_blocks/hand.4bpp.lz");
@@ -1892,6 +1894,33 @@ static const struct SlidingBlocksPuzzle sSlidingBlocksPuzzles[] = {
             .hollowIndex = {[INDEX_X] = 0, [INDEX_Y] = 0}
         },
         .winCondition = WinCondition_MagicSquare
+    },
+
+    [SLIDING_LAYOUT_RAYQUAZA] = {
+        .spriteSheet = sSpriteTiles_Rayquaza,
+        .palette = sSpritePal_Rayquaza,
+        .blocksInitialLayout = {
+            .blocksPermutation = {
+                {15,  4, 14,  0},
+                { 8,  7,  2, 10},
+                {12,  5, 13,  9},
+                { 6,  3, 11,  1}
+            },
+            .blocksOrientation = {
+                {DIR_EAST,  DIR_SOUTH, DIR_SOUTH, DIR_EAST},
+                {DIR_WEST,  DIR_NORTH, DIR_SOUTH, DIR_EAST},
+                {DIR_SOUTH, DIR_WEST,  DIR_SOUTH, DIR_WEST},
+                {DIR_EAST,  DIR_SOUTH, DIR_EAST,  DIR_NORTH}
+            },
+            .blocksFlags = {
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL},
+                {BLCFLG_ALL, BLCFLG_ALL, BLCFLG_ALL, BLCFLG_SLIDE}
+            },
+            .hollowIndex = {[INDEX_X] = 3, [INDEX_Y] = 3} // Where 1 is
+        },
+        .winCondition = WinCondition_AllCorrectPlacesAndOrientations
     }
 
 };

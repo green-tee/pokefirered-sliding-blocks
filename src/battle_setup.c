@@ -357,7 +357,7 @@ void StartLegendaryBattle(void)
     switch (species)
     {
     case SPECIES_MEWTWO:
-        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_VS_MEWTWO);
+        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_FINAL_BATTLE);
         break;
     case SPECIES_DEOXYS:
         CreateBattleStartTask(B_TRANSITION_BLUR, MUS_VS_DEOXYS);

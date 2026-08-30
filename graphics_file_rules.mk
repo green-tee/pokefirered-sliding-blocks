@@ -340,6 +340,9 @@ $(SLIDINGBLOCKSGFXDIR)/puzzle_salamence.4bpp: %.4bpp: %.png
 $(SLIDINGBLOCKSGFXDIR)/puzzle_numbers_magic.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+$(SLIDINGBLOCKSGFXDIR)/puzzle_rayquaza.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
 $(SLIDINGBLOCKSGFXDIR)/arrows.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
