@@ -914,7 +914,7 @@ SECTIONS {
         sound/songs/midi/mus_route24.o(.rodata);
         sound/songs/midi/mus_route3.o(.rodata);
         sound/songs/midi/mus_route11.o(.rodata);
-        sound/songs/midi/mus_victory_road.o(.rodata);
+        sound/songs/midi/mus_puzzle_final.o(.rodata);
         sound/songs/midi/mus_vs_gym_leader.o(.rodata);
         sound/songs/midi/mus_vs_trainer.o(.rodata);
         sound/songs/midi/mus_vs_wild.o(.rodata);

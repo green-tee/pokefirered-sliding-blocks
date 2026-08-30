@@ -294,7 +294,7 @@ gSongTable::
 	song mus_route24, 0, 0
 	song mus_route3, 0, 0
 	song mus_route11, 0, 0
-	song mus_victory_road, 0, 0
+	song mus_puzzle_final, 0, 0
 	song mus_vs_gym_leader, 0, 0
 	song mus_vs_trainer, 0, 0
 	song mus_vs_wild, 0, 0

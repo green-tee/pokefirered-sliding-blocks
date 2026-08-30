@@ -300,7 +300,7 @@
 #define MUS_ROUTE24               292 // MUS_OPENING
 #define MUS_ROUTE3                293 // MUS_LOAD02
 #define MUS_ROUTE11               294 // MUS_LOAD03
-#define MUS_VICTORY_ROAD          295 // MUS_CHAMP_R
+#define MUS_PUZZLE_FINAL          295 // MUS_CHAMP_R
 #define MUS_VS_GYM_LEADER         296 // MUS_VS_GYM
 #define MUS_VS_TRAINER            297 // MUS_VS_TORE
 #define MUS_VS_WILD               298 // MUS_VS_YASEI
