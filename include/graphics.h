@@ -3920,6 +3920,9 @@ extern const u8 gGraphics_TitleScreen_GameTitleLogoMap[];
 extern const u16 gGraphics_TitleScreen_BoxArtMonPals[];
 extern const u8 gGraphics_TitleScreen_BoxArtMonTiles[];
 extern const u8 gGraphics_TitleScreen_BoxArtMonMap[];
+extern const u16 gGraphics_TitleScreen_NewTitleScreenPals[];
+extern const u8 gGraphics_TitleScreen_NewTitleScreenTiles[];
+extern const u8 gGraphics_TitleScreen_NewTitleScreenMap[];
 extern u16 gGraphics_TitleScreen_BackgroundPals[]; // If this is const, title_screen.c does not match
 extern const u8 gGraphics_TitleScreen_CopyrightPressStartTiles[];
 extern const u8 gGraphics_TitleScreen_CopyrightPressStartMap[];

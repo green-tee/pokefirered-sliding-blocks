@@ -358,6 +358,9 @@ $(SSANNEGFXDIR)/smoke.4bpp: %.4bpp: %.png
 $(ITEMPCGFXDIR)/bg.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 82 -Wnum_tiles
 
+$(TITLESCREENGFXDIR)/new_title_screen.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -num_tiles 242 -Wnum_tiles
+
 $(TITLESCREENGFXDIR)/firered/box_art_mon.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 135 -Wnum_tiles
 
