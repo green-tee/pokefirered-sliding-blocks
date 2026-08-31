@@ -2,16 +2,22 @@ VictoryRoad_2F_MapScripts::
 	.byte 0
 
 
-VictoryRoad_2F_EventScript_PuzzleRayquaza::
+VictoryRoad_2F_EventScript_FloorSign::
 # 4 "data/maps/VictoryRoad_2F/scripts.pory"
-	lockall
-# 5 "data/maps/VictoryRoad_2F/scripts.pory"
-	playbgm MUS_PUZZLE_FINAL, 0
-# 6 "data/maps/VictoryRoad_2F/scripts.pory"
-	playslidingblocks SLIDING_LAYOUT_RAYQUAZA
-# 7 "data/maps/VictoryRoad_2F/scripts.pory"
-	fadedefaultbgm
+	msgbox VictoryRoad_2F_Text_FloorName, MSGBOX_SIGN
+	return
+
+
+VictoryRoad_2F_EventScript_PuzzleRayquaza::
 # 8 "data/maps/VictoryRoad_2F/scripts.pory"
+	lockall
+# 9 "data/maps/VictoryRoad_2F/scripts.pory"
+	playbgm MUS_PUZZLE_FINAL, 0
+# 10 "data/maps/VictoryRoad_2F/scripts.pory"
+	playslidingblocks SLIDING_LAYOUT_RAYQUAZA
+# 11 "data/maps/VictoryRoad_2F/scripts.pory"
+	fadedefaultbgm
+# 12 "data/maps/VictoryRoad_2F/scripts.pory"
 	releaseall
 	return
 
