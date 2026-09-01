@@ -888,6 +888,25 @@ gText_PkmnFainted3::
 	.string "{STR_VAR_1} fainted…\p"
 	.string "$"
 
+Text_HowMayIhelpYou::
+	.string "Hello! How may I help you?$"
+
+Text_WhatElseCanIDo::
+	.string "What else can I do for you?$"
+
+Text_WhichShouldRelarn::
+	.string "Yes, which POKéMON should\n"
+	.string "relearn a move?$"
+
+Text_MonCantRelearn::
+	.string "Oh, I'm sorry!\n"
+	.string "This POKéMON can't learn\l"
+	.string "any old move!$"
+
+Text_NicknameWhichMon::
+	.string "Sure! Which POKéMON do you want\n"
+	.string "to give a nickname?$"
+
 Text_WelcomeWantToHealPkmn::
 	.string "Welcome to our POKéMON CENTER!\p"
 	.string "Would you like me to heal your\n"
@@ -898,11 +917,11 @@ Text_TakeYourPkmnForFewSeconds::
 	.string "few seconds.$"
 
 Text_WeHopeToSeeYouAgain::
-	.string "We hope to see you again!$"
+	.string "I hope to see you again!$"
 
 Text_RestoredPkmnToFullHealth::
 	.string "Thank you for waiting.\n"
-	.string "We've restored your POKéMON to\l"
+	.string "I've restored your POKéMON to\l"
 	.string "full health.$"
 
 	.include "data/text/surf.inc"
@@ -932,7 +951,7 @@ Text_HandedOverItem::
 
 Text_GiveNicknameToThisMon::
 	.string "Do you want to give a nickname to\n"
-	.string "this {STR_VAR_1}?$"
+	.string "this POKéMON?$"
 
 	.include "data/text/itemfinder.inc"
 	.include "data/text/route23.inc"
@@ -1014,7 +1033,7 @@ Text_MoveCanOnlyBeLearnedOnce::
 	.string "once. Is that okay?$"
 
 EventScript_ResetAllMapFlags::
-	setflag FLAG_HIDE_OAK_IN_HIS_LAB
+	@setflag FLAG_HIDE_BRAINING_ISLAND_HO_OH
 	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
 	setflag FLAG_HIDE_BILL_HUMAN_SEA_COTTAGE
 	setflag FLAG_HIDE_PEWTER_CITY_RUNNING_SHOES_GUY

@@ -1,0 +1,55 @@
+mapscripts SevenIsland_TrainerTower_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_MAP_SCENE_BRAINING_ISLAND, 0: SevenIsland_TrainerTower_EventScript_Intro
+    ]
+    MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE [
+        VAR_MAP_SCENE_BRAINING_ISLAND, 0: SevenIsland_TrainerTower_EventScript_TurnPlayerNorth
+    ]
+}
+
+script SevenIsland_TrainerTower_EventScript_PalaceSign {
+    msgbox(SevenIsland_TrainerTower_Text_PuzzlePalace, MSGBOX_SIGN)
+}
+
+script SevenIsland_TrainerTower_EventScript_TurnPlayerNorth {
+    turnobject(LOCALID_PLAYER, DIR_NORTH)
+}
+
+script SevenIsland_TrainerTower_EventScript_Intro {
+    lockall
+    delay(30)
+    msgbox(SevenIsland_TrainerTower_Text_WelcomeToBrainingIsland, MSGBOX_DEFAULT)
+    closemessage
+    playmoncry(SPECIES_HO_OH, CRY_MODE_NORMAL)
+    applymovement(LOCALID_HO_OH, SevenIsland_TrainerTower_Movement_WalkDown)
+    waitmovement(LOCALID_HO_OH)
+    msgbox(SevenIsland_TrainerTower_Text_HoOh, MSGBOX_DEFAULT)
+    closemessage
+    applymovement(LOCALID_HO_OH, SevenIsland_TrainerTower_Movement_WalkDown)
+    waitmovement(LOCALID_HO_OH)
+    removeobject(LOCALID_HO_OH)
+    givemon(SPECIES_HO_OH, 50, ITEM_SHELL_BELL)
+    setflag(FLAG_SYS_POKEMON_GET)
+    msgbox(Text_GiveNicknameToThisMon, MSGBOX_YESNO)
+    if (var(VAR_RESULT) == YES) {
+        call(EventScript_GetGiftMonPartySlot)
+	    call(EventScript_ChangePokemonNickname)
+    }
+    giveitem(ITEM_ITEMFINDER)
+    msgbox(SevenIsland_TrainerTower_DoYourBest, MSGBOX_DEFAULT)
+    closemessage
+    addvar(VAR_MAP_SCENE_BRAINING_ISLAND, 1)
+    releaseall
+}
+
+movement SevenIsland_TrainerTower_Movement_WalkDown {
+    walk_down
+}
+
+script SevenIsland_TrainerTower_EventScript_Nurse {
+    lockall
+    applymovement(VAR_LAST_TALKED, Common_Movement_FacePlayer)
+    waitmovement(0)
+    call(EventScript_BrainingIslandNurse)
+    releaseall
+}

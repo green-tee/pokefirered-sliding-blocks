@@ -20,6 +20,10 @@ script MtMoon_1F_OnLoad {
     }
 }
 
+script MtMoon_1F_EventScript_FloorSign {
+    msgbox(MtMoon_1F_Text_FloorName, MSGBOX_SIGN)
+}
+
 script MtMoon_1F_EventScript_PuzzleNumbers1 {
     if (!flag(FLAG_SOLVED_NUMBERS_1)) {
         lockall
@@ -128,6 +132,7 @@ script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers1 {
     setmetatile(2, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(3, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(4, 30, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(5, 30, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
 }
 
 script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers1234 {
@@ -143,6 +148,7 @@ script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers1234 {
     setmetatile(2, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(3, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(4, 23, METATILE_Lab_PuzzlePalace_Tile, FALSE)
+    setmetatile(5, 23, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE)
 }
 
 script(local) MtMoon_1F_EventScript_ClearPuzzleNumbers3x3 {

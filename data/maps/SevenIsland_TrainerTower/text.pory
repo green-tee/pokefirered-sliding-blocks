@@ -1,0 +1,22 @@
+text SevenIsland_TrainerTower_Text_PuzzlePalace {
+    "Welcome to BRAINING PALACE!"
+}
+
+text SevenIsland_TrainerTower_Text_WelcomeToBrainingIsland {
+    "Welcome to BRAINING ISLAND!\n"
+    "This is a place in the middle\l"
+    "of the ocean, with nothing to do\l"
+    "but take on the challenge\l"
+    "of BRAINING PALACE.\p"
+    "The reward for beating it is…\n"
+    "Nothing! Nothing but glory!"
+}
+
+text SevenIsland_TrainerTower_Text_HoOh {
+    "HO-OH, the Pokémon you befriended\n"
+    "a long time ago, shall come along."
+}
+
+text SevenIsland_TrainerTower_DoYourBest {
+    "Do your best!"
+}

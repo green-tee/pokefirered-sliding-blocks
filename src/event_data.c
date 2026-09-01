@@ -215,6 +215,7 @@ u16 *GetVarPointer(u16 idx)
 
 static bool8 IsFlagOrVarStoredInQuestLog(u16 idx, bool8 isVar)
 {
+    /*
     if (!isVar)
     {
         if (idx < STORY_FLAGS_START)
@@ -226,10 +227,12 @@ static bool8 IsFlagOrVarStoredInQuestLog(u16 idx, bool8 isVar)
     {
         if (idx < VAR_ICE_STEP_COUNT - VARS_START)
             return FALSE;
-        if (idx >= VAR_MAP_SCENE_PALLET_TOWN_OAK - VARS_START && idx < VAR_PORTHOLE - VARS_START)
+        if (idx >= VAR_MAP_SCENE_BRAINING_ISLAND - VARS_START && idx < VAR_PORTHOLE - VARS_START)
             return FALSE;
     }
     return TRUE;
+    */
+    return FALSE;
 }
 
 u16 VarGet(u16 idx)

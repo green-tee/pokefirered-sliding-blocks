@@ -1,3 +1,8 @@
+text MtMoon_1F_Text_FloorName {
+    "\n"
+    "-- First steps --"
+}
+
 text MtMoon_1F_Text_UseDPad {
     "Use {DPAD_ANY} to slide a block in the chosen\n"
     "direction into the empty space.\p"

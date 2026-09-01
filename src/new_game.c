@@ -81,7 +81,7 @@ static void ClearBattleTower(void)
 
 static void WarpToPlayersRoom(void)
 {
-    SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), -1, 6, 6);
+    SetWarpDestination(MAP_GROUP(MAP_SEVEN_ISLAND_TRAINER_TOWER), MAP_NUM(MAP_SEVEN_ISLAND_TRAINER_TOWER), -1, 24, 22);
     WarpIntoMap();
 }
 

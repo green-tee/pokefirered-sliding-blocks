@@ -585,6 +585,8 @@ static const u8 *const sControlsGuide_Pages2And3_Strings[CONTROLS_GUIDE_STRINGS_
     gControlsGuide_Text_LRButtons
 };
 
+static const u8 sMaleDefaultName[] = _("ETHAN");
+
 static const u8 *const sMaleNameChoices[] =
 {
 #if defined(FIRERED)
@@ -687,8 +689,16 @@ void StartNewGameScene(void)
 {
     gPlttBufferUnfaded[0] = RGB_BLACK;
     gPlttBufferFaded[0]   = RGB_BLACK;
-    CreateTask(Task_NewGameScene, 0);
-    SetMainCallback2(CB2_NewGameScene);
+    /*
+    //CreateTask(Task_NewGameScene, 0);
+    //SetMainCallback2(CB2_NewGameScene);
+    //*/
+    //*
+    gSaveBlock2Ptr->playerGender = MALE;
+    GetDefaultName(FALSE, 0);
+    GetDefaultName(TRUE, 1);
+    SetMainCallback2(CB2_NewGame);
+    //*/
 }
 
 #define tSpriteTimer                data[0]
@@ -786,6 +796,7 @@ static void Task_NewGameScene(u8 taskId)
         ShowBg(1);
         SetVBlankCallback(VBlankCB_NewGameScene);
         PlayBGM(MUS_NEW_GAME_INSTRUCT);
+        gTasks[taskId].func = Task_OakSpeech_Init;
         gTasks[taskId].func = Task_ControlsGuide_HandleInput;
         gMain.state = 0;
         return;
@@ -2142,10 +2153,13 @@ static void GetDefaultName(u8 hasPlayerBeenNamed, u8 rivalNameChoice)
     u8 i;
     if (hasPlayerBeenNamed == FALSE)
     {
+        /*
         if (gSaveBlock2Ptr->playerGender == MALE)
             src = sMaleNameChoices[Random() % ARRAY_COUNT(sMaleNameChoices)];
         else
             src = sFemaleNameChoices[Random() % ARRAY_COUNT(sFemaleNameChoices)];
+        */
+        src = sMaleDefaultName;
         dest = gSaveBlock2Ptr->playerName;
     }
     else

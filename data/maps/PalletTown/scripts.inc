@@ -35,7 +35,7 @@ PalletTown_EventScript_MoveSignLadyToRouteEntrance::
 	return
 
 PalletTown_OnFrame::
-	map_script_2 VAR_MAP_SCENE_PALLET_TOWN_OAK, 2, PalletTown_EventScript_OakRatingScene
+	@map_script_2 VAR_MAP_SCENE_BRAINING_ISLAND, 2, PalletTown_EventScript_OakRatingScene
 	.2byte 0
 
 @ Oak approaches player after exiting their house post Elite Four to check if they should receieve the National Dex
@@ -70,7 +70,7 @@ PalletTown_EventScript_OakRatingScene::
 	closedoor 16, 13
 	waitdooranim
 	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 7
-	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
+	@setvar VAR_MAP_SCENE_BRAINING_ISLAND, 3
 	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
 	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12
 	waitstate
@@ -82,7 +82,7 @@ PalletTown_EventScript_EndOakRatingScene::
 	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakExit
 	waitmovement 0
 	removeobject LOCALID_PALLET_PROF_OAK
-	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
+	@setvar VAR_MAP_SCENE_BRAINING_ISLAND, 3
 	releaseall
 	end
 
@@ -210,8 +210,8 @@ PalletTown_EventScript_OakTrigger::
 	closedoor 16, 13
 	waitdooranim
 	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 1
-	clearflag FLAG_HIDE_OAK_IN_HIS_LAB
-	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 1
+	@clearflag FLAG_HIDE_BRAINING_ISLAND_HO_OH
+	@setvar VAR_MAP_SCENE_BRAINING_ISLAND, 1
 	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
 	setflag FLAG_DONT_TRANSITION_MUSIC
 	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12

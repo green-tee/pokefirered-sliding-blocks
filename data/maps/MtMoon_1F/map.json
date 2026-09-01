@@ -3,7 +3,7 @@
   "name": "MtMoon_1F",
   "layout": "LAYOUT_MT_MOON_1F",
   "music": "MUS_PUZZLE_TOWER",
-  "region_map_section": "MAPSEC_MT_MOON",
+  "region_map_section": "MAPSEC_TRAINER_TOWER",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_UNDERGROUND",
@@ -88,10 +88,10 @@
   ],
   "warp_events": [
     {
-      "x": 3,
-      "y": 36,
+      "x": 10,
+      "y": 43,
       "elevation": 3,
-      "dest_map": "MAP_ROUTE4",
+      "dest_map": "MAP_SEVEN_ISLAND_TRAINER_TOWER",
       "dest_warp_id": "0"
     },
     {
@@ -103,5 +103,14 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 7,
+      "y": 39,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MtMoon_1F_EventScript_FloorSign"
+    }
+  ]
 }

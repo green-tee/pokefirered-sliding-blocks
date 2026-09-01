@@ -1157,7 +1157,7 @@
       "id": "LAYOUT_MT_MOON_1F",
       "name": "MtMoon_1F_Layout",
       "width": 36,
-      "height": 38,
+      "height": 46,
       "border_width": 2,
       "border_height": 2,
       "primary_tileset": "gTileset_Building",
@@ -2824,7 +2824,7 @@
     {
       "id": "LAYOUT_SEVEN_ISLAND_TRAINER_TOWER",
       "name": "SevenIsland_TrainerTower_Layout",
-      "width": 120,
+      "width": 49,
       "height": 40,
       "border_width": 2,
       "border_height": 2,

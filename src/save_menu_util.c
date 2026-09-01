@@ -42,14 +42,20 @@ void SaveStatToString(u8 gameStatId, u8 *dest0, u8 color)
         GetMapNameGeneric(dest, gMapHeader.regionMapSectionId);
         break;
     case SAVE_STAT_BADGES:
+        *dest++ = CHAR_1;
+        *dest++ + CHAR_6;
+        *dest++ = 10; // 'こ'
+        *dest++ = EOS;
+        /*
         for (flagId = FLAG_BADGE01_GET, nBadges = 0; flagId < FLAG_BADGE01_GET + 8; flagId++)
         {
             if (FlagGet(flagId))
-                nBadges++;
+            nBadges++;
         }
         *dest++ = nBadges + CHAR_0;
         *dest++ = 10; // 'こ'
         *dest++ = EOS;
+        */
         break;
     }
 }

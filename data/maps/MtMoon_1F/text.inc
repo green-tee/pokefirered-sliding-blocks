@@ -1,24 +1,29 @@
-MtMoon_1F_Text_UseDPad::
+MtMoon_1F_Text_FloorName::
 # 1 "data/maps/MtMoon_1F/text.pory"
+	.string "\n"
+	.string "-- First steps --$"
+
+MtMoon_1F_Text_UseDPad::
+# 6 "data/maps/MtMoon_1F/text.pory"
 	.string "Use {DPAD_ANY} to slide a block in the chosen\n"
 	.string "direction into the empty space.\p"
 	.string "Bring the number 1\n"
 	.string "to the top left corner.$"
 
 MtMoon_1F_Text_CantMoveBorderedBlocks::
-# 8 "data/maps/MtMoon_1F/text.pory"
+# 13 "data/maps/MtMoon_1F/text.pory"
 	.string "Blocks with a dashed outline\n"
 	.string "can't slide.\p"
 	.string "Complete the top row with the\n"
 	.string "sequence of numbers from 1 to 4.$"
 
 MtMoon_1F_Text_Complete3x3::
-# 15 "data/maps/MtMoon_1F/text.pory"
+# 20 "data/maps/MtMoon_1F/text.pory"
 	.string "Complete the whole puzzle with the\n"
 	.string "sequence of numbers from 1 to 15.$"
 
 MtMoon_1F_Text_CanRotateRoundedBlocks::
-# 20 "data/maps/MtMoon_1F/text.pory"
+# 25 "data/maps/MtMoon_1F/text.pory"
 	.string "Use {SELECT_BUTTON} to switch between\n"
 	.string "Arrows Mode and Cursor Mode.\p"
 	.string "While in Cursor Mode, use {DPAD_ANY} to move\n"
@@ -31,7 +36,7 @@ MtMoon_1F_Text_CanRotateRoundedBlocks::
 	.string "be rotated.$"
 
 MtMoon_1F_Text_ImpossiblePuzzles::
-# 33 "data/maps/MtMoon_1F/text.pory"
+# 38 "data/maps/MtMoon_1F/text.pory"
 	.string "If a puzzle only needs to swap\n"
 	.string "two blocks to be solved, it is\l"
 	.string "unsolvable, but this one is not.$"

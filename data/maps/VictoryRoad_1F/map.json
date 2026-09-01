@@ -3,7 +3,7 @@
   "name": "VictoryRoad_1F",
   "layout": "LAYOUT_VICTORY_ROAD_1F",
   "music": "MUS_PUZZLE_TOWER",
-  "region_map_section": "MAPSEC_KANTO_VICTORY_ROAD",
+  "region_map_section": "MAPSEC_TRAINER_TOWER",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_UNDERGROUND",
