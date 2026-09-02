@@ -1107,11 +1107,12 @@ EventScript_GymBadgeFanfare::
 	return
 
 EventScript_OutOfCenterPartyHeal::
-	fadescreen FADE_TO_BLACK
+	@fadescreen FADE_TO_BLACK
 	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
-	fadescreen FADE_FROM_BLACK
+	fadedefaultbgm
+	@fadescreen FADE_FROM_BLACK
 	return
 
 EventScript_WallTownMap::

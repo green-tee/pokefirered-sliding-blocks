@@ -43,7 +43,7 @@ void SaveStatToString(u8 gameStatId, u8 *dest0, u8 color)
         break;
     case SAVE_STAT_BADGES:
         *dest++ = CHAR_1;
-        *dest++ + CHAR_6;
+        *dest++ = CHAR_6;
         *dest++ = 10; // 'こ'
         *dest++ = EOS;
         /*

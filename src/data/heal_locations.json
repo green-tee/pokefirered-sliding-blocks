@@ -159,6 +159,14 @@
       "y": 12,
       "respawn_map": "MAP_SIX_ISLAND_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_SIX_ISLAND_NURSE"
+    },
+    {
+      "id": "HEAL_LOCATION_SEVEN_ISLAND_TRAINER_TOWER",
+      "map": "MAP_SEVEN_ISLAND_TRAINER_TOWER",
+      "x": 24,
+      "y": 26,
+      "respawn_map": "MAP_SEVEN_ISLAND_TRAINER_TOWER",
+      "respawn_npc": "LOCALID_NURSE"
     }
   ]
 }

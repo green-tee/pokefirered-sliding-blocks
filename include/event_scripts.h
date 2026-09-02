@@ -1152,6 +1152,7 @@ extern const u8 EventScript_ResetAllMapFlags[];
 // field_screen_effect
 extern const u8 EventScript_AfterWhiteOutMomHeal[];
 extern const u8 EventScript_AfterWhiteOutHeal[];
+extern const u8 EventScript_OutOfCenterPartyHeal[];
 
 // start_menu
 extern const u8 gText_WouldYouLikeToSaveTheGame[];

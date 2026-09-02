@@ -958,6 +958,7 @@ const u8 gText_Sorry[] = _("SORRY");
 const u8 gText_YaySmileEmoji[] = _("YAY{EMOJI_BIGSMILE}");
 const u8 gText_ThankYou[] = _("THANK YOU");
 const u8 gText_ByeBye[] = _("BYE-BYE!");
+const u8 gText_PlayerScurriedOutside[] = _("{PLAYER} scurried outside,\nprotecting the exhausted and fainted\nPOKéMON from further harm‥");
 const u8 gText_PlayerScurriedToCenter[] = _("{PLAYER} scurried to a POKéMON CENTER,\nprotecting the exhausted and fainted\nPOKéMON from further harm‥\p");
 const u8 gText_PlayerScurriedBackHome[] = _("{PLAYER} scurried back home, protecting\nthe exhausted and fainted POKéMON from\nfurther harm‥\p");
 const u8 gText_Diploma_Player[] = _("PLAYER: {DYNAMIC 0x00}");

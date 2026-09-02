@@ -411,14 +411,14 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
             gTasks[taskId].tState = 1;
         break;
     case 1:
-        if (PrintWhiteOutRecoveryMessage(taskId, gText_PlayerScurriedToCenter, 2, 8))
+        if (PrintWhiteOutRecoveryMessage(taskId, gText_PlayerScurriedOutside, 2, 8))
         {
             ObjectEventTurn(&gObjectEvents[gPlayerAvatar.objectEventId], DIR_NORTH);
             gTasks[taskId].tState++;
         }
         break;
     case 4:
-        if (PrintWhiteOutRecoveryMessage(taskId, gText_PlayerScurriedBackHome, 2, 8))
+        if (PrintWhiteOutRecoveryMessage(taskId, gText_PlayerScurriedOutside, 2, 8))
         {
             ObjectEventTurn(&gObjectEvents[gPlayerAvatar.objectEventId], DIR_NORTH);
             gTasks[taskId].tState++;
@@ -438,14 +438,16 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
         if (FieldFadeTransitionBackgroundEffectIsFinished() == TRUE)
         {
             DestroyTask(taskId);
-            ScriptContext_SetupScript(EventScript_AfterWhiteOutHeal);
+            ScriptContext_SetupScript(EventScript_OutOfCenterPartyHeal);
+            //ScriptContext_SetupScript(EventScript_AfterWhiteOutHeal);
         }
         break;
     case 6:
         if (FieldFadeTransitionBackgroundEffectIsFinished() == TRUE)
         {
             DestroyTask(taskId);
-            ScriptContext_SetupScript(EventScript_AfterWhiteOutMomHeal);
+            ScriptContext_SetupScript(EventScript_OutOfCenterPartyHeal);
+            //ScriptContext_SetupScript(EventScript_AfterWhiteOutMomHeal);
         }
         break;
     }

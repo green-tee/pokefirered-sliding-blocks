@@ -5,6 +5,11 @@ mapscripts SevenIsland_TrainerTower_MapScripts {
     MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE [
         VAR_MAP_SCENE_BRAINING_ISLAND, 0: SevenIsland_TrainerTower_EventScript_TurnPlayerNorth
     ]
+    MAP_SCRIPT_ON_TRANSITION: SevenIsland_TrainerTower_OnTransition
+}
+
+script SevenIsland_TrainerTower_OnTransition {
+    setrespawn(HEAL_LOCATION_SEVEN_ISLAND_TRAINER_TOWER)
 }
 
 script SevenIsland_TrainerTower_EventScript_PalaceSign {
@@ -28,7 +33,7 @@ script SevenIsland_TrainerTower_EventScript_Intro {
     applymovement(LOCALID_HO_OH, SevenIsland_TrainerTower_Movement_WalkDown)
     waitmovement(LOCALID_HO_OH)
     removeobject(LOCALID_HO_OH)
-    givemon(SPECIES_HO_OH, 50, ITEM_SHELL_BELL)
+    givemon(SPECIES_HO_OH, 50, ITEM_SMOKE_BALL)
     setflag(FLAG_SYS_POKEMON_GET)
     msgbox(Text_GiveNicknameToThisMon, MSGBOX_YESNO)
     if (var(VAR_RESULT) == YES) {

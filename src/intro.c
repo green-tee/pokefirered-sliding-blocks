@@ -1290,7 +1290,9 @@ static void IntroCB_GF_RevealLogo(struct IntroSequenceData * this)
         if (++this->timer > 20)
         {
             SetGpuReg(REG_OFFSET_BLDCNT, 0);
-            SetIntroCB(this, IntroCB_Scene1);
+            //SetIntroCB(this, IntroCB_Scene1);
+            SetIntroCB(this, IntroCB_ExitToTitleScreen);
+            //SetMainCallback2(CB2_InitTitleScreen);
         }
         break;
     }

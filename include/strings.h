@@ -1066,6 +1066,7 @@ extern const u8 gText_RegionMap_AreaDesc_PatternBush[];
 extern const u8 gText_RegionMap_AreaDesc_DottedHole[];
 
 // field_screen_effect
+extern const u8 gText_PlayerScurriedOutside[];
 extern const u8 gText_PlayerScurriedToCenter[];
 extern const u8 gText_PlayerScurriedBackHome[];
 
