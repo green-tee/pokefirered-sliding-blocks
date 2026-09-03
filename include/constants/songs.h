@@ -303,7 +303,7 @@
 #define MUS_PUZZLE_FINAL          295 // MUS_CHAMP_R
 #define MUS_VS_GYM_LEADER         296 // MUS_VS_GYM
 #define MUS_VS_TRAINER            297 // MUS_VS_TORE
-#define MUS_VS_WILD               298 // MUS_VS_YASEI
+#define MUS_BATTLE                298 // MUS_VS_YASEI
 #define MUS_VS_CHAMPION           299 // MUS_VS_LAST
 #define MUS_PALLET                300 // MUS_MASARA
 #define MUS_OAK_LAB               301 // MUS_KENKYU

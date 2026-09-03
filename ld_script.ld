@@ -916,7 +916,7 @@ SECTIONS {
         sound/songs/midi/mus_puzzle_final.o(.rodata);
         sound/songs/midi/mus_vs_gym_leader.o(.rodata);
         sound/songs/midi/mus_vs_trainer.o(.rodata);
-        sound/songs/midi/mus_vs_wild.o(.rodata);
+        sound/songs/midi/mus_battle.o(.rodata);
         sound/songs/midi/mus_vs_champion.o(.rodata);
         sound/songs/midi/mus_pallet.o(.rodata);
         sound/songs/midi/mus_oak_lab.o(.rodata);

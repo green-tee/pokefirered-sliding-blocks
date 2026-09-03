@@ -219,7 +219,7 @@ gSpecials::
 	def_special NullFieldSpecial
 	def_special NullFieldSpecial
 	def_special NullFieldSpecial
-	def_special NullFieldSpecial
+	def_special GetPartyAndPCCount
 	def_special GetPokedexCount
 	def_special GetProfOaksRatingMessage
 	def_special AnimatePcTurnOn

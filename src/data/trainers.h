@@ -2,25 +2,25 @@ const struct Trainer gTrainers[] = {
     [TRAINER_NONE] = {
         .trainerName = _(""),
     },
-    [TRAINER_AQUA_LEADER] = {
-        .trainerClass = TRAINER_CLASS_AQUA_LEADER,
+    [TRAINER_EUSINE] = {
+        .trainerClass = TRAINER_CLASS_BOT,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_AQUA,
-        .trainerPic = TRAINER_PIC_AQUA_LEADER_ARCHIE,
-        .trainerName = _(""),
+        .trainerPic = TRAINER_PIC_EUSINE,
+        .trainerName = _("EUSINE"),
         .items = {},
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
-        .party = NO_ITEM_DEFAULT_MOVES(sParty_AquaLeader),
+        .party = ITEM_CUSTOM_MOVES(sParty_BotEusine),
     },
-    [TRAINER_AQUA_GRUNT_M] = {
-        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+    [TRAINER_MASTER_BOT] = {
+        .trainerClass = TRAINER_CLASS_MASTER,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_AQUA,
-        .trainerPic = TRAINER_PIC_AQUA_GRUNT_M,
-        .trainerName = _(""),
+        .trainerPic = TRAINER_PIC_LEADER_GIOVANNI,
+        .trainerName = _("BOT"),
         .items = {},
         .doubleBattle = FALSE,
-        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
-        .party = NO_ITEM_DEFAULT_MOVES(sParty_AquaGruntM),
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
+        .party = ITEM_CUSTOM_MOVES(sParty_ChampionRematchSquirtle),
     },
     [TRAINER_AQUA_GRUNT_F] = {
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,

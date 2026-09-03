@@ -5850,7 +5850,7 @@ void ClearBattleMonForms(void)
 static u16 GetBattleBGM(void)
 {
     if (gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON)
-        return MUS_VS_WILD;
+        return MUS_BATTLE;
     if (gBattleTypeFlags & BATTLE_TYPE_REGI)
         return MUS_RS_VS_TRAINER;
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
@@ -5873,24 +5873,28 @@ static u16 GetBattleBGM(void)
             return MUS_VS_TRAINER;
         }
     }
-    return MUS_VS_WILD;
+    return MUS_BATTLE;
 }
 
 void PlayBattleBGM(void)
 {
-    ResetMapMusic();
-    m4aMPlayAllStop();
-    PlayBGM(GetBattleBGM());
+    if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER)) {
+        ResetMapMusic();
+        m4aMPlayAllStop();
+        PlayBGM(GetBattleBGM());
+    }
 }
 
 void PlayMapChosenOrBattleBGM(u16 songId)
 {
-    ResetMapMusic();
-    m4aMPlayAllStop();
-    if (songId)
-        PlayNewMapMusic(songId);
-    else
-        PlayNewMapMusic(GetBattleBGM());
+    if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER)) {
+        ResetMapMusic();
+        m4aMPlayAllStop();
+        if (songId)
+            PlayNewMapMusic(songId);
+        else
+            PlayNewMapMusic(GetBattleBGM());
+    }
 }
 
 const u32 *GetMonFrontSpritePal(struct Pokemon *mon)

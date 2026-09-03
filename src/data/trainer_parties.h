@@ -21,8 +21,6 @@
         .species = SPECIES_STARMIE, \
     }
 
-static const struct TrainerMonNoItemDefaultMoves sParty_AquaLeader[] = {DUMMY_TRAINER_MON};
-static const struct TrainerMonNoItemDefaultMoves sParty_AquaGruntM[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_AquaGruntF[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSAromaLady[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSRuinManiac[] = {DUMMY_TRAINER_MON};
@@ -5447,6 +5445,33 @@ static const struct TrainerMonNoItemCustomMoves sParty_CooltrainerJulie[] = {
         .species = SPECIES_RAICHU,
         .moves = {MOVE_THUNDER, MOVE_THUNDER_WAVE, MOVE_SLAM, MOVE_DOUBLE_TEAM},
     },
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotEusine[] = {
+    {
+        .iv = 100,
+        .lvl = 48,
+        .species = SPECIES_SUICUNE,
+        .heldItem = ITEM_SITRUS_BERRY,
+        .moves = {MOVE_AURORA_BEAM, MOVE_BUBBLE_BEAM, MOVE_BITE, MOVE_CALM_MIND}
+    },
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MasterBot[] = {
+    {
+        .iv = 250,
+        .lvl = 50,
+        .species = SPECIES_RAYQUAZA,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_EXTREME_SPEED, MOVE_FLY, MOVE_OUTRAGE, MOVE_ANCIENT_POWER}
+    },
+    {
+        .iv = 250,
+        .lvl = 50,
+        .species = SPECIES_RAYQUAZA,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_SCARY_FACE, MOVE_CRUNCH}
+    }
 };
 
 static const struct TrainerMonItemCustomMoves sParty_EliteFourLorelei[] = {

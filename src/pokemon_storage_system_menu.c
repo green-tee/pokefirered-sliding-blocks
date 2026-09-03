@@ -186,6 +186,18 @@ u8 CountPartyMons(void)
     return count;
 }
 
+u16 GetPartyAndPCCount(void) {
+    u16 i;
+    u16 totalCount;
+    
+    totalCount = CountPartyMons();
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++) {
+        totalCount += CountMonsInBox(i);
+    }
+
+    return totalCount;
+}
+
 static u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n)
 {
     u8 *str;

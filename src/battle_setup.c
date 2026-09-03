@@ -1012,6 +1012,7 @@ void PlayTrainerEncounterMusic(void)
      && sTrainerBattleMode != TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC
      && sTrainerBattleMode != TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC)
     {
+        /*
         switch (GetTrainerEncounterMusicId(gTrainerBattleOpponent_A))
         {
         case TRAINER_ENCOUNTER_MUSIC_FEMALE:
@@ -1033,6 +1034,8 @@ void PlayTrainerEncounterMusic(void)
             music = MUS_ENCOUNTER_ROCKET;
             break;
         }
+        */
+        music = MUS_BATTLE;
         PlayNewMapMusic(music);
     }
 }

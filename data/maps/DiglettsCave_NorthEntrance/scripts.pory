@@ -35,6 +35,41 @@ script DiglettsCave_NorthEntrance_EventScript_PuzzleWhirlpoolIslands {
     }
 }
 
+script DiglettsCave_NorthEntrance_EventScript_Eusine {
+    lock
+    faceplayer
+    msgbox(DiglettsCave_NorthEntrance_Text_HowAboutABattle, MSGBOX_YESNO)
+    if (var(VAR_RESULT) == YES) {
+        msgbox(DiglettsCave_NorthEntrance_Text_LetsGo, MSGBOX_DEFAULT)
+        closemessage
+        trainerbattle_no_intro(TRAINER_EUSINE, DiglettsCave_NorthEntrance_Text_YouWinThisOne)
+        specialvar(VAR_RESULT, GetPartyAndPCCount)
+        if (var(VAR_RESULT) < 10) {
+            msgbox(DiglettsCave_NorthEntrance_Text_TakeMasterBall, MSGBOX_DEFAULT)
+            closemessage
+            giveitem(ITEM_MASTER_BALL, 1)
+        } else {
+            msgbox(DiglettsCave_NorthEntrance_Text_TakeSitrusBerry, MSGBOX_DEFAULT)
+            closemessage
+            giveitem(ITEM_SITRUS_BERRY, 1)
+        }
+        msgbox(DiglettsCave_NorthEntrance_Text_IllBattleYouAgain, MSGBOX_DEFAULT)
+        closemessage
+    } else {
+        msgbox(DiglettsCave_NorthEntrance_Text_ComeBackIfYouCangeYourMind, MSGBOX_DEFAULT)
+        closemessage
+    }
+    release
+}
+
+script DiglettsCave_NorthEntrance_EventScript_Boy {
+    if (flag(FLAG_SOLVED_WHIRLPOOL_ISLANDS)) {
+        msgbox(DiglettsCave_NorthEntrance_Text_IllHaveToSolveItMyself, MSGBOX_NPC)
+    } else {
+        msgbox(DiglettsCave_NorthEntrance_Text_ThisOneIsHard, MSGBOX_NPC)
+    }
+}
+
 script DiglettsCave_NorthEntrance_EventScript_PuzzleEusine {
     if (!flag(FLAG_SOLVED_EUSINE)) {
         lockall

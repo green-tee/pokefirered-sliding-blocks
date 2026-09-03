@@ -297,7 +297,7 @@ gSongTable::
 	song mus_puzzle_final, 0, 0
 	song mus_vs_gym_leader, 0, 0
 	song mus_vs_trainer, 0, 0
-	song mus_vs_wild, 0, 0
+	song mus_battle, 0, 0
 	song mus_vs_champion, 0, 0
 	song mus_pallet, 0, 0
 	song mus_oak_lab, 0, 0

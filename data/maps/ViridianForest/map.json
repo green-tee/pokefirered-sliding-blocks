@@ -266,16 +266,6 @@
     },
     {
       "type": "hidden_item",
-      "x": 3,
-      "y": 22,
-      "elevation": 3,
-      "item": "ITEM_POTION",
-      "flag": "FLAG_HIDDEN_ITEM_VIRIDIAN_FOREST_POTION",
-      "quantity": 1,
-      "underfoot": false
-    },
-    {
-      "type": "hidden_item",
       "x": 28,
       "y": 57,
       "elevation": 0,

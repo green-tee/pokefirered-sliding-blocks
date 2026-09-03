@@ -2,3 +2,49 @@ text DiglettsCave_NorthEntrance_Text_FloorName {
     "Floor III\n"
     "-- Obstacle course --"
 }
+
+text DiglettsCave_NorthEntrance_Text_HowAboutABattle {
+    "Hey, challenger!\n"
+    "How about a battle?\l"
+    "If you win, I'll give you an item."
+}
+
+text DiglettsCave_NorthEntrance_Text_LetsGo {
+    "Let's go!"
+}
+
+text DiglettsCave_NorthEntrance_Text_ComeBackIfYouCangeYourMind {
+    "Nevermind then.\n"
+    "Come back if you change your mind."
+}
+
+text DiglettsCave_NorthEntrance_Text_YouWinThisOne {
+    "You win this one!"
+}
+
+text DiglettsCave_NorthEntrance_Text_TakeMasterBall {
+    "Good job!\n"
+    "I see you only have a few POKéMON\l"
+    "with you.\l"
+    "Here, take this!"
+}
+
+text DiglettsCave_NorthEntrance_Text_TakeSitrusBerry {
+    "Good job! Here's the item I promised."
+}
+
+text DiglettsCave_NorthEntrance_Text_IllBattleYouAgain {
+    "I'll battle against you\n"
+    "anytime you want."
+}
+
+text DiglettsCave_NorthEntrance_Text_IllHaveToSolveItMyself {
+    "Yeah, you solved it, but I can't\n"
+    "pass: it'll close again for me\l"
+    "until I've solved it myself."
+}
+
+text DiglettsCave_NorthEntrance_Text_ThisOneIsHard {
+    "This one is stumping me!\n"
+    "The previous puzzles weren't as hard!"
+}
