@@ -22,7 +22,7 @@ PewterCity_EventScript_GymGuide::
 	waitmovement 0
 	fadedefaultbgm
 	removeobject LOCALID_PEWTER_GYM_GUIDE
-	clearflag FLAG_HIDE_PEWTER_CITY_GYM_GUIDE
+	@clearflag FLAG_HIDE_THE_EYE_OF_TRUTH_SITRUS_BERRY
 	release
 	end
 
@@ -292,7 +292,7 @@ PewterCity_EventScript_GymGuideTrigger::
 	waitmovement 0
 	fadedefaultbgm
 	removeobject LOCALID_PEWTER_GYM_GUIDE
-	clearflag FLAG_HIDE_PEWTER_CITY_GYM_GUIDE
+	@clearflag FLAG_HIDE_THE_EYE_OF_TRUTH_SITRUS_BERRY
 	releaseall
 	end
 

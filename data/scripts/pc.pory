@@ -1,0 +1,19 @@
+script EventScript_PC {
+    lockall
+    //setvar(VAR_0x8004, HELPCONTEXT_PC)
+    //special(Script_SetHelpContext)
+    //setvar(VAR_0x8004, 0)
+    special(AnimatePcTurnOn)
+    playse(SE_PC_ON)
+    msgbox(Text_BootedUpPC, MSGBOX_DEFAULT)
+    msgbox(Text_OpenedPkmnStorage, MSGBOX_DEFAULT)
+    special(ShowPokemonStorageSystemPC)
+    waitstate
+    //setvar(VAR_0x8004, HELPCONTEXT_PC)
+    //special(Script_SetHelpContext)
+    //setvar(VAR_0x8004, 0)
+    playse(SE_PC_OFF)
+	special(AnimatePcTurnOff)
+    //special(SetHelpContextForMap)
+    releaseall
+}

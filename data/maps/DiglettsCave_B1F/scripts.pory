@@ -67,6 +67,10 @@ script DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable4 {
     releaseall
 }
 
+script DiglettsCave_B1F_EventScript_ItemSitrusBerry {
+    finditem(ITEM_SITRUS_BERRY, 1)
+}
+
 script DiglettsCave_B1F_EventScript_ClearPuzzleHoOhBackShiny {
     setmetatile(7, 12, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE)
     setmetatile(8, 12, METATILE_Lab_PuzzlePalace_DoorTop, TRUE)

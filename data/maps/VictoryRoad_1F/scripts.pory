@@ -68,6 +68,10 @@ script VictoryRoad_1F_EventScript_FloorSign {
     msgbox(VictoryRoad_1F_Text_FloorName, MSGBOX_SIGN)
 }
 
+script VictoryRoad_1F_EventScript_CreditsSign {
+    msgbox(VictoryRoad_1F_Text_Credits, MSGBOX_SIGN)
+}
+
 script VictoryRoad_1F_EventScript_PuzzleAlakazam {
     if (!flag(FLAG_SOLVED_ALAKAZAM)) {
         lockall
@@ -769,6 +773,14 @@ script VictoryRoad_1F_EventScript_PuzzleNumbersMagic {
         }
         releaseall
     }
+}
+
+script VictoryRoad_1F_EventScript_ItemSitrusBerry {
+    finditem(ITEM_SITRUS_BERRY, 1)
+}
+
+script VictoryRoad_1F_EventScript_ItemMasterBall {
+    finditem(ITEM_MASTER_BALL, 1)
 }
 
 script(local) VictoryRoad_1F_EventScript_ClearPuzzleAlakazam {

@@ -2658,22 +2658,22 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HoOh = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Celebi = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rayquaza = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_GREEN,
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
-    .size = 128,
-    .width = 16,
-    .height = 16,
+    .size = 2048,
+    .width = 64,
+    .height = 64,
     .paletteSlot = PALSLOT_NPC_3,
-    .shadowSize = SHADOW_SIZE_M,
+    .shadowSize = SHADOW_SIZE_L,
     .inanimate = FALSE,
     .disableReflectionPaletteLoad = FALSE,
     .tracks = TRACKS_FOOT,
-    .oam = &gObjectEventBaseOam_16x16,
-    .subspriteTables = gObjectEventSpriteOamTables_16x16,
+    .oam = &gObjectEventBaseOam_64x64,
+    .subspriteTables = gObjectEventSpriteOamTables_64x64,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Celebi,
+    .images = sPicTable_Rayquaza,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 

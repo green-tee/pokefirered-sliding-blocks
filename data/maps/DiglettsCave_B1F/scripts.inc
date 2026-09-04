@@ -137,58 +137,64 @@ DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable4_2:
 	goto DiglettsCave_B1F_EventScript_PuzzleHoOhBackShinyUnsolvable4_1
 
 
-DiglettsCave_B1F_EventScript_ClearPuzzleHoOhBackShiny::
+DiglettsCave_B1F_EventScript_ItemSitrusBerry::
 # 71 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 12, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE
-# 72 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 8, 12, METATILE_Lab_PuzzlePalace_DoorTop, TRUE
-# 73 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 12, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE
-# 74 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 13, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE
+	finditem ITEM_SITRUS_BERRY, 1
+	return
+
+
+DiglettsCave_B1F_EventScript_ClearPuzzleHoOhBackShiny::
 # 75 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 8, 13, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE
+	setmetatile 7, 12, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE
 # 76 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 13, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE
+	setmetatile 8, 12, METATILE_Lab_PuzzlePalace_DoorTop, TRUE
 # 77 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 14, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE
+	setmetatile 9, 12, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE
 # 78 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 8, 14, METATILE_Lab_PuzzlePalace_Upstairs, FALSE
+	setmetatile 7, 13, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE
 # 79 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 14, METATILE_Lab_PuzzlePalace_DoorRight, TRUE
+	setmetatile 8, 13, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE
 # 80 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE
+	setmetatile 9, 13, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE
 # 81 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE
+	setmetatile 7, 14, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE
 # 82 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 8, 14, METATILE_Lab_PuzzlePalace_Upstairs, FALSE
+# 83 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 9, 14, METATILE_Lab_PuzzlePalace_DoorRight, TRUE
+# 84 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 7, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE
+# 85 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 9, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE
+# 86 "data/maps/DiglettsCave_B1F/scripts.pory"
 	setmetatile 8, 16, METATILE_Lab_PuzzlePalace_TileArrowUp, FALSE
 	return
 
 
 DiglettsCave_B1F_EventScript_SetPuzzleHoOhBackShiny::
-# 86 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 12, METATILE_Building_Void, TRUE
-# 87 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 8, 12, METATILE_Building_Void, TRUE
-# 88 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 12, METATILE_Building_Void, TRUE
-# 89 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 13, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
 # 90 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 8, 13, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE
+	setmetatile 7, 12, METATILE_Building_Void, TRUE
 # 91 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 13, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
+	setmetatile 8, 12, METATILE_Building_Void, TRUE
 # 92 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE
+	setmetatile 9, 12, METATILE_Building_Void, TRUE
 # 93 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 8, 14, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE
+	setmetatile 7, 13, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
 # 94 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE
+	setmetatile 8, 13, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE
 # 95 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 7, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE
+	setmetatile 9, 13, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
 # 96 "data/maps/DiglettsCave_B1F/scripts.pory"
-	setmetatile 9, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE
+	setmetatile 7, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE
 # 97 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 8, 14, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE
+# 98 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 9, 14, METATILE_Lab_PuzzlePalace_SmallTree_Top_Wall_Bottom, TRUE
+# 99 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 7, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE
+# 100 "data/maps/DiglettsCave_B1F/scripts.pory"
+	setmetatile 9, 15, METATILE_Lab_PuzzlePalace_SmallTree_Bottom, TRUE
+# 101 "data/maps/DiglettsCave_B1F/scripts.pory"
 	setmetatile 8, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
 	return
 

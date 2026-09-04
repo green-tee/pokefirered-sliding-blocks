@@ -169,7 +169,7 @@ $(TILESETGFXDIR)/secondary/museum/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 137 -Wnum_tiles
 
 $(TILESETGFXDIR)/secondary/lab/tiles.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 128 -Wnum_tiles
+	$(GFX) $< $@ -num_tiles 132 -Wnum_tiles
 
 $(TILESETGFXDIR)/secondary/game_corner/tiles.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 171 -Wnum_tiles

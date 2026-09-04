@@ -49,6 +49,10 @@ script MtMoon_B1F_EventScript_PuzzleHoOhBack {
     }
 }
 
+script MtMoon_B1F_EventScript_ItemMasterBall {
+    finditem(ITEM_MASTER_BALL, 1)
+}
+
 script(local) MtMoon_B1F_EventScript_ClearPuzzleBirds {
     setmetatile(10, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(11, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE)

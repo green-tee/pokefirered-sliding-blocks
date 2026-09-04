@@ -264,21 +264,27 @@ static void PcTurnOnUpdateMetatileId(bool16 flickerOff)
     }
     if (flickerOff)
     {
+        metatileId = METATILE_Building_PCOff;
+        /*
         if (gSpecialVar_0x8004 == 0)
             metatileId = METATILE_Building_PCOff;
         else if (gSpecialVar_0x8004 == 1)
             metatileId = METATILE_GenericBuilding1_PlayersPCOff;
         else if (gSpecialVar_0x8004 == 2)
             metatileId = METATILE_GenericBuilding1_PlayersPCOff;
+        */
     }
     else
     {
+        metatileId = METATILE_Building_PCOn;
+        /*
         if (gSpecialVar_0x8004 == 0)
             metatileId = METATILE_Building_PCOn;
         else if (gSpecialVar_0x8004 == 1)
             metatileId = METATILE_GenericBuilding1_PlayersPCOn;
         else if (gSpecialVar_0x8004 == 2)
             metatileId = METATILE_GenericBuilding1_PlayersPCOn;
+        */
     }
     MapGridSetMetatileIdAt(gSaveBlock1Ptr->pos.x + deltaX + MAP_OFFSET, gSaveBlock1Ptr->pos.y + deltaY + MAP_OFFSET, metatileId | MAPGRID_COLLISION_MASK);
 }

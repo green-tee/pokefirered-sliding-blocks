@@ -67,11 +67,21 @@
     },
     {
       "type": "hidden_item",
-      "x": 29,
-      "y": 16,
+      "x": 28,
+      "y": 8,
       "elevation": 0,
       "item": "ITEM_MASTER_BALL",
       "flag": "FLAG_HIDDEN_ITEM_BRAINING_ISLAND_MASTER_BALL",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 29,
+      "y": 16,
+      "elevation": 0,
+      "item": "ITEM_SITRUS_BERRY",
+      "flag": "FLAG_HIDDEN_ITEM_BRAINING_ISLAND_SITRUS_BERRY",
       "quantity": 1,
       "underfoot": false
     }

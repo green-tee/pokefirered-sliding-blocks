@@ -104,6 +104,10 @@ script DiglettsCave_NorthEntrance_EventScript_PuzzleLugia {
     }
 }
 
+script DiglettsCave_NorthEntrance_EventScript_ItemSitrusBerry {
+    finditem(ITEM_SITRUS_BERRY, 1)
+}
+
 script DiglettsCave_NorthEntrance_EventScript_ClearPuzzleWhirlpoolIslands {
     setmetatile(19, 38, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(20, 38, METATILE_Lab_PuzzlePalace_Tile, FALSE)

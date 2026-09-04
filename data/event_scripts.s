@@ -1033,8 +1033,6 @@ Text_MoveCanOnlyBeLearnedOnce::
 	.string "once. Is that okay?$"
 
 EventScript_ResetAllMapFlags::
-	@setflag FLAG_HIDE_BRAINING_ISLAND_HO_OH
-	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
 	setflag FLAG_HIDE_BILL_HUMAN_SEA_COTTAGE
 	setflag FLAG_HIDE_PEWTER_CITY_RUNNING_SHOES_GUY
 	setflag FLAG_HIDE_POKEHOUSE_FUJI

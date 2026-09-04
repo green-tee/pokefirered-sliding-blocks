@@ -379,6 +379,9 @@ $(OBJEVENTGFXDIR)/pokemon/poliwrath.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/pokemon/psyduck.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 2
 
+$(OBJEVENTGFXDIR)/pokemon/rayquaza.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 8 -mheight 8
+
 $(OBJEVENTGFXDIR)/pokemon/seel.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 2
 
