@@ -5,15 +5,15 @@
 // Dummy trainers for all the RS trainer classes
 #define TRAINER_EUSINE                             1
 #define TRAINER_MASTER_BOT                         2
-#define TRAINER_AQUA_GRUNT_F                       3
-#define TRAINER_RS_AROMA_LADY                      4
-#define TRAINER_RS_RUIN_MANIAC                     5
-#define TRAINER_INTERVIEWER                        6
-#define TRAINER_RS_TUBER_F                         7
-#define TRAINER_RS_TUBER_M                         8
-#define TRAINER_RS_COOLTRAINER_M                   9
-#define TRAINER_RS_COOLTRAINER_F                  10
-#define TRAINER_HEX_MANIAC                        11
+#define TRAINER_BOT_ROCKER                         3
+#define TRAINER_BOT_YOUNGSTER                      4
+#define TRAINER_BOT_COOLTRAINER                    5
+#define TRAINER_BOT_BLACK_BELT                     6
+#define TRAINER_BOT_GRUNT_1                        7
+#define TRAINER_BOT_GRUNT_2                        8
+#define TRAINER_BOT_GRUNT_3                        9
+#define TRAINER_BOT_GRUNT_4                       10
+#define TRAINER_BOT_GRUNT_5                       11
 #define TRAINER_RS_LADY                           12
 #define TRAINER_RS_BEAUTY                         13
 #define TRAINER_RICH_BOY                          14

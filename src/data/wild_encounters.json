@@ -1197,13 +1197,13 @@
                 "species": "SPECIES_MOLTRES"
               },
               {
-                "min_level": 43,
-                "max_level": 44,
+                "min_level": 45,
+                "max_level": 45,
                 "species": "SPECIES_ARTICUNO"
               },
               {
-                "min_level": 44,
-                "max_level": 44,
+                "min_level": 46,
+                "max_level": 46,
                 "species": "SPECIES_ARTICUNO"
               },
               {
@@ -1217,13 +1217,13 @@
                 "species": "SPECIES_MOLTRES"
               },
               {
-                "min_level": 45,
-                "max_level": 45,
+                "min_level": 47,
+                "max_level": 47,
                 "species": "SPECIES_ARTICUNO"
               },
               {
-                "min_level": 46,
-                "max_level": 46,
+                "min_level": 48,
+                "max_level": 48,
                 "species": "SPECIES_ARTICUNO"
               },
               {
@@ -1239,7 +1239,7 @@
               {
                 "min_level": 47,
                 "max_level": 47,
-                "species": "SPECIES_ARTICUNO"
+                "species": "SPECIES_HO_OH"
               },
               {
                 "min_level": 48,
@@ -1671,29 +1671,29 @@
                 "species": "SPECIES_GENGAR"
               },
               {
-                "min_level": 47,
-                "max_level": 47,
-                "species": "SPECIES_WALREIN"
-              },
-              {
-                "min_level": 48,
-                "max_level": 48,
-                "species": "SPECIES_SALAMENCE"
-              },
-              {
                 "min_level": 48,
                 "max_level": 48,
                 "species": "SPECIES_WALREIN"
               },
               {
-                "min_level": 49,
-                "max_level": 49,
+                "min_level": 50,
+                "max_level": 50,
                 "species": "SPECIES_SALAMENCE"
               },
               {
                 "min_level": 49,
                 "max_level": 49,
                 "species": "SPECIES_WALREIN"
+              },
+              {
+                "min_level": 50,
+                "max_level": 50,
+                "species": "SPECIES_SALAMENCE"
+              },
+              {
+                "min_level": 54,
+                "max_level": 54,
+                "species": "SPECIES_METANG"
               },
               {
                 "min_level": 55,

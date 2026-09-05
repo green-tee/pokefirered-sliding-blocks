@@ -4,6 +4,10 @@ script VictoryRoad_2F_EventScript_FloorSign {
     msgbox(VictoryRoad_2F_Text_FloorName, MSGBOX_SIGN)
 }
 
+script VictoryRoad_2F_EventScript_CreditsSign {
+    msgbox(VictoryRoad_2F_Text_Credits, MSGBOX_SIGN)
+}
+
 script VictoryRoad_2F_EventScript_PuzzleRayquaza {
     lockall
     playbgm(MUS_PUZZLE_FINAL, 0)

@@ -517,3 +517,49 @@ DiglettsCave_SouthEntrance_EventScript_LostBoy::
 	msgbox DiglettsCave_SouthEntrance_Text_KeepGoingLeft, MSGBOX_NPC
 	return
 
+
+DiglettsCave_SouthEntrance_EventScript_Grunt1::
+# 252 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	trainerbattle_single TRAINER_BOT_GRUNT_1, DiglettsCave_SouthEntrance_Text_GruntIntroM, DiglettsCave_SouthEntrance_Text_GruntDefeatedM
+# 253 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	msgbox DiglettsCave_SouthEntrance_ThePuzzlesAreClues, MSGBOX_NPC
+	return
+
+
+DiglettsCave_SouthEntrance_EventScript_Grunt2::
+# 257 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	trainerbattle_single TRAINER_BOT_GRUNT_2, DiglettsCave_SouthEntrance_Text_GruntIntroF, DiglettsCave_SouthEntrance_Text_GruntDefeatedF
+# 258 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	msgbox DiglettsCave_SouthEntrance_Text_RememberToGoLeft, MSGBOX_NPC
+	return
+
+
+DiglettsCave_SouthEntrance_EventScript_Grunt3::
+# 262 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	trainerbattle_single TRAINER_BOT_GRUNT_3, DiglettsCave_SouthEntrance_Text_GruntIntroM, DiglettsCave_SouthEntrance_Text_GruntDefeatedM
+# 263 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	msgbox DiglettsCave_SouthEntrance_ThePuzzlesAreClues, MSGBOX_NPC
+	return
+
+
+DiglettsCave_SouthEntrance_EventScript_Grunt4::
+# 267 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	trainerbattle_single TRAINER_BOT_GRUNT_4, DiglettsCave_SouthEntrance_Text_GruntIntroF, DiglettsCave_SouthEntrance_Text_GruntDefeatedF
+# 268 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	msgbox DiglettsCave_SouthEntrance_Text_RememberToGoLeft, MSGBOX_NPC
+	return
+
+
+DiglettsCave_SouthEntrance_EventScript_Grunt5::
+# 272 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	trainerbattle_single TRAINER_BOT_GRUNT_5, DiglettsCave_SouthEntrance_Text_GruntIntroM, DiglettsCave_SouthEntrance_Text_GruntDefeatedM
+# 273 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	msgbox DiglettsCave_SouthEntrance_ThePuzzlesAreClues, MSGBOX_NPC
+	return
+
+
+DiglettsCave_SouthEntrance_EventScript_Grunt6::
+# 277 "data/maps/DiglettsCave_SouthEntrance/scripts.pory"
+	msgbox DiglettsCave_SouthEntrance_Text_RememberToGoLeft, MSGBOX_NPC
+	return
+

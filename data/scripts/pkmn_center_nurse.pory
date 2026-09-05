@@ -68,9 +68,13 @@ Movement_Bow::
 `
 
 script EventScript_BrainingIslandNurse {
+    lockall
+    applymovement(VAR_LAST_TALKED, Common_Movement_FacePlayer)
+    waitmovement(0)
     message(Text_HowMayIhelpYou)
     waitmessage
     call(EventScript_BrainingIslandNurse_MainLoop)
+    releaseall
 }
 
 script(local) EventScript_BrainingIslandNurse_MainLoop {

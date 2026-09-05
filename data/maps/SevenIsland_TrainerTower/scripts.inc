@@ -96,17 +96,3 @@ SevenIsland_TrainerTower_Movement_WalkDown:
 # 51 "data/maps/SevenIsland_TrainerTower/scripts.pory"
 	walk_down
 	step_end
-
-SevenIsland_TrainerTower_EventScript_Nurse::
-# 55 "data/maps/SevenIsland_TrainerTower/scripts.pory"
-	lockall
-# 56 "data/maps/SevenIsland_TrainerTower/scripts.pory"
-	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
-# 57 "data/maps/SevenIsland_TrainerTower/scripts.pory"
-	waitmovement 0
-# 58 "data/maps/SevenIsland_TrainerTower/scripts.pory"
-	call EventScript_BrainingIslandNurse
-# 59 "data/maps/SevenIsland_TrainerTower/scripts.pory"
-	releaseall
-	return
-

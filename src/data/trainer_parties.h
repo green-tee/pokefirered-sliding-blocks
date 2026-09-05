@@ -21,15 +21,6 @@
         .species = SPECIES_STARMIE, \
     }
 
-static const struct TrainerMonNoItemDefaultMoves sParty_AquaGruntF[] = {DUMMY_TRAINER_MON};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSAromaLady[] = {DUMMY_TRAINER_MON};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSRuinManiac[] = {DUMMY_TRAINER_MON};
-static const struct TrainerMonNoItemDefaultMoves sParty_Interviewer[] = {DUMMY_TRAINER_MON};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSTuberF[] = {DUMMY_TRAINER_STARMIE};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSTuberM[] = {DUMMY_TRAINER_STARMIE};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSCooltrainerM[] = {DUMMY_TRAINER_MON_IV};
-static const struct TrainerMonNoItemDefaultMoves sParty_RSCooltrainerF[] = {DUMMY_TRAINER_MON_IV};
-static const struct TrainerMonNoItemDefaultMoves sParty_HexManiac[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSLady[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RSBeauty[] = {DUMMY_TRAINER_MON};
 static const struct TrainerMonNoItemDefaultMoves sParty_RichBoy[] = {DUMMY_TRAINER_MON};
@@ -5471,6 +5462,96 @@ static const struct TrainerMonItemCustomMoves sParty_MasterBot[] = {
         .species = SPECIES_RAYQUAZA,
         .heldItem = ITEM_NONE,
         .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_SCARY_FACE, MOVE_CRUNCH}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotRocker[] = {
+    {
+        .iv = 100,
+        .lvl = 49,
+        .species = SPECIES_RAICHU,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_THUNDERBOLT, MOVE_AGILITY, MOVE_DOUBLE_TEAM, MOVE_SLAM}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotYoungster[] = {
+    {
+        .iv = 100,
+        .lvl = 45,
+        .species = SPECIES_PIDGEOT,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_FEATHER_DANCE, MOVE_FLY, MOVE_MIRROR_MOVE, MOVE_QUICK_ATTACK}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotCooltrainer[] = {
+    {
+        .iv = 100,
+        .lvl = 45,
+        .species = SPECIES_ALAKAZAM,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_KINESIS, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT, MOVE_REFLECT}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotBlackBelt[] = {
+    {
+        .iv = 100,
+        .lvl = 45,
+        .species = SPECIES_HITMONCHAN,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_ICE_PUNCH, MOVE_FIRE_PUNCH, MOVE_THUNDER_PUNCH, MOVE_MACH_PUNCH}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotGrunt1[] = {
+    {
+        .iv = 100,
+        .lvl = 46,
+        .species = SPECIES_HERACROSS,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_MEGAHORN, MOVE_BRICK_BREAK, MOVE_HORN_ATTACK, MOVE_COUNTER}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotGrunt2[] = {
+    {
+        .iv = 100,
+        .lvl = 46,
+        .species = SPECIES_MUK,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_SLUDGE_BOMB, MOVE_MINIMIZE, MOVE_ACID_ARMOR, MOVE_DISABLE}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotGrunt3[] = {
+    {
+        .iv = 100,
+        .lvl = 47,
+        .species = SPECIES_GOLEM,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_BLAST, MOVE_DEFENSE_CURL, MOVE_DOUBLE_EDGE}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotGrunt4[] = {
+    {
+        .iv = 100,
+        .lvl = 47,
+        .species = SPECIES_STEELIX,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_CRUNCH, MOVE_IRON_TAIL, MOVE_DRAGON_BREATH, MOVE_HARDEN}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_BotGrunt5[] = {
+    {
+        .iv = 100,
+        .lvl = 48,
+        .species = SPECIES_HOUNDOOM,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_CRUNCH, MOVE_FLAMETHROWER, MOVE_LEER, MOVE_HOWL}
     }
 };
 

@@ -50,11 +50,3 @@ script SevenIsland_TrainerTower_EventScript_Intro {
 movement SevenIsland_TrainerTower_Movement_WalkDown {
     walk_down
 }
-
-script SevenIsland_TrainerTower_EventScript_Nurse {
-    lockall
-    applymovement(VAR_LAST_TALKED, Common_Movement_FacePlayer)
-    waitmovement(0)
-    call(EventScript_BrainingIslandNurse)
-    releaseall
-}

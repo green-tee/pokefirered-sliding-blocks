@@ -64,3 +64,34 @@ text DiglettsCave_SouthEntrance_Text_KeepGoingLeft {
     "you'll come back here eventually.\l"
     "That much, I was able to find out."
 }
+
+text DiglettsCave_SouthEntrance_Text_GruntIntroM {
+    "Are you lost in these woods?\n"
+    "I'm going to make your life\l"
+    "even harder!"
+}
+
+text DiglettsCave_SouthEntrance_Text_GruntDefeatedM {
+    "I don't need to say anything.\n"
+    "My work here is done!"
+}
+
+text DiglettsCave_SouthEntrance_ThePuzzlesAreClues {
+    "The puzzles on the wall are clues.\n"
+    "That's all I'm going to say."
+}
+
+text DiglettsCave_SouthEntrance_Text_GruntIntroF {
+    "Still confused?\n"
+    "Then perhaps this will enlighten you!"
+}
+
+text DiglettsCave_SouthEntrance_Text_GruntDefeatedF {
+    "…"
+}
+
+text DiglettsCave_SouthEntrance_Text_RememberToGoLeft {
+    "Remember to keep going left\n"
+    "if you want to give up and return\l"
+    "to the exit downstairs."
+}

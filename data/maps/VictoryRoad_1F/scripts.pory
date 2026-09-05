@@ -68,10 +68,6 @@ script VictoryRoad_1F_EventScript_FloorSign {
     msgbox(VictoryRoad_1F_Text_FloorName, MSGBOX_SIGN)
 }
 
-script VictoryRoad_1F_EventScript_CreditsSign {
-    msgbox(VictoryRoad_1F_Text_Credits, MSGBOX_SIGN)
-}
-
 script VictoryRoad_1F_EventScript_PuzzleAlakazam {
     if (!flag(FLAG_SOLVED_ALAKAZAM)) {
         lockall
@@ -759,7 +755,7 @@ script(local) VictoryRoad_1F_EventScript_ClearPathToFinalPuzzle {
 script VictoryRoad_1F_EventScript_PuzzleNumbersMagic {
     if (!flag(FLAG_SOLVED_NUMBERS_MAGIC)) {
         lockall
-        playbgm(MUS_PUZZLE_IMPORTANT, 0)
+        fadenewbgm(MUS_PUZZLE_IMPORTANT)
         msgbox(VictoryRoad_1F_Text_MagicSquare, MSGBOX_DEFAULT)
         closemessage
         playslidingblocks(SLIDING_LAYOUT_NUMBERS_MAGIC)
@@ -781,6 +777,23 @@ script VictoryRoad_1F_EventScript_ItemSitrusBerry {
 
 script VictoryRoad_1F_EventScript_ItemMasterBall {
     finditem(ITEM_MASTER_BALL, 1)
+}
+
+script VictoryRoad_1F_EventScript_Rocker {
+    trainerbattle_single(TRAINER_BOT_ROCKER, VictoryRoad_1F_Text_RockerIntro, VictoryRoad_1F_Text_RockerDefeated)
+    msgbox(VictoryRoad_1F_Text_RockerDefeated, MSGBOX_NPC)
+}
+
+script VictoryRoad_1F_EventScript_StuckBoy {
+    msgbox(VictoryRoad_1F_Text_ImStuck, MSGBOX_NPC)
+}
+
+script VictoryRoad_1F_EventScript_DefeatedBeauty {
+    msgbox(VictoryRoad_1F_Text_ThisIsTooDifficult, MSGBOX_NPC)
+}
+
+script VictoryRoad_1F_EventScript_Hiker {
+    msgbox(VictoryRoad_1F_Text_ImLookingForMetragross, MSGBOX_NPC)
 }
 
 script(local) VictoryRoad_1F_EventScript_ClearPuzzleAlakazam {

@@ -253,84 +253,100 @@ MtMoon_B2F_Movement_PanToVoltorb:
 	walk_faster_up
 	step_end
 
-MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode:
+MtMoon_B2F_EventScript_Cooltrainer::
 # 84 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 21, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
+	trainerbattle_single TRAINER_BOT_COOLTRAINER, MtMoon_B2F_Text_CooltrainerIntro, MtMoon_B2F_Text_CooltrainerDefeated
 # 85 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 22, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
-# 86 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 23, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
-# 87 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 21, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
-# 88 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 22, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+	msgbox MtMoon_B2F_Text_YoureCoolEnough, MSGBOX_NPC
+	return
+
+
+MtMoon_B2F_EventScript_BlackBelt::
 # 89 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 23, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+	trainerbattle_single TRAINER_BOT_BLACK_BELT, MtMoon_B2F_Text_BlackBeltIntro, MtMoon_B2F_Text_BlackBeltDefeated
 # 90 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 21, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
-# 91 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 22, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
-# 92 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 23, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
-# 93 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 21, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+	msgbox MtMoon_B2F_Text_ThingsWillEscalateQuickly, MSGBOX_NPC
+	return
+
+
+MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode:
 # 94 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 22, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+	setmetatile 21, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
 # 95 "data/maps/MtMoon_B2F/scripts.pory"
-	setmetatile 23, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+	setmetatile 22, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
 # 96 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 97 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 98 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 99 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 16, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 100 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 101 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 102 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 17, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 103 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 21, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 104 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 22, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 105 "data/maps/MtMoon_B2F/scripts.pory"
+	setmetatile 23, 18, METATILE_Lab_PuzzlePalace_Tile, FALSE
+# 106 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 24, 18, METATILE_Lab_PuzzlePalace_Corner_FacingRight, TRUE
 	return
 
 
 MtMoon_B2F_EventScript_ClearPuzzleVoltorb:
-# 100 "data/maps/MtMoon_B2F/scripts.pory"
+# 110 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 36, 4, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
-# 101 "data/maps/MtMoon_B2F/scripts.pory"
+# 111 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 36, 5, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE
 	return
 
 
 MtMoon_B2F_EventScript_ClearPuzzleElectrode:
-# 105 "data/maps/MtMoon_B2F/scripts.pory"
+# 115 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 21, 1, METATILE_Lab_PuzzlePalace_DoorTopLeft, TRUE
-# 106 "data/maps/MtMoon_B2F/scripts.pory"
+# 116 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 22, 1, METATILE_Lab_PuzzlePalace_DoorTop, TRUE
-# 107 "data/maps/MtMoon_B2F/scripts.pory"
+# 117 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 23, 1, METATILE_Lab_PuzzlePalace_DoorTopRight, TRUE
-# 108 "data/maps/MtMoon_B2F/scripts.pory"
+# 118 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 21, 2, METATILE_Lab_PuzzlePalace_AboveDoorLeft, TRUE
-# 109 "data/maps/MtMoon_B2F/scripts.pory"
+# 119 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 22, 2, METATILE_Lab_PuzzlePalace_AboveDoor, TRUE
-# 110 "data/maps/MtMoon_B2F/scripts.pory"
+# 120 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 23, 2, METATILE_Lab_PuzzlePalace_AboveDoorRight, TRUE
-# 111 "data/maps/MtMoon_B2F/scripts.pory"
+# 121 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 21, 3, METATILE_Lab_PuzzlePalace_DoorLeft, TRUE
-# 112 "data/maps/MtMoon_B2F/scripts.pory"
+# 122 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 22, 3, METATILE_Lab_PuzzlePalace_Upstairs, FALSE
-# 113 "data/maps/MtMoon_B2F/scripts.pory"
+# 123 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 23, 3, METATILE_Lab_PuzzlePalace_DoorRight, TRUE
 	return
 
 
 MtMoon_B2F_EventScript_SetPuzzleElectrode:
-# 117 "data/maps/MtMoon_B2F/scripts.pory"
+# 127 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 21, 1, METATILE_Building_Void, TRUE
-# 118 "data/maps/MtMoon_B2F/scripts.pory"
+# 128 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 22, 1, METATILE_Building_Void, TRUE
-# 119 "data/maps/MtMoon_B2F/scripts.pory"
+# 129 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 23, 1, METATILE_Building_Void, TRUE
-# 120 "data/maps/MtMoon_B2F/scripts.pory"
+# 130 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 21, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
-# 121 "data/maps/MtMoon_B2F/scripts.pory"
+# 131 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 22, 2, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE
-# 122 "data/maps/MtMoon_B2F/scripts.pory"
+# 132 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 23, 2, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE
-# 123 "data/maps/MtMoon_B2F/scripts.pory"
+# 133 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 21, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE
-# 124 "data/maps/MtMoon_B2F/scripts.pory"
+# 134 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 22, 3, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE
-# 125 "data/maps/MtMoon_B2F/scripts.pory"
+# 135 "data/maps/MtMoon_B2F/scripts.pory"
 	setmetatile 23, 3, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE
 	return
 

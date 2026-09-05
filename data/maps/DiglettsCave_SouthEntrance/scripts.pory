@@ -247,3 +247,32 @@ script DiglettsCave_SouthEntrance_EventScript_PuzzleArrowRight6 {
 script DiglettsCave_SouthEntrance_EventScript_LostBoy {
     msgbox(DiglettsCave_SouthEntrance_Text_KeepGoingLeft, MSGBOX_NPC)
 }
+
+script DiglettsCave_SouthEntrance_EventScript_Grunt1 {
+    trainerbattle_single(TRAINER_BOT_GRUNT_1, DiglettsCave_SouthEntrance_Text_GruntIntroM, DiglettsCave_SouthEntrance_Text_GruntDefeatedM)
+    msgbox(DiglettsCave_SouthEntrance_ThePuzzlesAreClues, MSGBOX_NPC)
+}
+
+script DiglettsCave_SouthEntrance_EventScript_Grunt2 {
+    trainerbattle_single(TRAINER_BOT_GRUNT_2, DiglettsCave_SouthEntrance_Text_GruntIntroF, DiglettsCave_SouthEntrance_Text_GruntDefeatedF)
+    msgbox(DiglettsCave_SouthEntrance_Text_RememberToGoLeft, MSGBOX_NPC)
+}
+
+script DiglettsCave_SouthEntrance_EventScript_Grunt3 {
+    trainerbattle_single(TRAINER_BOT_GRUNT_3, DiglettsCave_SouthEntrance_Text_GruntIntroM, DiglettsCave_SouthEntrance_Text_GruntDefeatedM)
+    msgbox(DiglettsCave_SouthEntrance_ThePuzzlesAreClues, MSGBOX_NPC)
+}
+
+script DiglettsCave_SouthEntrance_EventScript_Grunt4 {
+    trainerbattle_single(TRAINER_BOT_GRUNT_4, DiglettsCave_SouthEntrance_Text_GruntIntroF, DiglettsCave_SouthEntrance_Text_GruntDefeatedF)
+    msgbox(DiglettsCave_SouthEntrance_Text_RememberToGoLeft, MSGBOX_NPC)
+}
+
+script DiglettsCave_SouthEntrance_EventScript_Grunt5 {
+    trainerbattle_single(TRAINER_BOT_GRUNT_5, DiglettsCave_SouthEntrance_Text_GruntIntroM, DiglettsCave_SouthEntrance_Text_GruntDefeatedM)
+    msgbox(DiglettsCave_SouthEntrance_ThePuzzlesAreClues, MSGBOX_NPC)
+}
+
+script DiglettsCave_SouthEntrance_EventScript_Grunt6 {
+    msgbox(DiglettsCave_SouthEntrance_Text_RememberToGoLeft, MSGBOX_NPC)
+}

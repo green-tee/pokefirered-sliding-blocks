@@ -135,123 +135,131 @@ Movement_Bow::
 
 EventScript_BrainingIslandNurse::
 # 71 "data/scripts/pkmn_center_nurse.pory"
-	message Text_HowMayIhelpYou
+	lockall
 # 72 "data/scripts/pkmn_center_nurse.pory"
-	waitmessage
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 # 73 "data/scripts/pkmn_center_nurse.pory"
+	waitmovement 0
+# 74 "data/scripts/pkmn_center_nurse.pory"
+	message Text_HowMayIhelpYou
+# 75 "data/scripts/pkmn_center_nurse.pory"
+	waitmessage
+# 76 "data/scripts/pkmn_center_nurse.pory"
 	call EventScript_BrainingIslandNurse_MainLoop
+# 77 "data/scripts/pkmn_center_nurse.pory"
+	releaseall
 	return
 
 
 EventScript_BrainingIslandNurse_MainLoop:
-# 77 "data/scripts/pkmn_center_nurse.pory"
+# 81 "data/scripts/pkmn_center_nurse.pory"
 	multichoice 16, 4, MULTICHOICE_NURSE, FALSE
-# 78 "data/scripts/pkmn_center_nurse.pory"
+# 82 "data/scripts/pkmn_center_nurse.pory"
 	switch VAR_RESULT
-# 79 "data/scripts/pkmn_center_nurse.pory"
+# 83 "data/scripts/pkmn_center_nurse.pory"
 	case 0, EventScript_BrainingIslandNurse_MainLoop_2
-# 86 "data/scripts/pkmn_center_nurse.pory"
+# 90 "data/scripts/pkmn_center_nurse.pory"
 	case 1, EventScript_BrainingIslandNurse_MainLoop_3
-# 105 "data/scripts/pkmn_center_nurse.pory"
+# 109 "data/scripts/pkmn_center_nurse.pory"
 	case 2, EventScript_BrainingIslandNurse_MainLoop_4
-# 120 "data/scripts/pkmn_center_nurse.pory"
+# 124 "data/scripts/pkmn_center_nurse.pory"
 	msgbox Text_WeHopeToSeeYouAgain, MSGBOX_DEFAULT
-# 121 "data/scripts/pkmn_center_nurse.pory"
+# 125 "data/scripts/pkmn_center_nurse.pory"
 	closemessage
 	return
 
 EventScript_BrainingIslandNurse_MainLoop_2:
-# 81 "data/scripts/pkmn_center_nurse.pory"
-	special HealPlayerParty
-# 82 "data/scripts/pkmn_center_nurse.pory"
-	playfanfare MUS_HEAL
-# 83 "data/scripts/pkmn_center_nurse.pory"
-	waitfanfare
-# 84 "data/scripts/pkmn_center_nurse.pory"
-	msgbox Text_RestoredPkmnToFullHealth, MSGBOX_DEFAULT
 # 85 "data/scripts/pkmn_center_nurse.pory"
+	special HealPlayerParty
+# 86 "data/scripts/pkmn_center_nurse.pory"
+	playfanfare MUS_HEAL
+# 87 "data/scripts/pkmn_center_nurse.pory"
+	waitfanfare
+# 88 "data/scripts/pkmn_center_nurse.pory"
+	msgbox Text_RestoredPkmnToFullHealth, MSGBOX_DEFAULT
+# 89 "data/scripts/pkmn_center_nurse.pory"
 	call EventScript_BrainingIslandNurse_RepeatLoop
 	return
 
 EventScript_BrainingIslandNurse_MainLoop_3:
-# 88 "data/scripts/pkmn_center_nurse.pory"
-	msgbox Text_WhichShouldRelarn, MSGBOX_DEFAULT
-# 89 "data/scripts/pkmn_center_nurse.pory"
-	closemessage
-# 90 "data/scripts/pkmn_center_nurse.pory"
-	special ChooseMonForMoveRelearner
-# 91 "data/scripts/pkmn_center_nurse.pory"
-	waitstate
 # 92 "data/scripts/pkmn_center_nurse.pory"
+	msgbox Text_WhichShouldRelarn, MSGBOX_DEFAULT
+# 93 "data/scripts/pkmn_center_nurse.pory"
+	closemessage
+# 94 "data/scripts/pkmn_center_nurse.pory"
+	special ChooseMonForMoveRelearner
+# 95 "data/scripts/pkmn_center_nurse.pory"
+	waitstate
+# 96 "data/scripts/pkmn_center_nurse.pory"
 	compare VAR_0x8004, PARTY_SIZE
 	goto_if_lt EventScript_BrainingIslandNurse_MainLoop_7
 EventScript_BrainingIslandNurse_MainLoop_6:
-# 104 "data/scripts/pkmn_center_nurse.pory"
+# 108 "data/scripts/pkmn_center_nurse.pory"
 	call EventScript_BrainingIslandNurse_RepeatLoop
 	return
 
 EventScript_BrainingIslandNurse_MainLoop_4:
-# 107 "data/scripts/pkmn_center_nurse.pory"
-	msgbox Text_NicknameWhichMon, MSGBOX_DEFAULT
-# 108 "data/scripts/pkmn_center_nurse.pory"
-	closemessage
-# 109 "data/scripts/pkmn_center_nurse.pory"
-	special ChoosePartyMon
-# 110 "data/scripts/pkmn_center_nurse.pory"
-	waitstate
 # 111 "data/scripts/pkmn_center_nurse.pory"
+	msgbox Text_NicknameWhichMon, MSGBOX_DEFAULT
+# 112 "data/scripts/pkmn_center_nurse.pory"
+	closemessage
+# 113 "data/scripts/pkmn_center_nurse.pory"
+	special ChoosePartyMon
+# 114 "data/scripts/pkmn_center_nurse.pory"
+	waitstate
+# 115 "data/scripts/pkmn_center_nurse.pory"
 	compare VAR_0x8004, PARTY_SIZE
 	goto_if_lt EventScript_BrainingIslandNurse_MainLoop_10
 EventScript_BrainingIslandNurse_MainLoop_9:
-# 117 "data/scripts/pkmn_center_nurse.pory"
+# 121 "data/scripts/pkmn_center_nurse.pory"
 	call EventScript_BrainingIslandNurse_RepeatLoop
 	return
 
 EventScript_BrainingIslandNurse_MainLoop_7:
-# 93 "data/scripts/pkmn_center_nurse.pory"
+# 97 "data/scripts/pkmn_center_nurse.pory"
 	special IsSelectedMonEgg
-# 94 "data/scripts/pkmn_center_nurse.pory"
+# 98 "data/scripts/pkmn_center_nurse.pory"
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_BrainingIslandNurse_MainLoop_12
 	goto EventScript_BrainingIslandNurse_MainLoop_6
 
 EventScript_BrainingIslandNurse_MainLoop_10:
-# 112 "data/scripts/pkmn_center_nurse.pory"
+# 116 "data/scripts/pkmn_center_nurse.pory"
 	specialvar VAR_RESULT, GetPartyMonSpecies
-# 113 "data/scripts/pkmn_center_nurse.pory"
+# 117 "data/scripts/pkmn_center_nurse.pory"
 	compare VAR_RESULT, SPECIES_EGG
 	goto_if_ne EventScript_BrainingIslandNurse_MainLoop_14
 	goto EventScript_BrainingIslandNurse_MainLoop_9
 
 EventScript_BrainingIslandNurse_MainLoop_12:
-# 95 "data/scripts/pkmn_center_nurse.pory"
+# 99 "data/scripts/pkmn_center_nurse.pory"
 	compare VAR_0x8005, 0
 	goto_if_eq EventScript_BrainingIslandNurse_MainLoop_16
-# 99 "data/scripts/pkmn_center_nurse.pory"
+# 103 "data/scripts/pkmn_center_nurse.pory"
 	special TeachMoveRelearnerMove
-# 100 "data/scripts/pkmn_center_nurse.pory"
+# 104 "data/scripts/pkmn_center_nurse.pory"
 	waitstate
 	goto EventScript_BrainingIslandNurse_MainLoop_6
 
 EventScript_BrainingIslandNurse_MainLoop_14:
-# 114 "data/scripts/pkmn_center_nurse.pory"
+# 118 "data/scripts/pkmn_center_nurse.pory"
 	call EventScript_ChangePokemonNickname
 	goto EventScript_BrainingIslandNurse_MainLoop_9
 
 EventScript_BrainingIslandNurse_MainLoop_16:
-# 96 "data/scripts/pkmn_center_nurse.pory"
+# 100 "data/scripts/pkmn_center_nurse.pory"
 	msgbox Text_MonCantRelearn, MSGBOX_DEFAULT
-# 97 "data/scripts/pkmn_center_nurse.pory"
+# 101 "data/scripts/pkmn_center_nurse.pory"
 	closemessage
 	goto EventScript_BrainingIslandNurse_MainLoop_6
 
 
 EventScript_BrainingIslandNurse_RepeatLoop:
-# 126 "data/scripts/pkmn_center_nurse.pory"
+# 130 "data/scripts/pkmn_center_nurse.pory"
 	message Text_WhatElseCanIDo
-# 127 "data/scripts/pkmn_center_nurse.pory"
+# 131 "data/scripts/pkmn_center_nurse.pory"
 	waitmessage
-# 128 "data/scripts/pkmn_center_nurse.pory"
+# 132 "data/scripts/pkmn_center_nurse.pory"
 	call EventScript_BrainingIslandNurse_MainLoop
 	return
 

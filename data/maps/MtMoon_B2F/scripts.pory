@@ -80,6 +80,16 @@ movement MtMoon_B2F_Movement_PanToVoltorb {
     walk_faster_up * 12
 }
 
+script MtMoon_B2F_EventScript_Cooltrainer {
+    trainerbattle_single(TRAINER_BOT_COOLTRAINER, MtMoon_B2F_Text_CooltrainerIntro, MtMoon_B2F_Text_CooltrainerDefeated)
+    msgbox(MtMoon_B2F_Text_YoureCoolEnough, MSGBOX_NPC)
+}
+
+script MtMoon_B2F_EventScript_BlackBelt {
+    trainerbattle_single(TRAINER_BOT_BLACK_BELT, MtMoon_B2F_Text_BlackBeltIntro, MtMoon_B2F_Text_BlackBeltDefeated)
+    msgbox(MtMoon_B2F_Text_ThingsWillEscalateQuickly, MSGBOX_NPC)
+}
+
 script(local) MtMoon_B2F_EventScript_ClearPathToPuzzleElectrode {
     setmetatile(21, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)
     setmetatile(22, 15, METATILE_Lab_PuzzlePalace_Tile, FALSE)

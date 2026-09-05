@@ -15,6 +15,11 @@ script MtMoon_B1F_EventScript_FloorSign {
     msgbox(MtMoon_B1F_Text_FloorName, MSGBOX_SIGN)
 }
 
+script MtMoon_B1F_EventScript_Youngster {
+    trainerbattle_single(TRAINER_BOT_YOUNGSTER, MtMoon_B1F_Text_YoungsterIntro, MtMoon_B1F_Text_YoungsterDefeated)
+    msgbox(MtMoon_B1F_Text_WhatGoOn, MSGBOX_NPC)
+}
+
 script MtMoon_B1F_EventScript_PuzzleBirds {
     if (!flag(FLAG_SOLVED_BIRDS)) {
         lockall

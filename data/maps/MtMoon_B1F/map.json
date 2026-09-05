@@ -56,6 +56,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MtMoon_B1F_EventScript_ItemMasterBall",
       "flag": "FLAG_HIDE_THE_FULL_PICTURE_MASTER_BALL"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
+      "x": 10,
+      "y": 5,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "MtMoon_B1F_EventScript_Youngster",
+      "flag": "0"
     }
   ],
   "warp_events": [

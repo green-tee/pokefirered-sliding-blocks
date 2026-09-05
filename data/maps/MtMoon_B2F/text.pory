@@ -10,3 +10,30 @@ text MtMoon_B2F_Text_MakeElectrode {
 text MtMoon_B2F_Text_MakeElectrodeAgain {
     "Make ELECTRODE again."
 }
+
+text MtMoon_B2F_Text_CooltrainerIntro {
+    "Challenger found! Now, let's battle!"
+}
+
+text MtMoon_B2F_Text_CooltrainerDefeated {
+    "Cool!"
+}
+
+text MtMoon_B2F_Text_YoureCoolEnough {
+    "You're cool enough.\n"
+    "Do your best!"
+}
+
+text MtMoon_B2F_Text_BlackBeltIntro {
+    "Are you enjoying yourself so far?\n"
+    "Let's spice things up!"
+}
+
+text MtMoon_B2F_Text_BlackBeltDefeated {
+    "You're on fire!"
+}
+
+text MtMoon_B2F_Text_ThingsWillEscalateQuickly {
+    "Things will escalate quickly.\n"
+    "This place gives headaches!"
+}

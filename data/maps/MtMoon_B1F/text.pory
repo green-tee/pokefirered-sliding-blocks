@@ -2,3 +2,15 @@ text MtMoon_B1F_Text_FloorName {
     "Floor I\n"
     "-- The whole picture --"
 }
+
+text MtMoon_B1F_Text_YoungsterIntro {
+    "Battle! Now!"
+}
+
+text MtMoon_B1F_Text_YoungsterDefeated {
+    "Battle… lost."
+}
+
+text MtMoon_B1F_Text_WhatGoOn {
+    "What?! Go on!"
+}

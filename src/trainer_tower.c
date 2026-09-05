@@ -393,7 +393,8 @@ static const u16 sTrainerTowerEncounterMusic[] = {
     [TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR]  = MUS_ENCOUNTER_BOY,
     [TRAINER_ENCOUNTER_MUSIC_HIKER]       = MUS_ENCOUNTER_BOY,
     [TRAINER_ENCOUNTER_MUSIC_INTERVIEWER] = MUS_ENCOUNTER_BOY,
-    [TRAINER_ENCOUNTER_MUSIC_RICH]        = MUS_ENCOUNTER_BOY
+    [TRAINER_ENCOUNTER_MUSIC_RICH]        = MUS_ENCOUNTER_BOY,
+    [TRAINER_ENCOUNTER_MUSIC_BATTLE]      = MUS_BATTLE
 };
 
 // The trainer only uses two Pokemon from the encoded pool, based on the current floor
