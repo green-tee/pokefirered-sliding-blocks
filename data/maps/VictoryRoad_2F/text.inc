@@ -5,7 +5,7 @@ VictoryRoad_2F_Text_FloorName::
 
 VictoryRoad_2F_Text_Credits::
 # 6 "data/maps/VictoryRoad_2F/text.pory"
-	.string "POKéMON - Let it slide!\n"
+	.string "POKéMON - LET IT SLIDE!\n"
 	.string "CREDITS\p"
 	.string "AUTHOR - Nicolavs\n"
 	.string "BASE GAME - GAME FREAK\p"
@@ -16,7 +16,7 @@ VictoryRoad_2F_Text_Credits::
 	.string "Eusine's sprites: Project Palladium\p"
 	.string "MUSIC\n"
 	.string "GAME FREAK\p"
-	.string "Title theme: Unknown artist\l"
+	.string "Title theme: Unknown artist\n"
 	.string "Overworld theme: Bulgasali\l"
 	.string "Battle theme: Daniel Lawrence\l"
 	.string "Puzzles theme 1: Unknown artist\l"

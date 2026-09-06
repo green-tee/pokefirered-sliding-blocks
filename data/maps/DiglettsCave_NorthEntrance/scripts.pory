@@ -42,6 +42,7 @@ script DiglettsCave_NorthEntrance_EventScript_Eusine {
     if (var(VAR_RESULT) == YES) {
         msgbox(DiglettsCave_NorthEntrance_Text_LetsGo, MSGBOX_DEFAULT)
         closemessage
+        playbgm(MUS_BATTLE, 0)
         trainerbattle_no_intro(TRAINER_EUSINE, DiglettsCave_NorthEntrance_Text_YouWinThisOne)
         specialvar(VAR_RESULT, GetPartyAndPCCount)
         if (var(VAR_RESULT) < 10) {

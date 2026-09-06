@@ -8,6 +8,20 @@ script VictoryRoad_2F_EventScript_CreditsSign {
     msgbox(VictoryRoad_2F_Text_Credits, MSGBOX_SIGN)
 }
 
+script VictoryRoad_2F_EventScript_MasterBotTest {
+    lock
+    faceplayer
+    specialvar(VAR_0x8004, CalculatePlayerPartyCount)
+    specialvar(VAR_RESULT, CountPartyAliveNonEggMons_IgnoreVar0x8004Slot)
+    if (var(VAR_RESULT) >= 2) {
+        playbgm(MUS_FINAL_BATTLE, 0)
+        trainerbattle_(TRAINER_MASTER_BOT, "Final boss test complete.")
+        msgbox("Now release.", MSGBOX_DEFAULT)
+        closemessage
+    }
+    release
+}
+
 script VictoryRoad_2F_EventScript_PuzzleRayquaza {
     lockall
     playbgm(MUS_PUZZLE_FINAL, 0)

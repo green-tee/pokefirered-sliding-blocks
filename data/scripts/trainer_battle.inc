@@ -44,7 +44,7 @@ EventScript_NoDoubleTrainerBattle::
 EventScript_DoNoIntroTrainerBattle::
 	applymovement VAR_LAST_TALKED, Movement_RevealTrainer
 	waitmovement 0
-	special PlayTrainerEncounterMusic
+	@special PlayTrainerEncounterMusic
 	goto_if_questlog EventScript_EndQuestLogBattle
 	dotrainerbattle
 	gotopostbattlescript
