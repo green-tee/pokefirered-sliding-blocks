@@ -94,7 +94,7 @@ VictoryRoad_2F_EventScript_PuzzleRayquaza::
 # 54 "data/maps/VictoryRoad_2F/scripts.pory"
 	closemessage
 # 55 "data/maps/VictoryRoad_2F/scripts.pory"
-	savebgm MUS_FINAL_BATTLE
+	savebgm MUS_NONE
 # 56 "data/maps/VictoryRoad_2F/scripts.pory"
 	special RemoveCameraObject
 # 57 "data/maps/VictoryRoad_2F/scripts.pory"

@@ -79,5 +79,5 @@ text VictoryRoad_2F_MasterBotAfterWin {
 
 text VictoryRoad_2F_MasterBotCarvedName {
     "MASTER BOT carved {PLAYER}'s name\n"
-    "In the HALL OF FAME!"
+    "in the HALL OF FAME!"
 }

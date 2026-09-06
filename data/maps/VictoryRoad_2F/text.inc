@@ -80,4 +80,4 @@ VictoryRoad_2F_MasterBotAfterWin::
 VictoryRoad_2F_MasterBotCarvedName::
 # 80 "data/maps/VictoryRoad_2F/text.pory"
 	.string "MASTER BOT carved {PLAYER}'s name\n"
-	.string "In the HALL OF FAME!$"
+	.string "in the HALL OF FAME!$"

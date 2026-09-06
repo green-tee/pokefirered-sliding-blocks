@@ -52,7 +52,7 @@ script VictoryRoad_2F_EventScript_PuzzleRayquaza {
         waitmovement(LOCALID_CAMERA)
         msgbox(VictoryRoad_2F_Text_ThisIsTheFinalPuzzle, MSGBOX_DEFAULT)
         closemessage
-        savebgm(MUS_FINAL_BATTLE)
+        savebgm(MUS_NONE)
         special(RemoveCameraObject)
         playslidingblocks(SLIDING_LAYOUT_RAYQUAZA)
         if (var(VAR_RESULT) != 0) {
