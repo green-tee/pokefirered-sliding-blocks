@@ -44,4 +44,4 @@ VictoryRoad_1F_Text_ImLookingForMetragross::
 # 43 "data/maps/VictoryRoad_1F/text.pory"
 	.string "I'm looking for METAGROSS,\n"
 	.string "but I don't know how rare it is.\p"
-	.string "I've been looking for half an hour!$"
+	.string "I've been searching for half an hour!$"

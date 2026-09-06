@@ -608,7 +608,7 @@
 #define FLAG_SOLVED_WALREIN                              0x247
 #define FLAG_SOLVED_SALAMENCE                            0x248
 #define FLAG_SOLVED_NUMBERS_MAGIC                        0x249
-#define FLAG_DID_ZYNX_TRADE                              0x24A
+#define FLAG_DEFEATED_MASTER_BOT                         0x24A
 #define FLAG_DID_MS_NIDO_TRADE                           0x24B
 #define FLAG_0x24C                                       0x24C
 #define FLAG_DID_CH_DING_TRADE                           0x24D

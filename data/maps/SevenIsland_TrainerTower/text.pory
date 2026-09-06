@@ -20,3 +20,13 @@ text SevenIsland_TrainerTower_Text_HoOh {
 text SevenIsland_TrainerTower_DoYourBest {
     "Do your best!"
 }
+
+text SevenIsland_TrainerTower_ThankYouForPlaying {
+    "Thank your for playing\n"
+    "POKéMON - LET IT SLIDE!\p"
+    "This project was made for the\n"
+    "{FONT_SMALL}3rd Team Aqua's ROM-Hacking Competition{FONT_NORMAL}\l"
+    "(TARC3).\p"
+    "We hope you enjoyed your time\n"
+    "with it!"
+}

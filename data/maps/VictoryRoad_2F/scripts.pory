@@ -1,4 +1,20 @@
-mapscripts VictoryRoad_2F_MapScripts {}
+mapscripts VictoryRoad_2F_MapScripts {
+    MAP_SCRIPT_ON_LOAD: VictoryRoad_2F_OnLoad
+    MAP_SCRIPT_ON_RESUME: VictoryRoad_2F_OnResume
+}
+
+script VictoryRoad_2F_OnLoad {
+    if (!flag(FLAG_TEMP_1)) {
+        call(VictoryRoad_2F_EventScript_SetPuzzleRayquaza)
+    }
+}
+
+script VictoryRoad_2F_OnResume {
+    if (flag(FLAG_TEMP_2)) {
+        removeobject(LOCALID_RAYQUAZA_L)
+        removeobject(LOCALID_RAYQUAZA_R)
+    }
+}
 
 script VictoryRoad_2F_EventScript_FloorSign {
     msgbox(VictoryRoad_2F_Text_FloorName, MSGBOX_SIGN)
@@ -15,7 +31,7 @@ script VictoryRoad_2F_EventScript_MasterBotTest {
     specialvar(VAR_RESULT, CountPartyAliveNonEggMons_IgnoreVar0x8004Slot)
     if (var(VAR_RESULT) >= 2) {
         playbgm(MUS_FINAL_BATTLE, 0)
-        trainerbattle_(TRAINER_MASTER_BOT, "Final boss test complete.")
+        trainerbattle_no_intro(TRAINER_MASTER_BOT, "Final boss test complete.")
         msgbox("Now release.", MSGBOX_DEFAULT)
         closemessage
     }
@@ -24,8 +40,194 @@ script VictoryRoad_2F_EventScript_MasterBotTest {
 
 script VictoryRoad_2F_EventScript_PuzzleRayquaza {
     lockall
-    playbgm(MUS_PUZZLE_FINAL, 0)
-    playslidingblocks(SLIDING_LAYOUT_RAYQUAZA)
-    fadedefaultbgm
+    specialvar(VAR_0x8004, CalculatePlayerPartyCount)
+    specialvar(VAR_RESULT, CountPartyAliveNonEggMons_IgnoreVar0x8004Slot)
+    if (var(VAR_RESULT) < 2) {
+        msgbox(VictoryRoad_2F_Text_NeedTwoPokemon, MSGBOX_DEFAULT)
+        closemessage
+    } else {
+        fadenewbgm(MUS_PUZZLE_FINAL)
+        special(SpawnCameraObject)
+        applymovement(LOCALID_CAMERA, VictoryRoad_2F_Movement_PanCameraUp)
+        waitmovement(LOCALID_CAMERA)
+        msgbox(VictoryRoad_2F_Text_ThisIsTheFinalPuzzle, MSGBOX_DEFAULT)
+        closemessage
+        savebgm(MUS_FINAL_BATTLE)
+        special(RemoveCameraObject)
+        playslidingblocks(SLIDING_LAYOUT_RAYQUAZA)
+        if (var(VAR_RESULT) != 0) {
+            playbgm(MUS_FINAL_BATTLE, 0)
+            removeobject(VAR_LAST_TALKED)
+            playse(SE_UNLOCK)
+            call(VictoryRoad_2F_EventScript_ClearPuzzleRayquaza)
+            special(DrawWholeMapView)
+            delay(30)
+            playmoncry(SPECIES_RAYQUAZA, CRY_MODE_NORMAL)
+            applymovement(LOCALID_RAYQUAZA_L, VictoryRoad_2F_Movement_WalkDown)
+            waitmovement(LOCALID_RAYQUAZA_L)
+            playmoncry(SPECIES_RAYQUAZA, CRY_MODE_NORMAL)
+            applymovement(LOCALID_RAYQUAZA_R, VictoryRoad_2F_Movement_WalkDown)
+            waitmovement(LOCALID_RAYQUAZA_R)
+            delay(30)
+            msgbox(VictoryRoad_2F_Text_ImTheMasterBot, MSGBOX_DEFAULT)
+            closemessage
+            setflag(FLAG_TEMP_2)
+            savebgm(MUS_NONE)
+            trainerbattle_no_intro(TRAINER_MASTER_BOT, VictoryRoad_2F_MasterBotDefeated)
+            msgbox(VictoryRoad_2F_MasterBotAfterWin, MSGBOX_DEFAULT)
+            closemessage
+            special(SpawnCameraObject)
+            applymovement(LOCALID_CAMERA, VictoryRoad_2F_Movement_PanCameraDown)
+            waitmovement(LOCALID_CAMERA)
+            special(RemoveCameraObject)
+            fadescreen(FADE_TO_BLACK)
+            msgbox(VictoryRoad_2F_MasterBotCarvedName, MSGBOX_DEFAULT)
+            closemessage
+            call(VictoryRoad_2F_EventScript_PrepareForEndingAndRematch)
+        } else {
+            fadedefaultbgm
+            special(SpawnCameraObject)
+            applymovement(LOCALID_CAMERA, VictoryRoad_2F_Movement_PanCameraDown)
+            waitmovement(LOCALID_CAMERA)
+            special(RemoveCameraObject)
+        }
+    }
     releaseall
+}
+
+movement VictoryRoad_2F_Movement_PanCameraUp {
+    walk_slower_up
+}
+
+movement VictoryRoad_2F_Movement_PanCameraDown {
+    walk_slower_down
+}
+
+movement VictoryRoad_2F_Movement_WalkDown {
+    walk_down
+}
+
+script(local) VictoryRoad_2F_EventScript_PrepareForEndingAndRematch {
+    call(VictoryRoad_2F_EventScript_SetPuzzleRayquaza)
+    addobject(LOCALID_PUZZLE_RAYQUAZA)
+    addobject(LOCALID_RAYQUAZA_L)
+    addobject(LOCALID_RAYQUAZA_R)
+    clearflag(FLAG_TEMP_1)
+    clearflag(FLAG_TEMP_2)
+    clearflag(FLAG_TEMP_3)
+    clearflag(FLAG_TEMP_4)
+    setobjectxyperm(LOCALID_RAYQUAZA_L, 9, 16)
+    setobjectxyperm(LOCALID_RAYQUAZA_R, 11, 16)
+    special(HealPlayerParty)
+    delay(30)
+    savebgm(MUS_PUZZLE_IMPORTANT)
+    call(EventScript_AskSaveGame)
+    setvar(VAR_MAP_SCENE_BRAINING_ISLAND, 2)
+    warp(MAP_SEVEN_ISLAND_TRAINER_TOWER, 24, 10)
+}
+
+script(local) VictoryRoad_2F_EventScript_SetPuzzleRayquaza {
+    setmetatile(7, 11, METATILE_Building_Void, TRUE)
+    setmetatile(8, 11, METATILE_Building_Void, TRUE)
+    setmetatile(9, 11, METATILE_Building_Void, TRUE)
+    setmetatile(10, 11, METATILE_Building_Void, TRUE)
+    setmetatile(11, 11, METATILE_Building_Void, TRUE)
+    setmetatile(12, 11, METATILE_Building_Void, TRUE)
+    setmetatile(13, 11, METATILE_Building_Void, TRUE)
+    setmetatile(7, 12, METATILE_Building_Void, TRUE)
+    setmetatile(8, 12, METATILE_Building_Void, TRUE)
+    setmetatile(9, 12, METATILE_Building_Void, TRUE)
+    setmetatile(10, 12, METATILE_Building_Void, TRUE)
+    setmetatile(11, 12, METATILE_Building_Void, TRUE)
+    setmetatile(12, 12, METATILE_Building_Void, TRUE)
+    setmetatile(13, 12, METATILE_Building_Void, TRUE)
+    setmetatile(7, 13, METATILE_Building_Void, TRUE)
+    setmetatile(8, 13, METATILE_Building_Void, TRUE)
+    setmetatile(9, 13, METATILE_Building_Void, TRUE)
+    setmetatile(10, 13, METATILE_Building_Void, TRUE)
+    setmetatile(11, 13, METATILE_Building_Void, TRUE)
+    setmetatile(12, 13, METATILE_Building_Void, TRUE)
+    setmetatile(13, 13, METATILE_Building_Void, TRUE)
+    setmetatile(7, 14, METATILE_Building_Void, TRUE)
+    setmetatile(8, 14, METATILE_Building_Void, TRUE)
+    setmetatile(9, 14, METATILE_Building_Void, TRUE)
+    setmetatile(10, 14, METATILE_Building_Void, TRUE)
+    setmetatile(11, 14, METATILE_Building_Void, TRUE)
+    setmetatile(12, 14, METATILE_Building_Void, TRUE)
+    setmetatile(13, 14, METATILE_Building_Void, TRUE)
+    setmetatile(7, 15, METATILE_Building_Void, TRUE)
+    setmetatile(8, 15, METATILE_Building_Void, TRUE)
+    setmetatile(9, 15, METATILE_Building_Void, TRUE)
+    setmetatile(10, 15, METATILE_Building_Void, TRUE)
+    setmetatile(11, 15, METATILE_Building_Void, TRUE)
+    setmetatile(12, 15, METATILE_Building_Void, TRUE)
+    setmetatile(13, 15, METATILE_Building_Void, TRUE)
+    setmetatile(8, 16, METATILE_Building_Void, TRUE)
+    setmetatile(9, 16, METATILE_Building_Void, TRUE)
+    setmetatile(10, 16, METATILE_Building_Void, TRUE)
+    setmetatile(11, 16, METATILE_Building_Void, TRUE)
+    setmetatile(12, 16, METATILE_Building_Void, TRUE)
+    setmetatile(8, 17, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(9, 17, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(10, 17, METATILE_Lab_PuzzlePalace_Wall_TopPuzzle, TRUE)
+    setmetatile(11, 17, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(12, 17, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(8, 18, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(9, 18, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(10, 18, METATILE_Lab_PuzzlePalace_Wall_BottomPuzzle, TRUE)
+    setmetatile(11, 18, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(12, 18, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+}
+
+script(local) VictoryRoad_2F_EventScript_ClearPuzzleRayquaza {
+    setmetatile(7, 11, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthWest, TRUE)
+    setmetatile(8, 11, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(9, 11, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(10, 11, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(11, 11, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(12, 11, METATILE_Lab_PuzzlePalace_Wall_Top, TRUE)
+    setmetatile(13, 11, METATILE_Lab_PuzzlePalace_Wall_TopCornerNorthEast, TRUE)
+    setmetatile(7, 12, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthWest, TRUE)
+    setmetatile(8, 12, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(9, 12, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(10, 12, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(11, 12, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(12, 12, METATILE_Lab_PuzzlePalace_Wall_Bottom, TRUE)
+    setmetatile(13, 12, METATILE_Lab_PuzzlePalace_Wall_BottomCornerSouthEast, TRUE)
+    setmetatile(7, 13, METATILE_Lab_PuzzlePalace_Corner_FacingLeftShaded, TRUE)
+    setmetatile(8, 13, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 13, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(10, 13, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(11, 13, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(12, 13, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(13, 13, METATILE_Lab_PuzzlePalace_Corner_FacingRightShaded, TRUE)
+    setmetatile(7, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(8, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(10, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(11, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(12, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(13, 14, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(7, 15, METATILE_Lab_PuzzlePalace_TileCornerSouthWestShaded, TRUE)
+    setmetatile(8, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(10, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(11, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(12, 15, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(13, 15, METATILE_Lab_PuzzlePalace_TileCornerSouthEastShaded, TRUE)
+    setmetatile(8, 16, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 16, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(10, 16, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(11, 16, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(12, 16, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(8, 17, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 17, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(10, 17, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(11, 17, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(12, 17, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(8, 18, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(9, 18, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(10, 18, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(11, 18, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
+    setmetatile(12, 18, METATILE_Lab_PuzzlePalace_TileShaded, FALSE)
 }

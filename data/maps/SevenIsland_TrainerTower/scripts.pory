@@ -1,6 +1,7 @@
 mapscripts SevenIsland_TrainerTower_MapScripts {
     MAP_SCRIPT_ON_FRAME_TABLE [
         VAR_MAP_SCENE_BRAINING_ISLAND, 0: SevenIsland_TrainerTower_EventScript_Intro
+        VAR_MAP_SCENE_BRAINING_ISLAND, 2: SevenIsland_TrainerTower_EventScript_Ending
     ]
     MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE [
         VAR_MAP_SCENE_BRAINING_ISLAND, 0: SevenIsland_TrainerTower_EventScript_TurnPlayerNorth
@@ -49,4 +50,30 @@ script SevenIsland_TrainerTower_EventScript_Intro {
 
 movement SevenIsland_TrainerTower_Movement_WalkDown {
     walk_down
+}
+
+script SevenIsland_TrainerTower_EventScript_Ending {
+    lockall
+    delay(30)
+    msgbox(SevenIsland_TrainerTower_ThankYouForPlaying, MSGBOX_DEFAULT)
+    closemessage
+    delay(30)
+    applymovement(LOCALID_PLAYER, SevenIsland_TrainerTower_Movement_WalkAway1)
+    waitmovement(LOCALID_PLAYER)
+    applymovement(LOCALID_PLAYER, SevenIsland_TrainerTower_Movement_WalkAway2)
+    fadescreenspeed(FADE_TO_BLACK, 16)
+    waitmovement(LOCALID_PLAYER)
+    fadeoutbgm(0)
+    delay(120)
+    special(DoSoftReset)
+    delay(30)
+    releaseall
+}
+
+movement SevenIsland_TrainerTower_Movement_WalkAway1 {
+    walk_down * 6
+}
+
+movement SevenIsland_TrainerTower_Movement_WalkAway2 {
+    walk_down * 10
 }

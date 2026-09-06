@@ -17,7 +17,7 @@ text VictoryRoad_2F_Text_Credits {
     "MUSIC\n"
     "GAME FREAK\l"
     "Level 5\l"
-    "Title theme: Unknown artist\n"
+    "Title theme: Unknown artist\l"
     "Overworld theme: Bulgasali\l"
     "Battle theme: Daniel Lawrence\l"
     "Puzzles theme 1: Unknown artist\l"
@@ -28,4 +28,56 @@ text VictoryRoad_2F_Text_Credits {
     "Final battle theme: Xenu\p"
     "Project subitted to\n"
     "{FONT_SMALL}3rd Team Aqua's ROM-Hacking Competition."
+}
+
+text VictoryRoad_2F_Text_NeedTwoPokemon {
+    "The final trial of BRAINING PALACE\n"
+    "is only available to those with\l"
+    "at least 2 Pokémon capable\l"
+    "of partaking in battle.\p"
+    "Go back to the previous floors\n"
+    "and prepare yourself."
+}
+
+text VictoryRoad_2F_Text_ThisIsTheFinalPuzzle {
+    "Greetings, challenger!\n"
+    "You made your way to the final\l"
+    "puzzle of BRAINING PALACE.\p"
+    "There are no new rules,\n"
+    "only a final obstacle in your path\l"
+    "to victory.\p"
+    "Do your best!"
+}
+
+text VictoryRoad_2F_Text_ImTheMasterBot {
+    "Challenger! I am the MASTER BOT.\n"
+    "I am the real final trial\l"
+    "of BRAINING PALACE.\p"
+    "Do you want to add your name to our\n"
+    "HALL OF FAME?\p"
+    "Of course! Who wouldn't, having come\n"
+    "this far?\p"
+    "Let the trial begin!"
+}
+
+text VictoryRoad_2F_MasterBotDefeated {
+    "It looks like your journey\n"
+    "is a success!"
+}
+
+text VictoryRoad_2F_MasterBotAfterWin {
+    "Enough!\p"
+    "Well done, challenger.\n"
+    "You started your challenge\l"
+    "in this PALACE.\l"
+    "You solved the challenges\l"
+    "of each floor.\l"
+    "And now, you defeated me.\p"
+    "You have the right to have your name\n"
+    "forever carved in our HALL OF FAME."
+}
+
+text VictoryRoad_2F_MasterBotCarvedName {
+    "MASTER BOT carved {PLAYER}'s name\n"
+    "In the HALL OF FAME!"
 }

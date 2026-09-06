@@ -43,5 +43,5 @@ text VictoryRoad_1F_Text_ThisIsTooDifficult {
 text VictoryRoad_1F_Text_ImLookingForMetragross {
     "I'm looking for METAGROSS,\n"
     "but I don't know how rare it is.\p"
-    "I've been looking for half an hour!"
+    "I've been searching for half an hour!"
 }
